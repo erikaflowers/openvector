@@ -1,0 +1,45 @@
+import { Routes, Route } from 'react-router-dom';
+import LearnLayout from './layouts/LearnLayout';
+import OpenVectorPage from './pages/OpenVectorPage';
+import LearnHubPage from './pages/learn/LearnHubPage';
+import LearnIndexPage from './pages/learn/LearnIndexPage';
+import LevelPage from './pages/learn/LevelPage';
+import LessonPage from './pages/learn/LessonPage';
+import LearnResourcesPage from './pages/learn/LearnResourcesPage';
+import LearnChatPage from './pages/learn/LearnChatPage';
+import LearnContributePage from './pages/learn/LearnContributePage';
+import LearnAboutPage from './pages/learn/LearnAboutPage';
+import LearnFAQPage from './pages/learn/LearnFAQPage';
+import LearnChangelogPage from './pages/learn/LearnChangelogPage';
+import LearnProgressPage from './pages/learn/LearnProgressPage';
+import LearnGlossaryPage from './pages/learn/LearnGlossaryPage';
+import LearnEnterprisePage from './pages/learn/LearnEnterprisePage';
+import ApproachIndexPage from './pages/learn/ApproachIndexPage';
+import GuidePage from './pages/learn/GuidePage';
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<OpenVectorPage />} />
+      <Route path="/learn" element={<LearnLayout />}>
+        <Route index element={<LearnHubPage />} />
+        <Route path="curriculum" element={<LearnIndexPage />} />
+        <Route path="curriculum/:levelSlug" element={<LevelPage />} />
+        <Route path="curriculum/:levelSlug/:lessonSlug" element={<LessonPage />} />
+        <Route path="approach" element={<ApproachIndexPage />} />
+        <Route path="approach/:guideSlug" element={<GuidePage />} />
+        <Route path="resources" element={<LearnResourcesPage />} />
+        <Route path="chat" element={<LearnChatPage />} />
+        <Route path="contribute" element={<LearnContributePage />} />
+        <Route path="about" element={<LearnAboutPage />} />
+        <Route path="faq" element={<LearnFAQPage />} />
+        <Route path="changelog" element={<LearnChangelogPage />} />
+        <Route path="progress" element={<LearnProgressPage />} />
+        <Route path="glossary" element={<LearnGlossaryPage />} />
+        <Route path="enterprise" element={<LearnEnterprisePage />} />
+      </Route>
+    </Routes>
+  );
+}
+
+export default App;

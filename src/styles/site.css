@@ -1,0 +1,7213 @@
+/* ========================================
+   Zero-Vector Design — Site Styles
+   ======================================== */
+
+/* --- Design Tokens --- */
+:root {
+  /* Void */
+  --void: #181818;
+  --void-elevated: #0a0a0f;
+  --void-surface: #111118;
+  --void-border: rgba(255, 255, 255, 0.06);
+
+  /* Cyan — primary accent */
+  --cyan: #00ffff;
+  --cyan-dim: #00cccc;
+  --cyan-glow: rgba(0, 255, 255, 0.15);
+  --cyan-subtle: rgba(0, 255, 255, 0.06);
+
+  /* Magenta — struck-through "old way" */
+  --magenta: #ff0080;
+  --magenta-dim: #cc0066;
+  --magenta-glow: rgba(255, 0, 128, 0.15);
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b0;
+  --text-tertiary: #555566;
+  --text-muted: rgba(255, 255, 255, 0.4);
+
+  /* Typography */
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Spacing */
+  --container-max: 1100px;
+  --container-padding: 24px;
+  --section-padding: 160px;
+
+  /* Easing */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* --- Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: var(--void);
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--cyan);
+  text-decoration: none;
+  transition: color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+a:hover {
+  color: var(--text-primary);
+  text-shadow: 0 0 12px var(--cyan-glow);
+}
+
+/* --- Error Boundary --- */
+.zv-error-boundary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 40px 24px;
+  text-align: center;
+}
+.zv-error-boundary-content {
+  max-width: 440px;
+}
+.zv-error-boundary-icon {
+  font-size: 3rem;
+  color: #ff4466;
+  margin-bottom: 16px;
+  font-weight: 300;
+}
+.zv-error-boundary-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.zv-error-boundary-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.7;
+  margin-bottom: 24px;
+}
+.zv-error-boundary-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* --- Animate (shared) --- */
+.zv-animate {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.zv-animate.zv-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.zv-animate-delay-1 { transition-delay: 0.1s; }
+.zv-animate-delay-2 { transition-delay: 0.2s; }
+.zv-animate-delay-3 { transition-delay: 0.3s; }
+.zv-animate-delay-4 { transition-delay: 0.4s; }
+
+
+/* ========================================
+   The Open Vector — Inverted Theme
+   ======================================== */
+
+/* --- Page Root --- */
+.ov-page {
+  background: #ffffff;
+  color: #0a0a0a;
+  min-height: 100vh;
+  position: relative;
+  font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+}
+
+/* Grid paper background */
+.ov-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Override link styles — exclude buttons */
+.ov-page a:not(.ov-btn) {
+  color: #0055ff;
+  text-shadow: none;
+}
+
+.ov-page a:not(.ov-btn):hover {
+  color: #0033cc;
+  text-shadow: none;
+}
+
+/* Gentler scroll animations */
+.ov-page .zv-animate {
+  transform: translateY(16px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+/* --- Layout --- */
+.ov-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.ov-section {
+  padding: 20px 0;
+  position: relative;
+}
+
+/* --- Custom Nav --- */
+.ov-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ov-nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.ov-nav-brand {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+.ov-nav-brand:hover {
+  color: #0a0a0a;
+}
+
+.ov-nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.ov-nav-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: #777;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.ov-nav-link:hover {
+  color: #0a0a0a;
+}
+
+.ov-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.ov-hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 20px;
+}
+
+.ov-hamburger span {
+  display: block;
+  height: 2px;
+  background: #0a0a0a;
+  border-radius: 1px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.ov-hamburger--open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.ov-hamburger--open span:nth-child(2) {
+  opacity: 0;
+}
+.ov-hamburger--open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.ov-nav-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: #00aa44;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border: 1px solid rgba(0, 170, 68, 0.3);
+  border-radius: 2px;
+}
+
+.ov-mobile-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .ov-nav-toggle {
+    display: flex;
+  }
+  .ov-nav-links,
+  .ov-nav-badge {
+    display: none;
+  }
+  .ov-mobile-menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 8px 0;
+  }
+  .ov-mobile-menu-link {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    padding: 12px 24px;
+    transition: background 0.15s ease;
+  }
+  .ov-mobile-menu-link:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .ov-mobile-menu-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #00aa44;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+  }
+}
+
+/* --- Labels --- */
+.ov-label {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: #0055ff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* --- Rule --- */
+.ov-rule {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 64px;
+}
+
+/* --- Hero --- */
+.ov-hero {
+  padding-top: calc(56px + 120px);
+  padding-bottom: 80px;
+}
+
+/* --- Launch Banner --- */
+.ov-launch-banner {
+  position: relative;
+  background: #0055ff;
+  color: #fff;
+  padding: 24px 32px;
+  margin-bottom: 48px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ov-launch-banner--live {
+  background: #0a0a0a;
+}
+
+/* Blueprint grid overlay */
+.ov-launch-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+/* Scanning light sweep */
+.ov-launch-banner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: ov-scan 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ov-scan {
+  0%, 100% { left: -40%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* Pulsing beacon dot */
+.ov-launch-beacon {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+  animation: ov-beacon 2s ease-in-out infinite;
+}
+
+.ov-launch-beacon--live {
+  background: #00ff88;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.5);
+  animation: ov-beacon-live 2s ease-in-out infinite;
+}
+
+@keyframes ov-beacon-live {
+  0%, 100% { opacity: 0.7; box-shadow: 0 0 8px rgba(0, 255, 136, 0.3); }
+  50% { opacity: 1; box-shadow: 0 0 16px rgba(0, 255, 136, 0.6); }
+}
+
+@keyframes ov-beacon {
+  0%, 100% { opacity: 0.6; box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); }
+  50% { opacity: 1; box-shadow: 0 0 16px rgba(255, 255, 255, 0.6); }
+}
+
+.ov-launch-content {
+  position: relative;
+  z-index: 1;
+}
+
+.ov-launch-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 4px;
+}
+
+.ov-launch-date {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 700;
+  color: #fff;
+}
+
+.ov-launch-cta {
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.ov-launch-cta .ov-btn-primary {
+  background: #00ff88;
+  color: #0a0a0a;
+  font-weight: 700;
+  padding: 10px 24px;
+  border: none;
+  font-size: 0.95rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.ov-launch-cta .ov-btn-primary:hover {
+  background: #33ffaa;
+  box-shadow: 0 2px 16px rgba(0, 255, 136, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ov-launch-banner::after,
+  .ov-launch-beacon {
+    animation: none;
+  }
+  .ov-launch-beacon {
+    opacity: 1;
+  }
+}
+
+.ov-hero-title {
+  font-family: var(--font-display);
+  line-height: 0.95;
+  margin-bottom: 48px;
+}
+
+.ov-hero-light {
+  display: block;
+  font-size: clamp(3rem, 10vw, 7rem);
+  font-weight: 300;
+  color: #aaa;
+}
+
+.ov-hero-heavy {
+  display: block;
+  font-size: clamp(4rem, 14vw, 10rem);
+  font-weight: 900;
+  color: #0a0a0a;
+  letter-spacing: -0.04em;
+}
+
+/* --- Body Text --- */
+.ov-body {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #1a1a1a;
+  max-width: 720px;
+}
+
+.ov-body + .ov-body {
+  margin-top: 20px;
+}
+
+.ov-body strong {
+  font-weight: 700;
+  color: #0a0a0a;
+}
+
+.ov-body-bold {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #0a0a0a;
+}
+
+.ov-muted {
+  color: #666;
+}
+
+/* --- Declaration --- */
+.ov-declaration {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+  font-weight: 600;
+  color: #0a0a0a;
+  line-height: 1.7;
+  margin: 40px 0;
+  padding-left: 24px;
+  border-left: 3px solid #0055ff;
+  max-width: 720px;
+}
+
+/* --- Free Indicator --- */
+.ov-free-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.ov-free-dot {
+  width: 10px;
+  height: 10px;
+  background: #00aa44;
+  border-radius: 50%;
+  animation: ov-pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes ov-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 170, 68, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(0, 170, 68, 0); }
+}
+
+.ov-free-text {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: #00aa44;
+  letter-spacing: 0.05em;
+}
+
+/* --- Pledge --- */
+.ov-pledge {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.ov-pledge-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.ov-pledge-icon {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #00aa44;
+  flex-shrink: 0;
+  width: 32px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* --- Curriculum --- */
+.ov-curriculum {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 48px;
+}
+
+.ov-curriculum-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-top: 24px;
+}
+
+.ov-curriculum-split-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ov-curriculum-split-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.ov-curriculum-overview-item {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.ov-curriculum-overview-item:first-child {
+  border-top: 1px solid #e8e8e8;
+}
+
+.ov-curriculum-overview-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: #999;
+  flex-shrink: 0;
+  min-width: 24px;
+}
+
+.ov-curriculum-overview-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0a0a0a;
+  flex-shrink: 0;
+}
+
+.ov-curriculum-overview-sub {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: #888;
+}
+
+@media (max-width: 768px) {
+  .ov-curriculum-split {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .ov-curriculum-overview-item {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+  .ov-curriculum-overview-sub {
+    width: 100%;
+    padding-left: 40px;
+  }
+}
+
+.ov-curriculum-cta {
+  margin-top: 32px;
+}
+
+.ov-level {
+  display: flex;
+  gap: 32px;
+  padding: 32px 24px;
+  border: 1px solid transparent;
+  transition: background 0.3s var(--ease-out), border-color 0.3s var(--ease-out), margin 0.3s var(--ease-out), padding 0.3s var(--ease-out);
+  cursor: default;
+}
+
+.ov-level:hover {
+  background: rgba(0, 85, 255, 0.04);
+  border-color: rgba(0, 85, 255, 0.1);
+  margin: 0 -8px;
+  padding: 32px 32px;
+}
+
+.ov-level-left {
+  flex-shrink: 0;
+  width: 100px;
+}
+
+.ov-level-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.12);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.ov-level-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: #999;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ov-level-status--available {
+  color: #00a86b;
+}
+
+.ov-level-right {
+  flex: 1;
+}
+
+.ov-level-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-weight: 700;
+  color: #0a0a0a;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.ov-level-subtitle {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #0055ff;
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+
+.ov-level-desc {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.ov-level-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ov-topic {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #666;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 4px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.02em;
+}
+
+/* --- Recently Added --- */
+.ov-recently-updated {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 24px;
+}
+
+.ov-recent-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: #0a0a0a;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.ov-recent-item:hover {
+  background: rgba(0, 85, 255, 0.04);
+}
+
+.ov-recent-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.ov-recent-badge--new {
+  background: #0055ff;
+  color: #fff;
+}
+
+.ov-recent-badge--updated {
+  background: rgba(0, 85, 255, 0.1);
+  color: #0055ff;
+}
+
+.ov-recent-title {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.ov-recent-level {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #999;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .ov-recent-item {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+  }
+  .ov-recent-level {
+    width: 100%;
+    padding-left: 0;
+  }
+}
+
+/* --- Contrast Table --- */
+.ov-contrast-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.ov-contrast-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.ov-contrast-them {
+  background: #f8f8f8;
+}
+
+.ov-contrast-us {
+  background: #fff;
+}
+
+.ov-contrast-col-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.ov-contrast-them .ov-contrast-col-label {
+  color: #999;
+}
+
+.ov-contrast-us .ov-contrast-col-label {
+  color: #00aa44;
+}
+
+.ov-contrast-line {
+  padding: 14px 20px;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.ov-contrast-line:last-child {
+  border-bottom: none;
+}
+
+.ov-contrast-them .ov-contrast-line {
+  color: #999;
+  text-decoration: line-through;
+  text-decoration-color: rgba(0, 0, 0, 0.2);
+}
+
+.ov-contrast-us .ov-contrast-line {
+  color: #0a0a0a;
+}
+
+/* --- Saint-Exupéry --- */
+.ov-exupery {
+  text-align: center;
+  padding: 0 0 60px 0;
+}
+
+.ov-exupery .ov-container {
+  max-width: 700px;
+}
+
+.ov-quote {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-style: italic;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.ov-cite {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #999;
+  font-style: normal;
+  letter-spacing: 0.05em;
+  margin-bottom: 48px;
+}
+
+.ov-punch {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 1.125rem;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.ov-close {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0a0a0a;
+}
+
+/* --- Footer --- */
+.ov-footer {
+  border-top: 1px solid #e0e0e0;
+  padding: 32px 0 48px;
+  text-align: center;
+}
+
+.ov-footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.ov-footer-link {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #666;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: color 0.15s ease;
+}
+
+.ov-footer-link:hover {
+  color: #0a0a0a;
+}
+
+/* --- Support Section --- */
+.ov-support-section {
+  text-align: center;
+}
+.ov-support-section .ov-container {
+  max-width: 700px;
+}
+.ov-support-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: #0a0a0a;
+  margin-bottom: 16px;
+}
+.ov-support-links {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+/* --- Twin Cards (Support + CTA side by side) --- */
+
+.ov-twin-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  padding-bottom: 80px;
+}
+
+.ov-twin-card {
+  padding: 32px;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ov-twin-card-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 700;
+  color: #0a0a0a;
+  margin-bottom: 12px;
+}
+
+.ov-twin-card .ov-body {
+  flex: 1;
+}
+
+.ov-twin-card-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .ov-twin-cards {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-bottom: 60px;
+  }
+}
+
+/* --- Buttons --- */
+.ov-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out);
+  text-decoration: none;
+}
+
+.ov-btn-primary {
+  background: #0055ff;
+  color: #fff;
+}
+
+.ov-btn-primary:hover {
+  background: #0044cc;
+  color: #fff;
+}
+
+.ov-btn-outline {
+  background: transparent;
+  color: #0a0a0a;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.ov-btn-outline:hover {
+  border-color: #0a0a0a;
+  color: #0a0a0a;
+  text-shadow: none;
+}
+
+/* --- Open Vector Responsive --- */
+@media (max-width: 768px) {
+  .ov-hero {
+    padding-top: calc(56px + 72px);
+  }
+
+  .ov-section {
+    padding: 56px 0;
+  }
+
+  .ov-rule {
+    margin-bottom: 40px;
+  }
+
+  .ov-level {
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px 16px;
+  }
+
+  .ov-level-left {
+    width: auto;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .ov-level:hover {
+    margin: 0;
+    padding: 24px 16px;
+  }
+
+  .ov-contrast-table {
+    grid-template-columns: 1fr;
+  }
+
+  .ov-contrast-them {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .ov-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ov-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .ov-nav-brand {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ov-hero-heavy {
+    font-size: clamp(3rem, 16vw, 5rem);
+  }
+
+  .ov-hero-light {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+  }
+
+  .ov-pledge-item {
+    gap: 12px;
+  }
+
+  .ov-pledge-icon {
+    font-size: 1.25rem;
+    width: 24px;
+  }
+}
+
+
+
+/* ===================================================================
+   OPEN VECTOR LEARN — LMS Curriculum Layout
+   Prefix: .ovl-*
+   =================================================================== */
+
+/* --- Page Shell --- */
+
+/* ---- OVL Theme Variables (on :root so ThemeContext inline styles can override) ---- */
+:root {
+  --ovl-bg: #ffffff;
+  --ovl-bg-elevated: #ffffff;
+  --ovl-bg-surface: #f5f5f5;
+  --ovl-bg-hover: #f0f0f0;
+  --ovl-text: #0a0a0a;
+  --ovl-text-secondary: #666666;
+  --ovl-text-tertiary: #999999;
+  --ovl-accent: #0055ff;
+  --ovl-accent-hover: #0044cc;
+  --ovl-accent-subtle: rgba(0, 85, 255, 0.04);
+  --ovl-accent-medium: rgba(0, 85, 255, 0.10);
+  --ovl-border: rgba(0, 0, 0, 0.08);
+  --ovl-border-strong: rgba(0, 0, 0, 0.15);
+  --ovl-success: #00aa44;
+  --ovl-nav-bg: rgba(255, 255, 255, 0.92);
+}
+
+.ovl-page {
+  background: var(--ovl-bg);
+  color: var(--ovl-text);
+  min-height: 100vh;
+  font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+}
+
+.ovl-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ovl-page a:not(.ovl-btn) { color: var(--ovl-accent); text-decoration: none; text-shadow: none; }
+.ovl-page a:not(.ovl-btn):hover { color: var(--ovl-accent-hover); }
+
+/* Reusable OVL button primitives */
+.ovl-btn {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.ovl-btn-primary {
+  color: #fff;
+  background: var(--ovl-accent);
+}
+.ovl-btn-primary:hover {
+  color: #fff;
+  background: var(--ovl-accent-hover);
+}
+.ovl-btn-outline {
+  color: var(--ovl-accent);
+  background: transparent;
+  border: 1px solid var(--ovl-border-strong);
+}
+.ovl-btn-outline:hover {
+  background: var(--ovl-accent-subtle);
+  border-color: var(--ovl-border-strong);
+}
+
+/* --- Nav --- */
+
+.ovl-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--ovl-nav-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--ovl-border);
+  height: 56px;
+}
+
+.ovl-nav-inner {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ovl-nav-brand {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ovl-text) !important;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.ovl-nav-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ovl-accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--ovl-border-strong);
+  border-radius: 3px;
+}
+
+.ovl-nav-primary {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-left: 24px;
+  height: 56px;
+}
+
+.ovl-nav-tab {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ovl-text-tertiary) !important;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.ovl-nav-tab:hover {
+  color: var(--ovl-text) !important;
+}
+.ovl-nav-tab--active {
+  color: var(--ovl-accent) !important;
+  border-bottom-color: var(--ovl-accent);
+}
+
+.ovl-nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ovl-nav-support {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.ovl-nav-support:hover {
+  background: rgba(255, 68, 102, 0.08);
+}
+.ovl-nav-support-heart {
+  color: #ff4466;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.ovl-nav-back {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ovl-text-secondary) !important;
+  letter-spacing: 0.02em;
+}
+.ovl-nav-back:hover { color: var(--ovl-accent) !important; }
+
+/* Hamburger toggle (mobile) */
+.ovl-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.ovl-hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 20px;
+}
+
+.ovl-hamburger span {
+  display: block;
+  height: 2px;
+  background: #0a0a0a;
+  border-radius: 1px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.ovl-hamburger--open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.ovl-hamburger--open span:nth-child(2) {
+  opacity: 0;
+}
+.ovl-hamburger--open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* --- Two-Panel Shell --- */
+
+.ovl-shell {
+  display: flex;
+  padding-top: 56px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Sidebar --- */
+
+.ovl-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  border-right: 1px solid var(--ovl-border);
+  background: var(--ovl-bg-elevated);
+  padding: 24px 0;
+}
+
+.ovl-sidebar-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ovl-text);
+}
+
+.ovl-sidebar-scroll a:not(.ovl-btn) {
+  color: inherit;
+}
+
+.ovl-sidebar-home {
+  display: block;
+  padding: 8px 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ovl-accent);
+  margin-bottom: 16px;
+}
+
+.ovl-sidebar-level-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 24px;
+  text-decoration: none;
+  color: var(--ovl-text-secondary);
+  transition: background 0.15s ease;
+}
+.ovl-sidebar-level-header:hover {
+  background: var(--ovl-accent-subtle);
+  color: var(--ovl-text);
+}
+
+.ovl-sidebar-level--active > .ovl-sidebar-level-header {
+  color: var(--ovl-accent);
+  font-weight: 600;
+  background: var(--ovl-accent-medium);
+  border-left: 3px solid var(--ovl-accent);
+  padding-left: 21px;
+}
+
+.ovl-sidebar-level-number {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ovl-accent);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.ovl-sidebar-level-title {
+  font-size: 12px;
+}
+
+.ovl-sidebar-lessons {
+  padding: 4px 0 12px 0;
+}
+
+.ovl-sidebar-lesson {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px 6px 42px;
+  color: var(--ovl-text-secondary);
+  border-left: 3px solid transparent;
+  transition: all 0.15s ease;
+}
+.ovl-sidebar-lesson:hover {
+  color: var(--ovl-text);
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-sidebar-lesson--active {
+  color: var(--ovl-accent);
+  font-weight: 600;
+  border-left-color: var(--ovl-accent);
+  background: var(--ovl-accent-medium);
+}
+
+/* --- Content Area --- */
+
+.ovl-content {
+  flex: 1;
+  min-width: 0;
+  max-width: 1140px;
+  padding: 32px 48px 80px;
+}
+
+/* --- Breadcrumbs --- */
+
+.ovl-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ovl-text-tertiary);
+  margin-bottom: 32px;
+}
+
+.ovl-crumb { color: var(--ovl-text-secondary) !important; }
+.ovl-crumb:hover { color: var(--ovl-accent) !important; }
+.ovl-crumb--current { color: var(--ovl-text) !important; cursor: default; }
+.ovl-crumb-sep { color: var(--ovl-text-tertiary); user-select: none; }
+
+/* --- Learn Index Page --- */
+
+.ovl-index-header {
+  margin-bottom: 48px;
+}
+
+.ovl-index-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  color: var(--ovl-text);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.ovl-index-subtitle {
+  font-size: 1.15rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.ovl-index-intro {
+  font-size: 1rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.6;
+}
+
+.ovl-index-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* --- Right Rail System --- */
+
+.ovl-with-rail {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 40px;
+  align-items: start;
+}
+
+.ovl-main {
+  min-width: 0;
+}
+
+.ovl-rail {
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ovl-rail-section {
+  border: 1px solid var(--ovl-border);
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-rail-section-header {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ovl-text-tertiary);
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--ovl-border);
+}
+
+/* Rail — Link list (recent updates, etc.) */
+
+.ovl-rail-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ovl-rail-list-item {
+  display: block;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--ovl-border);
+  color: var(--ovl-text) !important;
+  transition: background 0.15s ease;
+}
+.ovl-rail-list-item:last-child {
+  border-bottom: none;
+}
+.ovl-rail-list-item:hover {
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-rail-list-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.ovl-rail-list-level {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ovl-text-tertiary);
+  letter-spacing: 0.02em;
+}
+
+.ovl-rail-list-title {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ovl-text);
+}
+
+/* Rail — Level navigation links */
+
+.ovl-rail-levels {
+  display: flex;
+  flex-direction: column;
+}
+
+.ovl-rail-level-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--ovl-border);
+  color: var(--ovl-text) !important;
+  transition: background 0.15s ease;
+}
+.ovl-rail-level-link:last-child {
+  border-bottom: none;
+}
+.ovl-rail-level-link:hover {
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-rail-level-num {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ovl-border-strong);
+  width: 28px;
+  flex-shrink: 0;
+}
+
+.ovl-rail-level-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ovl-text);
+}
+
+/* Rail — Table of contents */
+
+.ovl-rail-toc {
+  display: flex;
+  flex-direction: column;
+}
+
+.ovl-rail-toc-link {
+  display: block;
+  padding: 7px 16px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ovl-text-secondary) !important;
+  border-left: 2px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.ovl-rail-toc-link:hover {
+  background: var(--ovl-accent-subtle);
+  border-left-color: var(--ovl-accent);
+  color: var(--ovl-accent) !important;
+}
+
+/* Rail — Sign-in prompt (global) */
+
+.ovl-rail-signin {
+  padding: 16px;
+  border: 1px solid var(--ovl-accent-medium);
+  background: var(--ovl-accent-subtle);
+}
+.ovl-rail-signin .ovl-rail-section-header {
+  padding: 0 0 10px;
+  border-bottom: none;
+}
+
+.ovl-rail-signin-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ovl-text-secondary);
+  margin: 0 0 12px;
+}
+
+.ovl-rail-signin-btn {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  background: var(--ovl-accent);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.ovl-rail-signin-btn:hover {
+  background: var(--ovl-accent-hover);
+}
+
+@media (max-width: 900px) {
+  .ovl-with-rail {
+    grid-template-columns: 1fr;
+  }
+  .ovl-rail {
+    position: static;
+  }
+}
+
+.ovl-level-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 28px 24px;
+  border: 1px solid var(--ovl-border);
+  color: var(--ovl-text) !important;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.ovl-level-card:hover {
+  background: var(--ovl-accent-subtle);
+  border-color: var(--ovl-accent-medium);
+}
+
+.ovl-level-card-number {
+  font-family: var(--font-mono);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--ovl-border);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 64px;
+}
+
+.ovl-level-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ovl-level-card-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--ovl-text);
+}
+
+.ovl-level-card-subtitle {
+  font-size: 0.95rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.ovl-level-card-meta {
+  display: flex;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-tertiary);
+  letter-spacing: 0.02em;
+}
+
+.ovl-level-card-status { color: var(--ovl-accent); }
+
+/* --- Level Page --- */
+
+.ovl-level-header {
+  margin-bottom: 48px;
+}
+
+.ovl-level-header-number {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 800;
+  color: var(--ovl-border);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.ovl-level-header-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: var(--ovl-text);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.ovl-level-header-subtitle {
+  font-size: 1.2rem;
+  color: var(--ovl-text-secondary);
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.ovl-level-header-desc {
+  font-size: 1.05rem;
+  color: var(--ovl-text);
+  line-height: 1.7;
+}
+
+.ovl-level-lesson-list {
+  margin-top: 32px;
+}
+
+.ovl-level-lesson-list-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ovl-accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ovl-border);
+}
+
+.ovl-level-lesson-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 16px;
+  border-bottom: 1px solid var(--ovl-border);
+  color: var(--ovl-text) !important;
+  transition: background 0.15s ease;
+}
+.ovl-level-lesson-item:hover {
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-level-lesson-index {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ovl-text-tertiary);
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.ovl-level-lesson-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ovl-level-lesson-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ovl-text);
+  margin-bottom: 2px;
+}
+
+.ovl-level-lesson-subtitle {
+  font-size: 0.85rem;
+  color: var(--ovl-text-secondary);
+}
+
+.ovl-level-lesson-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.ovl-level-lesson-duration {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-tertiary);
+  flex-shrink: 0;
+}
+
+/* --- Lesson Page --- */
+
+.ovl-lesson-header {
+  margin-bottom: 48px;
+}
+
+.ovl-lesson-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.ovl-lesson-level {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ovl-accent);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ovl-lesson-duration {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-lesson-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: var(--ovl-text);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.ovl-lesson-subtitle {
+  font-size: 1.2rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.6;
+}
+
+/* --- Content Blocks --- */
+
+.ovl-lesson-body {
+  margin-top: 32px;
+}
+
+.ovl-block {
+  margin-bottom: 36px;
+}
+
+.ovl-block-heading {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 16px;
+}
+
+.ovl-block-paragraph {
+  font-size: 1.1rem;
+  line-height: 1.85;
+  color: var(--ovl-text);
+  margin-bottom: 16px;
+}
+.ovl-block-paragraph:last-child { margin-bottom: 0; }
+
+.ovl-block-callout {
+  margin: 36px 0;
+  padding: 20px 24px;
+  border-left: 3px solid var(--ovl-accent);
+  background: var(--ovl-accent-subtle);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ovl-text);
+  font-style: italic;
+}
+
+.ovl-block-exercise {
+  margin: 36px 0;
+  padding: 24px;
+  border: 1px solid rgba(0, 170, 68, 0.3);
+  background: rgba(0, 170, 68, 0.04);
+  border-radius: 4px;
+}
+
+.ovl-exercise-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ovl-success);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.ovl-exercise-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 8px;
+}
+
+.ovl-block-code {
+  margin: 36px 0;
+  background: #0a0a0a;
+  color: #e0e0e0;
+  padding: 20px 24px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: auto;
+  border-radius: 4px;
+}
+
+/* --- Resources block --- */
+
+.ovl-block-resources {
+  margin: 40px 0;
+  padding: 24px 28px;
+  background: var(--ovl-accent-subtle);
+  border-left: 3px solid var(--ovl-accent);
+  border-radius: 4px;
+}
+
+.ovl-resource-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ovl-resource-item {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.ovl-resource-link {
+  color: var(--ovl-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ovl-resource-link:hover {
+  text-decoration: underline;
+}
+
+.ovl-resource-note {
+  color: var(--ovl-text-secondary);
+  font-size: 14px;
+}
+
+/* --- Auth UI --- */
+
+.ovl-signin-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ovl-accent);
+  background: none;
+  border: 1px solid var(--ovl-border-strong);
+  padding: 4px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: border-color 0.15s, background 0.15s;
+  margin-left: auto;
+}
+
+.ovl-signin-btn:hover {
+  border-color: var(--ovl-accent);
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-user-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ovl-user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ovl-accent);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.ovl-user-avatar--img {
+  object-fit: cover;
+  padding: 0;
+}
+
+.ovl-signin-loading {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--ovl-border-strong);
+  border-top-color: var(--ovl-accent);
+  border-radius: 50%;
+  animation: ovl-spin 0.6s linear infinite;
+  margin-left: auto;
+}
+
+@keyframes ovl-spin {
+  to { transform: rotate(360deg); }
+}
+
+.ovl-signout-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-tertiary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ovl-signout-btn:hover {
+  color: var(--ovl-text-secondary);
+}
+
+/* --- OV Nav Dropdown (ZV Network) --- */
+.ovl-nav-group {
+  position: relative;
+}
+
+.ovl-nav-group-trigger {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ovl-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s ease;
+  letter-spacing: 0.02em;
+}
+
+.ovl-nav-group-trigger:hover {
+  color: var(--ovl-text);
+}
+
+.ovl-nav-group-trigger--active {
+  color: var(--ovl-accent) !important;
+}
+
+/* "More" dropdown positioned inline with tabs */
+.ovl-nav-more {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.ovl-nav-more .ovl-nav-group-trigger {
+  height: 100%;
+  padding: 0 16px;
+  font-weight: 600;
+  color: var(--ovl-text-tertiary);
+  border-bottom: 2px solid transparent;
+}
+
+.ovl-nav-more .ovl-nav-group-trigger--active {
+  color: var(--ovl-accent) !important;
+  border-bottom-color: var(--ovl-accent);
+}
+
+.ovl-nav-more .ovl-nav-group-panel {
+  left: 0;
+  right: auto;
+}
+
+.ovl-nav-group-chevron {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 3.5px solid currentColor;
+  opacity: 0.5;
+  transition: transform 0.2s ease, opacity 0.2s;
+  margin-top: 1px;
+}
+
+.ovl-nav-group--open .ovl-nav-group-chevron {
+  transform: rotate(180deg);
+  opacity: 0.8;
+}
+
+.ovl-nav-group-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--ovl-bg);
+  border: 1px solid var(--ovl-border-strong);
+  border-radius: 6px;
+  padding: 4px 0;
+  min-width: 150px;
+  z-index: 200;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  animation: ovlDropIn 0.15s ease;
+}
+
+@keyframes ovlDropIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ovl-nav-group-item {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ovl-text-secondary) !important;
+  text-decoration: none;
+  padding: 8px 16px;
+  transition: color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+
+.ovl-nav-group-item:hover {
+  color: var(--ovl-text) !important;
+  background: var(--ovl-accent-subtle);
+}
+
+/* --- OV User Avatar Dropdown --- */
+.ovl-user-avatar-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.ovl-user-dropdown-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+}
+
+.ovl-user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--ovl-bg);
+  border: 1px solid var(--ovl-border-strong);
+  border-radius: 6px;
+  padding: 14px 18px;
+  min-width: 180px;
+  z-index: 200;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  animation: ovlDropIn 0.15s ease;
+}
+
+.ovl-user-dropdown-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ovl-text);
+  margin-bottom: 2px;
+}
+
+.ovl-user-dropdown-email {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-secondary);
+  margin-bottom: 12px;
+  word-break: break-all;
+}
+
+.ovl-user-dropdown-signout {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ovl-text-secondary);
+  background: none;
+  border: 1px solid var(--ovl-border-strong);
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.ovl-user-dropdown-signout:hover {
+  color: var(--ovl-text);
+  border-color: var(--ovl-accent);
+}
+
+.ovl-signin-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--ovl-accent-subtle);
+  border: 1px solid var(--ovl-accent-medium);
+  border-radius: 6px;
+  padding: 14px 20px;
+  margin-bottom: 32px;
+}
+
+.ovl-signin-prompt-text {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ovl-text-secondary);
+  margin: 0;
+}
+
+.ovl-signin-prompt-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--ovl-accent);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.ovl-signin-prompt-btn:hover {
+  background: var(--ovl-accent-hover);
+}
+
+/* --- Badges --- */
+
+.ovl-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  line-height: 1.4;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.ovl-badge--new {
+  background: var(--ovl-accent);
+  color: #fff;
+}
+
+.ovl-badge--updated {
+  background: var(--ovl-accent-medium);
+  color: var(--ovl-accent);
+}
+
+/* --- Progress: Mark Complete --- */
+
+.ovl-mark-complete {
+  margin-top: 48px;
+  padding-top: 24px;
+}
+
+.ovl-mark-complete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 24px;
+  border: 1px solid var(--ovl-border-strong);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.ovl-mark-complete-check {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.ovl-mark-complete-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ovl-text-secondary);
+}
+
+.ovl-mark-complete-btn:hover {
+  border-color: var(--ovl-accent);
+}
+
+.ovl-mark-complete-btn:hover .ovl-mark-complete-label {
+  color: var(--ovl-accent);
+}
+
+.ovl-mark-complete-btn--done {
+  background: var(--ovl-accent);
+  border-color: var(--ovl-accent);
+}
+
+.ovl-mark-complete-btn--done .ovl-mark-complete-check {
+  color: #fff;
+}
+
+.ovl-mark-complete-btn--done .ovl-mark-complete-label {
+  color: #fff;
+}
+
+.ovl-mark-complete-btn--done:hover {
+  background: var(--ovl-accent-hover);
+  border-color: var(--ovl-accent-hover);
+}
+
+/* --- Progress: Ring (level cards) --- */
+
+.ovl-progress-ring {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.ovl-progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ovl-progress-track {
+  stroke: var(--ovl-border);
+}
+
+.ovl-progress-fill {
+  stroke: var(--ovl-accent);
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.3s ease;
+}
+
+.ovl-progress-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 600;
+  color: var(--ovl-accent);
+}
+
+/* --- Progress: Level page bar --- */
+
+.ovl-level-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.ovl-level-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--ovl-border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.ovl-level-progress-fill {
+  height: 100%;
+  background: var(--ovl-accent);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.ovl-level-progress-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ovl-text-tertiary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* --- Progress: Sidebar checkmarks --- */
+
+.ovl-sidebar-check {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-accent);
+  width: 14px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.ovl-sidebar-lesson-label {
+  flex: 1;
+  min-width: 0;
+}
+
+/* --- Progress: Level lesson list checkmarks --- */
+
+.ovl-level-lesson-check {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ovl-accent);
+}
+
+.ovl-level-lesson-item--done .ovl-level-lesson-index {
+  color: var(--ovl-accent);
+}
+
+/* --- Level card badge dot --- */
+
+.ovl-level-card-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ovl-accent);
+}
+
+.ovl-level-card-number {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .ovl-signin-prompt {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .ovl-signin-prompt-btn {
+    align-self: center;
+  }
+}
+
+/* --- Pagination --- */
+
+.ovl-pagination {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--ovl-border);
+}
+
+.ovl-pagination-link {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  border: 1px solid var(--ovl-border);
+  border-radius: 4px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  max-width: 45%;
+  color: var(--ovl-text) !important;
+}
+.ovl-pagination-link:hover {
+  border-color: var(--ovl-accent);
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-pagination-next {
+  text-align: right;
+  margin-left: auto;
+}
+
+.ovl-pagination-direction {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-tertiary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.ovl-pagination-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ovl-text);
+}
+
+.ovl-pagination-level {
+  font-size: 0.8rem;
+  color: var(--ovl-text-tertiary);
+  margin-top: 3px;
+}
+
+/* --- Sidebar — Resources View --- */
+
+.ovl-sidebar-resources {
+  padding: 8px 0;
+}
+
+.ovl-sidebar-section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ovl-text-tertiary);
+  padding: 12px 24px 8px;
+}
+
+.ovl-sidebar-topic {
+  display: block;
+  padding: 8px 24px;
+  color: var(--ovl-text-secondary);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.ovl-sidebar-topic:hover {
+  background: var(--ovl-accent-subtle);
+  color: var(--ovl-text);
+}
+
+/* --- Sidebar — Hub View --- */
+
+.ovl-sidebar-hub {
+  padding: 8px 0;
+}
+
+.ovl-sidebar-hub-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  color: var(--ovl-text);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.ovl-sidebar-hub-link:hover {
+  background: var(--ovl-accent-subtle);
+  color: var(--ovl-accent);
+}
+
+.ovl-sidebar-hub-link--static {
+  cursor: default;
+  color: var(--ovl-text-secondary);
+}
+.ovl-sidebar-hub-link--static:hover {
+  background: transparent;
+  color: var(--ovl-text-secondary);
+}
+
+.ovl-sidebar-hub-link--prompt {
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.ovl-sidebar-hub-glyph {
+  font-size: 16px;
+  color: var(--ovl-accent);
+  font-weight: 700;
+  width: 20px;
+  text-align: center;
+}
+
+.ovl-sidebar-hub-stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 24px;
+}
+
+.ovl-sidebar-hub-stat-num {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--ovl-text);
+  width: 28px;
+  text-align: right;
+}
+
+.ovl-sidebar-hub-stat-label {
+  font-size: 13px;
+  color: var(--ovl-text-secondary);
+}
+
+/* --- Learn Hub Page --- */
+
+.ovl-hub {
+  max-width: 900px;
+}
+
+/* Hero */
+.ovl-hub-hero {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--ovl-border);
+  margin-bottom: 40px;
+}
+
+.ovl-hub-hero-content {
+  margin-bottom: 24px;
+}
+
+.ovl-hub-hero-greeting {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ovl-accent);
+  margin-bottom: 8px;
+}
+
+.ovl-hub-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ovl-text);
+  margin-bottom: 16px;
+}
+
+.ovl-hub-hero-subtitle {
+  font-size: 1.05rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+/* Progress snapshot */
+.ovl-hub-progress {
+  background: var(--ovl-accent-subtle);
+  border: 1px solid var(--ovl-accent-medium);
+  border-radius: 8px;
+  padding: 20px 24px;
+}
+
+.ovl-hub-progress-bar {
+  height: 6px;
+  background: var(--ovl-border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.ovl-hub-progress-fill {
+  height: 100%;
+  background: var(--ovl-accent);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.ovl-hub-progress-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ovl-text-secondary);
+  margin-bottom: 12px;
+}
+
+.ovl-hub-continue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ovl-accent) !important;
+  padding: 10px 16px;
+  background: var(--ovl-accent-medium);
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.ovl-hub-continue:hover {
+  background: var(--ovl-accent-medium);
+}
+
+.ovl-hub-continue-level {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-hub-continue-arrow {
+  margin-left: auto;
+  font-size: 16px;
+}
+
+/* About section (visitors only) */
+.ovl-hub-about {
+  padding: 40px 0;
+  border-bottom: 1px solid var(--ovl-border);
+  margin-bottom: 40px;
+}
+
+.ovl-hub-about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.ovl-hub-about-block {
+  padding: 24px;
+  border: 1px solid var(--ovl-border);
+  border-radius: 8px;
+}
+
+.ovl-hub-about-icon {
+  font-size: 24px;
+  color: var(--ovl-accent);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.ovl-hub-about-label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 8px;
+}
+
+.ovl-hub-about-desc {
+  font-size: 0.9rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.5;
+}
+
+.ovl-hub-about-statement {
+  max-width: 700px;
+}
+
+.ovl-hub-about-statement p {
+  font-size: 1rem;
+  color: var(--ovl-text);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.ovl-hub-about-statement p:last-child {
+  margin-bottom: 0;
+}
+
+/* Section cards */
+.ovl-hub-sections-header {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ovl-text-tertiary);
+  margin-bottom: 12px;
+}
+
+.ovl-hub-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 40px;
+}
+
+/* Stats bar */
+.ovl-hub-stats {
+  display: flex;
+  gap: 0;
+  margin-top: 40px;
+  border-top: 1px solid var(--ovl-border);
+  padding-top: 32px;
+}
+
+.ovl-hub-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 0;
+}
+
+.ovl-hub-stat-num {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--ovl-text);
+}
+
+.ovl-hub-stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ovl-text-tertiary);
+}
+
+/* Hub support callout */
+.ovl-hub-support {
+  margin-top: 48px;
+  padding: 32px;
+  background: var(--ovl-accent-subtle);
+  border: 1px solid var(--ovl-accent-medium);
+  border-radius: 12px;
+  text-align: center;
+}
+.ovl-hub-support-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 8px;
+}
+.ovl-hub-support-desc {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ovl-text-secondary);
+  max-width: 540px;
+  margin: 0 auto 20px;
+}
+.ovl-hub-support-links {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ===========================
+   Contribute Page
+   =========================== */
+.ovl-contribute {
+  max-width: 740px;
+}
+
+.ovl-contribute-header {
+  margin-bottom: 48px;
+}
+
+.ovl-contribute-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: var(--ovl-text);
+  margin-bottom: 12px;
+}
+
+.ovl-contribute-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ovl-text-secondary);
+}
+
+.ovl-contribute-section {
+  margin-bottom: 56px;
+}
+
+.ovl-contribute-heading {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ovl-border);
+}
+
+.ovl-contribute-body p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--ovl-text);
+  margin-bottom: 16px;
+}
+
+/* Contribution ways grid */
+.ovl-contribute-ways {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 32px 0;
+}
+
+.ovl-contribute-way {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.015);
+  border: 1px solid var(--ovl-border);
+  border-radius: 10px;
+}
+
+.ovl-contribute-way-icon {
+  font-size: 1.4rem;
+  color: var(--ovl-accent);
+  flex-shrink: 0;
+  width: 32px;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.ovl-contribute-way-content h3 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 6px;
+}
+
+.ovl-contribute-way-content p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--ovl-text-secondary);
+  margin: 0;
+}
+
+/* Cost breakdown */
+.ovl-contribute-costs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin: 32px 0;
+  padding: 28px;
+  background: var(--ovl-accent-subtle);
+  border: 1px solid var(--ovl-accent-medium);
+  border-radius: 10px;
+}
+
+.ovl-contribute-cost-group h3 {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ovl-text);
+  margin-bottom: 12px;
+}
+
+.ovl-contribute-cost-group ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ovl-contribute-cost-group li {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--ovl-text-secondary);
+  padding-left: 16px;
+  position: relative;
+}
+
+.ovl-contribute-cost-group li::before {
+  content: '\2013';
+  position: absolute;
+  left: 0;
+  color: var(--ovl-text-tertiary);
+}
+
+/* CTA buttons */
+.ovl-contribute-cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+/* Closing quote */
+.ovl-contribute-closing {
+  text-align: center;
+  padding-top: 16px;
+}
+
+.ovl-contribute-quote {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--ovl-text);
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+
+.ovl-contribute-cite {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ovl-text-tertiary);
+  display: block;
+  margin-bottom: 24px;
+}
+
+.ovl-contribute-close {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--ovl-text-secondary);
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* ===========================
+   FAQ Page
+   =========================== */
+.ovl-faq {
+  max-width: 740px;
+}
+.ovl-faq-header {
+  margin-bottom: 40px;
+}
+.ovl-faq-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: var(--ovl-text);
+  margin-bottom: 12px;
+}
+.ovl-faq-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ovl-text-secondary);
+}
+.ovl-faq-list {
+  display: flex;
+  flex-direction: column;
+}
+.ovl-faq-item {
+  border-bottom: 1px solid var(--ovl-border);
+}
+.ovl-faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 16px;
+}
+.ovl-faq-question-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ovl-text);
+  line-height: 1.4;
+}
+.ovl-faq-toggle {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  color: var(--ovl-text-tertiary);
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+.ovl-faq-item--open .ovl-faq-question-text {
+  color: var(--ovl-accent);
+}
+.ovl-faq-answer {
+  padding: 0 0 20px;
+}
+.ovl-faq-answer p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--ovl-text);
+  margin: 0;
+}
+.ovl-faq-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ===========================
+   Changelog Page
+   =========================== */
+.ovl-changelog {
+  max-width: 740px;
+}
+.ovl-changelog-header {
+  margin-bottom: 40px;
+}
+.ovl-changelog-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: var(--ovl-text);
+  margin-bottom: 12px;
+}
+.ovl-changelog-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ovl-text-secondary);
+}
+.ovl-changelog-empty {
+  font-size: 0.95rem;
+  color: var(--ovl-text-muted);
+}
+.ovl-changelog-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.ovl-changelog-entry {
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--ovl-border);
+}
+.ovl-changelog-entry:last-child {
+  border-bottom: none;
+}
+.ovl-changelog-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ovl-text-tertiary);
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+}
+.ovl-changelog-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ovl-changelog-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--ovl-surface, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--ovl-border, rgba(255, 255, 255, 0.08));
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.ovl-changelog-item:hover {
+  border-color: var(--ovl-accent);
+  background: rgba(0, 255, 136, 0.04);
+}
+.ovl-changelog-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  flex-shrink: 0;
+}
+.ovl-changelog-badge--new {
+  color: #ffffff;
+  background: var(--ovl-accent, #00ff88);
+}
+.ovl-changelog-badge--updated {
+  color: var(--ovl-accent, #00ff88);
+  border: 1px solid var(--ovl-accent, #00ff88);
+  background: transparent;
+}
+.ovl-changelog-item-title {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ovl-text);
+  flex: 1;
+}
+.ovl-changelog-item-context {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-muted);
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+@media (max-width: 560px) {
+  .ovl-changelog-item {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .ovl-changelog-item-context {
+    width: 100%;
+    padding-left: 0;
+  }
+}
+
+/* Contribute responsive */
+@media (max-width: 768px) {
+  .ovl-contribute-costs {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .ovl-contribute-way {
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+  }
+}
+
+.ovl-hub-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 32px 28px;
+  border: 1px solid var(--ovl-border);
+  color: var(--ovl-text) !important;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.ovl-hub-card:hover {
+  background: var(--ovl-accent-subtle);
+  border-color: var(--ovl-accent-medium);
+}
+
+.ovl-hub-card-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--ovl-accent-medium);
+  border-radius: 8px;
+}
+
+.ovl-hub-card-glyph {
+  font-size: 22px;
+  color: var(--ovl-accent);
+  font-weight: 700;
+}
+
+.ovl-hub-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ovl-hub-card-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.ovl-hub-card-desc {
+  font-size: 0.95rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.ovl-hub-card-action {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ovl-accent);
+  letter-spacing: 0.02em;
+}
+
+.ovl-hub-recent {
+  margin-top: 40px;
+}
+
+.ovl-hub-recent-header {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ovl-text-tertiary);
+  margin-bottom: 12px;
+}
+
+.ovl-hub-recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ovl-hub-recent-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border: 1px solid var(--ovl-border);
+  color: var(--ovl-text) !important;
+  transition: background 0.15s ease;
+}
+.ovl-hub-recent-item:hover {
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-hub-recent-title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.ovl-hub-recent-level {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ovl-text-tertiary);
+  margin-left: auto;
+}
+
+/* --- Recommended Reading (Learn Hub) --- */
+
+.ovl-hub-reading {
+  margin-top: 40px;
+}
+
+.ovl-hub-reading-header {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ovl-text-tertiary);
+  margin-bottom: 4px;
+}
+
+.ovl-hub-reading-subtitle {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ovl-text-secondary);
+  margin: 0 0 12px;
+}
+
+.ovl-hub-reading-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ovl-hub-reading-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 16px;
+  border: 1px solid var(--ovl-border);
+  color: var(--ovl-text) !important;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.ovl-hub-reading-item:hover {
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-hub-reading-item-title {
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+  min-width: 0;
+}
+
+.ovl-hub-reading-item-subtitle {
+  font-size: 12px;
+  color: var(--ovl-text-secondary);
+  flex: 1;
+  min-width: 0;
+  display: none;
+}
+
+.ovl-hub-reading-item-date {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ovl-text-tertiary);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+@media (min-width: 768px) {
+  .ovl-hub-reading-item-subtitle {
+    display: block;
+  }
+}
+
+/* --- Resources / Go Further Page --- */
+
+.ovl-resources-header {
+  margin-bottom: 32px;
+}
+
+.ovl-resources-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.ovl-resources-subtitle {
+  font-size: 1rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.6;
+  max-width: 640px;
+}
+
+.ovl-resources-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.ovl-resources-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ovl-filter-pill {
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid var(--ovl-border);
+  background: var(--ovl-bg);
+  color: var(--ovl-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ovl-filter-pill:hover {
+  border-color: var(--ovl-border-strong);
+  color: var(--ovl-accent);
+}
+.ovl-filter-pill--active {
+  background: var(--ovl-accent);
+  color: white;
+  border-color: var(--ovl-accent);
+}
+.ovl-filter-pill--active:hover {
+  background: var(--ovl-accent-hover);
+  color: white;
+}
+
+.ovl-filter-pill--topic {
+  font-size: 10px;
+  padding: 4px 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ovl-filter-pill-count {
+  font-size: 9px;
+  opacity: 0.7;
+}
+
+.ovl-resources-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-tertiary);
+  margin-bottom: 16px;
+  letter-spacing: 0.02em;
+}
+
+.ovl-resources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ovl-resource-card {
+  display: block;
+  padding: 20px 24px;
+  border: 1px solid var(--ovl-border);
+  color: var(--ovl-text) !important;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.ovl-resource-card:hover {
+  background: var(--ovl-accent-subtle);
+  border-color: var(--ovl-accent-medium);
+}
+
+.ovl-resource-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.ovl-resource-type {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+}
+.ovl-resource-type--book { background: var(--ovl-accent-medium); color: var(--ovl-accent); }
+.ovl-resource-type--article { background: rgba(0, 180, 100, 0.1); color: #00a060; }
+.ovl-resource-type--course { background: rgba(180, 80, 255, 0.1); color: #9040e0; }
+.ovl-resource-type--tool { background: rgba(255, 140, 0, 0.1); color: #cc7000; }
+.ovl-resource-type--reference { background: var(--ovl-border); color: var(--ovl-text-secondary); }
+
+.ovl-resource-card-arrow {
+  font-size: 14px;
+  color: var(--ovl-text-tertiary);
+}
+.ovl-resource-card:hover .ovl-resource-card-arrow {
+  color: var(--ovl-accent);
+}
+
+.ovl-resource-card-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.ovl-resource-card-author {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-tertiary);
+  margin-bottom: 6px;
+}
+
+.ovl-resource-card-desc {
+  font-size: 0.9rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.ovl-resource-card-topics {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.ovl-resource-card-topic {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ovl-text-tertiary);
+  padding: 2px 6px;
+  border: 1px solid var(--ovl-border);
+}
+
+.ovl-resources-empty {
+  padding: 48px 0;
+  text-align: center;
+  color: var(--ovl-text-tertiary);
+  font-size: 0.95rem;
+}
+
+.ovl-resources-empty-reset {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 20px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ovl-accent);
+  background: none;
+  border: 1px solid var(--ovl-accent);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.ovl-resources-empty-reset:hover {
+  background: var(--ovl-accent-subtle);
+}
+
+/* Rail — About section */
+
+.ovl-rail-about {
+  padding: 12px 16px;
+}
+.ovl-rail-about p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ovl-text-secondary);
+  margin: 0;
+}
+.ovl-rail-about a {
+  color: var(--ovl-accent);
+}
+
+/* Rail — Stats */
+
+.ovl-rail-stats {
+  display: flex;
+  flex-direction: column;
+}
+
+.ovl-rail-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--ovl-border);
+}
+.ovl-rail-stat:last-child {
+  border-bottom: none;
+}
+
+.ovl-rail-stat-count {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ovl-border-strong);
+  width: 28px;
+  text-align: right;
+}
+
+.ovl-rail-stat-label {
+  font-size: 13px;
+  color: var(--ovl-text-secondary);
+}
+
+/* --- Sidebar — Chat View --- */
+
+.ovl-sidebar-chat-about {
+  padding: 8px 24px 16px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ovl-text-tertiary);
+}
+
+/* --- Approach Page --- */
+
+/* Section 00 — Intro */
+.ovl-approach-intro {
+  display: flex;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto 48px;
+  padding: 0 0 48px;
+  border-bottom: 1px solid var(--ovl-border);
+}
+.ovl-approach-intro-label {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--ovl-accent-medium);
+  line-height: 1;
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+.ovl-approach-intro-body {
+  flex: 1;
+  min-width: 0;
+}
+.ovl-approach-intro-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ovl-text);
+  margin: 0 0 20px;
+}
+.ovl-approach-intro-heading {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin: 32px 0 12px;
+}
+.ovl-approach-intro-text {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ovl-text);
+  margin: 0 0 16px;
+}
+.ovl-approach-intro-text:last-child {
+  margin-bottom: 0;
+}
+.ovl-approach-intro-link {
+  color: var(--ovl-accent);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+.ovl-approach-intro-link:hover {
+  border-bottom-color: var(--ovl-accent);
+}
+.ovl-approach-intro-callout {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--ovl-text);
+  padding: 16px 20px;
+  border-left: 3px solid var(--ovl-accent);
+  background: var(--ovl-accent-subtle);
+  margin: 24px 0;
+}
+
+/* The Zero Vector Loop — workflow model */
+.ovl-approach-model {
+  background: rgba(0, 0, 0, 0.015);
+  border: 1px solid var(--ovl-border);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0 24px;
+}
+.ovl-approach-model-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ovl-text-tertiary);
+  margin-bottom: 20px;
+}
+.ovl-approach-model-flow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+.ovl-approach-model-step {
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+}
+.ovl-approach-model-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ovl-accent);
+  color: white;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+}
+.ovl-approach-model-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 4px;
+}
+.ovl-approach-model-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ovl-text-secondary);
+  padding: 0 4px;
+}
+.ovl-approach-model-arrow {
+  flex-shrink: 0;
+  color: var(--ovl-border-strong);
+  font-size: 18px;
+  padding-top: 6px;
+  width: 24px;
+  text-align: center;
+}
+.ovl-approach-model-loop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--ovl-border);
+}
+.ovl-approach-model-loop-arrow {
+  color: var(--ovl-border-strong);
+  font-size: 14px;
+}
+.ovl-approach-model-loop-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-tertiary);
+}
+
+/* Vibe Coding vs Zero Vector contrast table */
+.ovl-approach-contrast {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--ovl-border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px 0 24px;
+}
+.ovl-approach-contrast-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--ovl-border);
+}
+.ovl-approach-contrast-header {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 10px 14px;
+  text-align: center;
+}
+.ovl-approach-contrast-header--bad {
+  background: rgba(200, 0, 0, 0.04);
+  color: #cc3333;
+}
+.ovl-approach-contrast-header--good {
+  background: var(--ovl-accent-subtle);
+  color: var(--ovl-accent);
+}
+.ovl-approach-contrast-item {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ovl-text);
+  padding: 8px 14px;
+  background: var(--ovl-bg);
+}
+
+/* Knowledge stack visual */
+.ovl-approach-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 16px 0 24px;
+}
+.ovl-approach-stack-layer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-radius: 6px;
+}
+.ovl-approach-stack-layer--top {
+  background: var(--ovl-accent);
+  color: white;
+}
+.ovl-approach-stack-layer--mid {
+  background: var(--ovl-accent-medium);
+  color: var(--ovl-text);
+}
+.ovl-approach-stack-layer--base {
+  background: rgba(0, 0, 0, 0.03);
+  color: var(--ovl-text);
+}
+.ovl-approach-stack-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+.ovl-approach-stack-layer--top .ovl-approach-stack-label {
+  color: white;
+}
+.ovl-approach-stack-desc {
+  font-size: 13px;
+  line-height: 1.4;
+}
+.ovl-approach-stack-layer--top .ovl-approach-stack-desc {
+  color: rgba(255, 255, 255, 0.85);
+}
+.ovl-approach-stack-layer--mid .ovl-approach-stack-desc {
+  color: var(--ovl-text);
+}
+.ovl-approach-stack-layer--base .ovl-approach-stack-desc {
+  color: var(--ovl-text-secondary);
+}
+
+/* Guides section header */
+.ovl-approach-guides-header {
+  margin-bottom: 32px;
+}
+.ovl-approach-guides-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--ovl-text);
+  margin: 0 0 8px;
+}
+.ovl-approach-guides-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ovl-text-secondary);
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .ovl-approach-intro {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ovl-approach-intro-label {
+    font-size: 24px;
+  }
+  .ovl-approach-model-flow {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .ovl-approach-model-arrow {
+    transform: rotate(90deg);
+    padding: 0;
+    width: auto;
+  }
+  .ovl-approach-model-step {
+    width: 100%;
+  }
+  .ovl-approach-contrast {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Guide cards + categories */
+.ovl-approach-category {
+  margin-bottom: 40px;
+}
+.ovl-approach-category:last-child {
+  margin-bottom: 0;
+}
+.ovl-approach-category-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--ovl-border);
+}
+.ovl-approach-guides {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--ovl-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ovl-guide-card {
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--ovl-bg);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+.ovl-guide-card:hover {
+  background: var(--ovl-accent-subtle);
+}
+.ovl-guide-card--coming {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.ovl-guide-card-index {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ovl-accent);
+  padding-top: 2px;
+  flex-shrink: 0;
+  width: 24px;
+}
+.ovl-guide-card-info {
+  flex: 1;
+  min-width: 0;
+}
+.ovl-guide-card-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 4px;
+}
+.ovl-guide-card-subtitle {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ovl-text-secondary);
+  margin-bottom: 8px;
+}
+.ovl-guide-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-tertiary);
+}
+.ovl-guide-card-status {
+  color: var(--ovl-text-tertiary);
+  font-style: italic;
+}
+
+/* Guide page — category label */
+.ovl-guide-category {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ovl-accent);
+}
+
+/* Guide page — prerequisites box */
+.ovl-guide-prereqs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  margin-bottom: 32px;
+  background: var(--ovl-accent-subtle);
+  border: 1px solid var(--ovl-accent-medium);
+  border-radius: 8px;
+}
+.ovl-guide-prereqs-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ovl-text-secondary);
+  margin-right: 4px;
+}
+.ovl-guide-prereqs-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ovl-accent);
+  text-decoration: none;
+  padding: 2px 8px;
+  background: var(--ovl-accent-medium);
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+.ovl-guide-prereqs-link:hover {
+  background: var(--ovl-accent-medium);
+}
+.ovl-guide-prereqs-level {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ovl-text-tertiary);
+}
+
+/* Step blocks — IKEA-style numbered instructions */
+.ovl-block-step {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+.ovl-block-step + .ovl-block-step {
+  margin-top: 24px;
+}
+.ovl-step-number {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ovl-accent);
+  color: white;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.ovl-step-body {
+  flex: 1;
+  min-width: 0;
+}
+.ovl-step-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin: 0 0 8px;
+}
+
+/* Template blocks */
+.ovl-block-template {
+  background: var(--ovl-accent-subtle);
+  border: 1px solid var(--ovl-accent-medium);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.ovl-template-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--ovl-accent-medium);
+}
+.ovl-template-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ovl-accent);
+  background: var(--ovl-accent-medium);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+.ovl-template-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ovl-text);
+}
+.ovl-template-body {
+  margin: 0;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ovl-text);
+  background: var(--ovl-accent-subtle);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.ovl-template-body code {
+  font-family: inherit;
+}
+
+@media (max-width: 600px) {
+  .ovl-block-step {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ovl-step-number {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+}
+
+/* --- Chat Page --- */
+
+.ovl-chat {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 56px);
+  margin: -32px -48px -80px;
+  overflow: hidden;
+}
+
+.ovl-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.1) transparent;
+}
+
+/* Welcome / Empty State */
+
+.ovl-chat-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 60px 32px 40px;
+  text-align: center;
+}
+
+.ovl-chat-welcome-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--ovl-accent-medium), var(--ovl-accent-subtle));
+  border: 1px solid var(--ovl-accent-medium);
+  border-radius: 16px;
+  margin-bottom: 24px;
+}
+
+.ovl-chat-welcome-glyph {
+  font-size: 28px;
+  color: var(--ovl-accent);
+  font-weight: 700;
+}
+
+.ovl-chat-welcome-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.ovl-chat-welcome-subtitle {
+  font-size: 1rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.6;
+  max-width: 480px;
+  margin-bottom: 40px;
+}
+
+.ovl-chat-prompts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  max-width: 520px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.ovl-chat-prompt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--ovl-border);
+  background: var(--ovl-bg);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+.ovl-chat-prompt:hover {
+  border-color: var(--ovl-border-strong);
+  background: var(--ovl-accent-subtle);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 85, 255, 0.06);
+}
+
+.ovl-chat-prompt-icon {
+  font-size: 16px;
+  color: var(--ovl-border-strong);
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+.ovl-chat-prompt-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ovl-text);
+  line-height: 1.3;
+}
+
+.ovl-chat-welcome-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-chat-welcome-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ovl-accent);
+  animation: ovl-chat-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ovl-chat-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Message Thread */
+
+.ovl-chat-thread {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 24px 24px;
+}
+
+.ovl-chat-msg {
+  display: flex;
+  gap: 16px;
+  padding: 24px 0;
+}
+.ovl-chat-msg + .ovl-chat-msg {
+  border-top: 1px solid var(--ovl-border);
+}
+
+.ovl-chat-msg-avatar {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.ovl-chat-avatar-ai {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0055ff, #0033aa);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 8px;
+}
+
+.ovl-chat-avatar-user {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  color: white;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 8px;
+}
+
+.ovl-chat-msg-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ovl-chat-msg-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+
+.ovl-chat-msg-content {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ovl-text);
+}
+.ovl-chat-msg-content p {
+  margin: 0 0 12px;
+}
+.ovl-chat-msg-content p:last-child {
+  margin-bottom: 0;
+}
+
+.ovl-chat-msg--user .ovl-chat-msg-content {
+  color: var(--ovl-text);
+}
+
+/* Chat Links */
+
+.ovl-chat-link {
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.ovl-chat-link--internal {
+  color: var(--ovl-accent);
+}
+.ovl-chat-link--internal:hover {
+  border-bottom-color: var(--ovl-accent);
+}
+.ovl-chat-link--external {
+  color: var(--ovl-accent);
+}
+.ovl-chat-link--external:hover {
+  border-bottom-color: var(--ovl-accent);
+}
+.ovl-chat-link-arrow {
+  font-size: 0.75em;
+  opacity: 0.5;
+}
+
+/* Chat Inline Code */
+
+.ovl-chat-code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--ovl-border);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--ovl-text);
+}
+
+/* Chat Lists */
+
+.ovl-chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+}
+.ovl-chat-list li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 6px;
+  line-height: 1.7;
+}
+.ovl-chat-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--ovl-text-tertiary);
+}
+.ovl-chat-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Thinking Indicator */
+
+.ovl-chat-thinking {
+  display: flex;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.ovl-chat-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ovl-accent);
+  animation: ovl-chat-bounce 1.4s ease-in-out infinite;
+}
+.ovl-chat-dot:nth-child(2) {
+  animation-delay: 0.16s;
+}
+.ovl-chat-dot:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes ovl-chat-bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+  30% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+/* Input Area */
+
+.ovl-chat-input-area {
+  flex-shrink: 0;
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--ovl-accent-medium);
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-chat-form {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.ovl-chat-input-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--ovl-border-strong);
+  border-radius: 12px;
+  background: var(--ovl-bg);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.ovl-chat-input-wrap:focus-within {
+  border-color: var(--ovl-border-strong);
+  box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.08);
+}
+
+.ovl-chat-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ovl-text);
+  resize: none;
+  min-height: 24px;
+  max-height: 120px;
+  background: transparent;
+}
+.ovl-chat-input::placeholder {
+  color: var(--ovl-text-tertiary);
+}
+.ovl-chat-input:disabled {
+  opacity: 0.5;
+}
+
+.ovl-chat-send {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ovl-border);
+  border: none;
+  border-radius: 8px;
+  color: var(--ovl-text-tertiary);
+  cursor: not-allowed;
+  transition: all 0.15s ease;
+}
+.ovl-chat-send--active {
+  background: var(--ovl-accent);
+  color: white;
+  cursor: pointer;
+}
+.ovl-chat-send--active:hover {
+  background: var(--ovl-accent-hover);
+}
+
+.ovl-chat-disclaimer {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ovl-text-tertiary);
+  text-align: center;
+  margin-top: 8px;
+  letter-spacing: 0.02em;
+}
+
+
+@media (max-width: 768px) {
+  .ovl-chat {
+    margin: -24px -20px -64px;
+  }
+
+  .ovl-chat-prompts {
+    grid-template-columns: 1fr;
+  }
+
+  .ovl-chat-thread {
+    padding: 16px;
+  }
+
+  .ovl-chat-input-area {
+    padding: 12px 16px 16px;
+  }
+}
+
+/* --- Not Found --- */
+
+.ovl-not-found {
+  padding: 80px 0;
+  text-align: center;
+}
+.ovl-not-found h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.ovl-not-found p {
+  color: var(--ovl-text-secondary);
+  margin-bottom: 24px;
+}
+
+/* --- Mobile Responsive --- */
+
+@media (max-width: 768px) {
+  .ovl-nav-toggle { display: flex; }
+  .ovl-nav-primary { display: none; }
+  .ovl-nav-back { display: none; }
+  .ovl-nav-group { display: none; }
+
+  .ovl-sidebar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    z-index: 90;
+    transform: translateX(-100%);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 300px;
+    background: var(--ovl-nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .ovl-sidebar--open {
+    transform: translateX(0);
+  }
+
+  .ovl-sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    top: 56px;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 89;
+  }
+
+  .ovl-content {
+    padding: 24px 20px 64px;
+    max-width: 100%;
+  }
+
+  .ovl-with-rail {
+    grid-template-columns: 1fr;
+  }
+  .ovl-rail {
+    position: static;
+  }
+
+  .ovl-pagination {
+    flex-direction: column;
+  }
+
+  .ovl-pagination-link {
+    max-width: 100%;
+  }
+
+  .ovl-pagination-next {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  .ovl-level-card {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ovl-level-card-number {
+    width: auto;
+  }
+
+  .ovl-level-lesson-item {
+    gap: 12px;
+    padding: 14px 8px;
+  }
+
+  .ovl-hub-hero {
+    padding: 32px 0 28px;
+  }
+
+  .ovl-hub-about-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .ovl-hub-stats {
+    flex-wrap: wrap;
+  }
+
+  .ovl-hub-stat {
+    flex: 0 0 50%;
+  }
+
+  .ovl-hub-support {
+    padding: 24px 20px;
+    margin-top: 32px;
+  }
+
+  .ovl-hub-card {
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px 20px;
+  }
+
+  .ovl-resources-filter-row {
+    gap: 4px;
+  }
+
+  .ovl-filter-pill {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ovl-index-title {
+    font-size: clamp(1.6rem, 8vw, 2.2rem);
+  }
+
+  .ovl-lesson-title {
+    font-size: clamp(1.6rem, 8vw, 2.2rem);
+  }
+
+  .ovl-level-header-number {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+}
+
+/* ============================================================
+   Knowledge Check — expandable quiz section inside lessons
+   ============================================================ */
+
+.ovl-knowledge-check {
+  margin-top: 48px;
+  background: var(--ovl-accent-subtle);
+  border-left: 3px solid var(--ovl-accent);
+  border-radius: 4px;
+}
+
+/* --- Toggle header (expand / collapse) --- */
+
+.ovl-knowledge-check-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.ovl-knowledge-check-toggle:hover {
+  background: var(--ovl-accent-medium);
+}
+
+.ovl-knowledge-check-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ovl-accent);
+  line-height: 1;
+}
+
+.ovl-knowledge-check-label {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+}
+
+.ovl-knowledge-check-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ovl-text-secondary);
+  margin-left: auto;
+}
+
+/* --- Question list (visible when expanded) --- */
+
+.ovl-knowledge-check-list {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* --- Individual question --- */
+
+.ovl-knowledge-check-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.ovl-knowledge-check-num {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ovl-text);
+  flex-shrink: 0;
+  line-height: 1.75;
+}
+
+.ovl-knowledge-check-q {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--ovl-text);
+}
+
+/* --- Hint area --- */
+
+.ovl-knowledge-check-hint-wrap {
+  margin-top: 6px;
+}
+
+.ovl-knowledge-check-hint-btn {
+  display: inline;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ovl-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.ovl-knowledge-check-hint-btn:hover {
+  color: var(--ovl-accent-hover);
+}
+
+.ovl-knowledge-check-hint {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ovl-text-secondary);
+  font-style: italic;
+}
+
+/* --- Knowledge Check responsive --- */
+
+@media (max-width: 768px) {
+  .ovl-knowledge-check-toggle {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .ovl-knowledge-check-list {
+    padding: 0 16px 16px;
+    gap: 16px;
+  }
+
+  .ovl-knowledge-check-label {
+    font-size: 0.95rem;
+  }
+}
+
+/* ============================================================
+   Search — fuzzy search in LearnNav
+   ============================================================ */
+
+.ovl-search {
+  position: relative;
+}
+
+.ovl-search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--ovl-bg-surface);
+  border: 1px solid var(--ovl-bg-surface);
+  border-radius: 6px;
+  padding: 4px 10px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.ovl-search-input-wrap:focus-within {
+  border-color: var(--ovl-accent);
+  background: var(--ovl-bg);
+}
+
+.ovl-search-icon {
+  color: var(--ovl-text-tertiary);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.ovl-search-input {
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ovl-text);
+  outline: none;
+  width: 140px;
+  transition: width 0.2s;
+}
+
+.ovl-search-input:focus {
+  width: 200px;
+}
+
+.ovl-search-input::placeholder {
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-search-kbd {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-tertiary);
+  background: var(--ovl-bg-surface);
+  border: 1px solid var(--ovl-text-tertiary);
+  border-radius: 3px;
+  padding: 1px 5px;
+  line-height: 1;
+}
+
+.ovl-search-clear {
+  border: none;
+  background: transparent;
+  color: var(--ovl-text-tertiary);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+.ovl-search-clear:hover {
+  color: var(--ovl-text);
+}
+
+.ovl-search-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 320px;
+  background: var(--ovl-bg);
+  border: 1px solid var(--ovl-bg-surface);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.ovl-search-result {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  border-bottom: 1px solid var(--ovl-bg-surface);
+  transition: background 0.1s;
+}
+
+.ovl-search-result:last-child {
+  border-bottom: none;
+}
+
+.ovl-search-result:hover,
+.ovl-search-result--active {
+  background: var(--ovl-bg-hover);
+}
+
+.ovl-search-result-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ovl-text);
+  margin-bottom: 2px;
+}
+
+.ovl-search-result-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--ovl-text-secondary);
+}
+
+.ovl-search-result-level {
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .ovl-search {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Level Overview — prereqs, outcomes, stats
+   ============================================================ */
+
+.ovl-level-header-stats {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.ovl-level-header-stat {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ovl-text-secondary);
+  background: var(--ovl-bg-surface);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.ovl-level-prereqs {
+  background: #fffbeb;
+  border-left: 3px solid #e6a817;
+  border-radius: 4px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.ovl-level-prereqs-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #a67c00;
+  margin-bottom: 6px;
+}
+
+.ovl-level-prereqs-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #5a4a00;
+  margin: 0;
+}
+
+.ovl-level-outcomes {
+  margin-bottom: 32px;
+}
+
+.ovl-level-outcomes-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ovl-accent);
+  margin-bottom: 12px;
+}
+
+.ovl-level-outcomes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 24px;
+}
+
+.ovl-level-outcomes-list li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ovl-text);
+  padding-left: 20px;
+  position: relative;
+}
+
+.ovl-level-outcomes-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--ovl-accent);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .ovl-level-outcomes-list {
+    grid-template-columns: 1fr;
+  }
+
+  .ovl-level-prereqs {
+    padding: 14px 16px;
+  }
+}
+
+/* ============================================================
+   Completion Certificate — shareable level completion card
+   ============================================================ */
+
+.ovl-completion {
+  margin-top: 48px;
+  background: var(--ovl-accent-subtle);
+  border: 2px solid var(--ovl-accent);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+}
+
+.ovl-completion-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.ovl-completion-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin: 0 0 4px;
+}
+
+.ovl-completion-subtitle {
+  font-size: 14px;
+  color: var(--ovl-text-secondary);
+  margin: 0 0 24px;
+}
+
+.ovl-completion-card {
+  background: var(--ovl-bg);
+  border: 1px solid var(--ovl-bg-surface);
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 400px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+.ovl-completion-card-brand {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ovl-accent);
+  margin-bottom: 8px;
+}
+
+.ovl-completion-card-level {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 4px;
+}
+
+.ovl-completion-card-detail {
+  font-size: 13px;
+  color: var(--ovl-text-secondary);
+}
+
+.ovl-completion-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ovl-completion-actions .ovl-btn {
+  font-size: 13px;
+  padding: 8px 16px;
+}
+
+@media (max-width: 768px) {
+  .ovl-completion {
+    padding: 24px 16px;
+  }
+
+  .ovl-completion-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ============================================================
+   Progress Dashboard
+   ============================================================ */
+
+.ovl-progress {
+  padding: 48px 0;
+}
+
+.ovl-progress-header {
+  margin-bottom: 40px;
+}
+
+.ovl-progress-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  color: var(--ovl-text);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.ovl-progress-subtitle {
+  font-size: 1.1rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.6;
+}
+
+/* Overall progress */
+
+.ovl-progress-overall {
+  margin-bottom: 32px;
+}
+
+.ovl-progress-overall-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--ovl-bg-surface);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.ovl-progress-overall-fill {
+  height: 100%;
+  background: var(--ovl-accent);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.ovl-progress-overall-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ovl-accent);
+}
+
+/* Continue Learning card */
+
+.ovl-progress-next {
+  display: block;
+  background: var(--ovl-accent-subtle);
+  border: 1px solid var(--ovl-accent-medium);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 40px;
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ovl-progress-next:hover {
+  background: var(--ovl-accent-medium);
+  border-color: var(--ovl-border-strong);
+  box-shadow: 0 2px 12px rgba(0, 85, 255, 0.08);
+  text-shadow: none;
+}
+
+.ovl-progress-next-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ovl-accent);
+  margin-bottom: 6px;
+}
+
+.ovl-progress-next-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 2px;
+}
+
+.ovl-progress-next-level {
+  font-size: 13px;
+  color: var(--ovl-text-secondary);
+}
+
+/* Levels container */
+
+.ovl-progress-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ovl-progress-section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ovl-accent);
+  margin-bottom: 4px;
+}
+
+/* Individual level block */
+
+.ovl-progress-level {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--ovl-bg-surface);
+}
+
+.ovl-progress-level:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ovl-progress-level-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+
+.ovl-progress-level-header:hover {
+  text-shadow: none;
+}
+
+.ovl-progress-level-number {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ovl-accent);
+  flex-shrink: 0;
+  min-width: 24px;
+}
+
+.ovl-progress-level-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  flex: 1;
+}
+
+.ovl-progress-level-count {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ovl-text-secondary);
+  flex-shrink: 0;
+}
+
+.ovl-progress-level-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--ovl-bg-surface);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.ovl-progress-level-fill {
+  height: 100%;
+  background: var(--ovl-accent);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* Expandable lesson list */
+
+.ovl-progress-level-lessons {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 12px;
+  padding-left: 36px;
+}
+
+.ovl-progress-lesson {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--ovl-text);
+  transition: background 0.15s ease;
+}
+
+.ovl-progress-lesson:hover {
+  background: var(--ovl-accent-subtle);
+  text-shadow: none;
+  color: var(--ovl-text);
+}
+
+.ovl-progress-lesson--done {
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-progress-lesson--done:hover {
+  color: var(--ovl-text-secondary);
+}
+
+.ovl-progress-lesson-check {
+  font-size: 14px;
+  flex-shrink: 0;
+  width: 18px;
+  text-align: center;
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-progress-lesson--done .ovl-progress-lesson-check {
+  color: var(--ovl-accent);
+}
+
+.ovl-progress-lesson-title {
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* Guest state */
+
+.ovl-progress-guest {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.ovl-progress-guest-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.ovl-progress-guest-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  color: var(--ovl-text);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.ovl-progress-guest-desc {
+  font-size: 1rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.6;
+  max-width: 480px;
+}
+
+/* ============================================================
+   Glossary
+   ============================================================ */
+
+.ovl-glossary {
+  padding: 48px 0;
+}
+
+.ovl-glossary-header {
+  margin-bottom: 40px;
+}
+
+.ovl-glossary-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  color: var(--ovl-text);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.ovl-glossary-subtitle {
+  font-size: 1.1rem;
+  color: var(--ovl-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.ovl-glossary-filter {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ovl-text);
+  background: var(--ovl-bg);
+  border: 1.5px solid var(--ovl-text-tertiary);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ovl-glossary-filter::placeholder {
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-glossary-filter:focus {
+  border-color: var(--ovl-border-strong);
+  box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.08);
+}
+
+/* Letter nav */
+
+.ovl-glossary-letters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 40px;
+}
+
+.ovl-glossary-letter {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ovl-text-secondary);
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.ovl-glossary-letter:hover {
+  color: var(--ovl-accent);
+  background: var(--ovl-accent-subtle);
+  text-shadow: none;
+}
+
+/* Term list */
+
+.ovl-glossary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.ovl-glossary-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ovl-glossary-group-letter {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--ovl-accent);
+  line-height: 1;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ovl-bg-surface);
+}
+
+.ovl-glossary-item {
+  padding: 0 0 0 4px;
+}
+
+.ovl-glossary-term {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 4px;
+}
+
+.ovl-glossary-def {
+  font-size: 15px;
+  color: var(--ovl-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.ovl-glossary-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ovl-accent);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.ovl-glossary-link:hover {
+  color: var(--ovl-accent-hover);
+  text-shadow: none;
+}
+
+.ovl-glossary-empty {
+  text-align: center;
+  padding: 60px 24px;
+  font-size: 1rem;
+  color: var(--ovl-text-tertiary);
+}
+
+/* ============================================================
+   Socratic Mode Toggle
+   ============================================================ */
+
+.ovl-chat-modes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.ovl-chat-mode {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid var(--ovl-text-tertiary);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ovl-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1.4;
+}
+
+.ovl-chat-mode:hover {
+  background: var(--ovl-bg-surface);
+}
+
+.ovl-chat-mode--active {
+  background: var(--ovl-accent);
+  border-color: var(--ovl-accent);
+  color: #fff;
+}
+
+.ovl-chat-mode--active:hover {
+  background: var(--ovl-accent-hover);
+  border-color: var(--ovl-accent-hover);
+}
+
+/* ============================================================
+   Progress & Glossary Responsive (768px)
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .ovl-progress {
+    padding: 32px 0;
+  }
+
+  .ovl-progress-header {
+    margin-bottom: 28px;
+  }
+
+  .ovl-progress-next {
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+
+  .ovl-progress-level-lessons {
+    padding-left: 0;
+  }
+
+  .ovl-progress-lesson {
+    padding: 8px 8px;
+  }
+
+  .ovl-progress-guest {
+    padding: 48px 16px;
+  }
+
+  .ovl-glossary {
+    padding: 32px 0;
+  }
+
+  .ovl-glossary-header {
+    margin-bottom: 28px;
+  }
+
+  .ovl-glossary-letters {
+    gap: 4px;
+    margin-bottom: 28px;
+  }
+
+  .ovl-glossary-letter {
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+
+  .ovl-glossary-list {
+    gap: 36px;
+  }
+
+  .ovl-glossary-group-letter {
+    font-size: 1.6rem;
+  }
+}
+
+/* ============================================================
+   Theme Switcher
+   ============================================================ */
+
+.ovl-theme-switcher {
+  position: relative;
+}
+
+.ovl-theme-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--ovl-text-secondary);
+  border-radius: 6px;
+  transition: color 0.15s ease, background 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ovl-theme-btn:hover {
+  color: var(--ovl-accent);
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-theme-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 200px;
+  background: var(--ovl-bg-elevated);
+  border: 1px solid var(--ovl-border);
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  padding: 6px;
+  z-index: 1000;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.ovl-theme-menu-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ovl-text-tertiary);
+  padding: 6px 10px 4px;
+}
+
+.ovl-theme-option {
+  appearance: none;
+  -webkit-appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ovl-text);
+  text-align: left;
+  transition: background 0.12s ease;
+}
+
+.ovl-theme-option:hover {
+  background: var(--ovl-bg-hover);
+}
+
+.ovl-theme-option--active {
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-theme-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid var(--ovl-border);
+}
+
+.ovl-theme-option-label {
+  flex: 1;
+}
+
+.ovl-theme-check {
+  font-size: 12px;
+  color: var(--ovl-accent);
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .ovl-theme-menu {
+    right: -40px;
+    width: 180px;
+  }
+}
+
+
+/* ===================================================================
+   SPRINT: Cross-Nav, Investiture ↔ OV, Email, Founding Contributors
+   =================================================================== */
+
+/* --- Sidebar hub badge (e.g. "Scaffold" next to Investiture link) --- */
+.ovl-sidebar-hub-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ovl-accent);
+  background: var(--ovl-accent-subtle);
+  padding: 2px 6px;
+  border-radius: 2px;
+  margin-left: auto;
+}
+
+/* --- Investiture linked card style --- */
+.inv-card--linked {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.inv-card--linked:hover {
+  border-color: rgba(201, 168, 76, 0.5);
+  box-shadow: 0 0 24px rgba(201, 168, 76, 0.15);
+}
+
+/* --- Resources featured Investiture card --- */
+.ovl-resources-featured-card {
+  display: block;
+  text-decoration: none;
+  color: var(--ovl-text);
+  border: 1px solid var(--ovl-accent);
+  border-radius: 8px;
+  padding: 24px 28px;
+  margin-bottom: 32px;
+  background: var(--ovl-accent-subtle);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ovl-resources-featured-card:hover {
+  box-shadow: 0 2px 12px var(--ovl-accent-subtle);
+}
+
+.ovl-resources-featured-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ovl-accent);
+  margin-bottom: 8px;
+}
+
+.ovl-resources-featured-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.ovl-resources-featured-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ovl-text-secondary);
+  margin: 0 0 12px;
+}
+
+.ovl-resources-featured-cta {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ovl-accent);
+}
+
+/* --- Level page "Ready to Build?" CTA --- */
+.ovl-level-build-cta {
+  margin-top: 32px;
+  padding: 24px 28px;
+  border: 1px solid var(--ovl-accent);
+  border-radius: 8px;
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-level-build-cta-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ovl-accent);
+  margin-bottom: 8px;
+}
+
+.ovl-level-build-cta-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ovl-text-secondary);
+  margin: 0 0 16px;
+}
+
+/* --- OV landing page Investiture card --- */
+.ov-investiture-card {
+  display: block;
+  text-decoration: none;
+  color: #0a0a0a;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  padding: 32px;
+  margin-top: 24px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ov-investiture-card:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.ov-investiture-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #00aa44;
+  margin-bottom: 12px;
+}
+
+.ov-investiture-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.ov-investiture-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #555;
+  margin: 0 0 16px;
+}
+
+.ov-investiture-cta {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: #00aa44;
+}
+
+/* --- NotifyForm learn variant (uses OVL CSS variables for theme compat) --- */
+.zv-notify--learn .zv-notify-input {
+  background: var(--ovl-bg-elevated, #f8f8f8);
+  color: var(--ovl-text, #1a1a1a);
+  border-color: var(--ovl-border, rgba(0, 0, 0, 0.12));
+}
+
+.zv-notify--learn .zv-notify-input::placeholder {
+  color: var(--ovl-text-secondary, #888);
+}
+
+.zv-notify--learn .zv-notify-input:focus {
+  border-color: var(--ovl-accent, #0066cc);
+  box-shadow: 0 0 0 2px var(--ovl-accent-subtle, rgba(0, 102, 204, 0.1));
+}
+
+.zv-notify--learn .zv-notify-btn {
+  background: var(--ovl-accent, #0066cc);
+  color: var(--ovl-bg, #fff);
+}
+
+.zv-notify--learn .zv-notify-btn:hover {
+  opacity: 0.9;
+}
+
+.zv-notify--learn .zv-notify-check {
+  color: var(--ovl-accent, #0066cc);
+}
+
+.zv-notify--learn .zv-notify-success-text {
+  color: var(--ovl-text-secondary, #666);
+}
+
+/* --- Email in sidebar (narrow, stacked) --- */
+.ovl-sidebar-email .zv-notify-form {
+  flex-direction: column;
+}
+
+.ovl-sidebar-email .zv-notify-btn {
+  width: 100%;
+}
+
+/* --- Email CTA sections on hub and level pages --- */
+.ovl-hub-support-email {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ovl-border, rgba(0, 0, 0, 0.08));
+}
+
+.ovl-hub-support-email-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ovl-text-secondary, #666);
+  margin: 0 0 12px;
+}
+
+.ovl-level-email-cta {
+  margin-top: 24px;
+  padding: 20px 24px;
+  border: 1px solid var(--ovl-border, rgba(0, 0, 0, 0.08));
+  border-radius: 8px;
+  background: var(--ovl-bg-elevated, #fafafa);
+}
+
+.ovl-level-email-cta-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ovl-text-secondary, #666);
+  margin: 0 0 12px;
+}
+
+/* --- Founding Contributor Program --- */
+.ovl-contribute-founding {
+  border: 2px solid var(--ovl-accent, #0066cc);
+  border-radius: 12px;
+  padding: 32px;
+  background: var(--ovl-accent-subtle, rgba(0, 102, 204, 0.04));
+}
+
+.ovl-contribute-founding-banner {
+  margin-bottom: 32px;
+}
+
+.ovl-contribute-founding-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ovl-accent, #0066cc);
+  background: var(--ovl-accent-subtle, rgba(0, 102, 204, 0.08));
+  padding: 4px 12px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.ovl-contribute-founding-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ovl-text, #1a1a1a);
+  margin: 0 0 16px;
+}
+
+.ovl-contribute-founding-body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ovl-text-secondary, #555);
+  margin: 0 0 12px;
+}
+
+/* Roles grid */
+.ovl-contribute-roles-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ovl-text, #1a1a1a);
+  margin: 0 0 20px;
+}
+
+.ovl-contribute-roles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+  .ovl-contribute-roles {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ovl-contribute-role {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--ovl-border, rgba(0, 0, 0, 0.08));
+  border-radius: 8px;
+  background: var(--ovl-bg, #fff);
+}
+
+.ovl-contribute-role-icon {
+  font-size: 18px;
+  color: var(--ovl-accent, #0066cc);
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+  padding-top: 2px;
+}
+
+.ovl-contribute-role-content h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ovl-text, #1a1a1a);
+  margin: 0 0 6px;
+}
+
+.ovl-contribute-role-content p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ovl-text-secondary, #666);
+  margin: 0;
+}
+
+/* Founding contributors wall */
+.ovl-contribute-wall {
+  margin-bottom: 28px;
+  padding: 24px;
+  border: 1px dashed var(--ovl-border, rgba(0, 0, 0, 0.15));
+  border-radius: 8px;
+  text-align: center;
+}
+
+.ovl-contribute-wall-header {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ovl-text-secondary, #888);
+  margin-bottom: 16px;
+}
+
+.ovl-contribute-wall-placeholder {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ovl-text-secondary, #999);
+  font-style: italic;
+  padding: 20px 0;
+}
+
+/* CTA row */
+.ovl-contribute-founding-cta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.ovl-contribute-founding-email {
+  padding-top: 16px;
+  border-top: 1px solid var(--ovl-border, rgba(0, 0, 0, 0.08));
+}
+
+.ovl-contribute-founding-email-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ovl-text-secondary, #666);
+  margin: 0 0 12px;
+}
+
+/* ===================================================================
+   NAME ANIMATION PAGE — "Meaning Behind the Name" / /name route
+   =================================================================== */
+
+/* --- Name page layout --- */
+.zv-name-page {
+  padding-top: 80px;
+}
+
+.zv-name-hero {
+  text-align: center;
+  padding-bottom: 0;
+}
+
+.zv-name-hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #00ff88;
+  margin-bottom: 16px;
+}
+
+.zv-name-hero-title {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0 0 24px;
+}
+
+.zv-name-hero-subtitle {
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* --- Animation component --- */
+.zv-name-anim {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.zv-name-anim--compact {
+  max-width: 480px;
+}
+
+.zv-name-anim-svg-wrap {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.zv-name-anim-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Axes draw in */
+.zv-name-axis {
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zv-name-axis--drawn {
+  stroke-dashoffset: 0;
+}
+
+/* Origin dot pulse */
+.zv-name-origin {
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.zv-name-origin--pulse {
+  opacity: 1;
+  animation: zv-origin-pulse 2s ease-in-out infinite;
+}
+
+@keyframes zv-origin-pulse {
+  0%, 100% { r: 4; opacity: 1; }
+  50% { r: 6; opacity: 0.7; }
+}
+
+/* Vector arrows */
+.zv-name-vector {
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80;
+  opacity: 0;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
+}
+
+.zv-name-vector--drawn {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+.zv-name-vector--collapsed {
+  stroke-dashoffset: 80;
+  opacity: 0;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s, opacity 1s ease 0.6s;
+}
+
+/* Arrowhead dots */
+.zv-name-arrowhead {
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.3s, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.zv-name-arrowhead--visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.zv-name-arrowhead--collapsed {
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.6s ease 0.2s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+/* Aerospace craft + target */
+.zv-name-craft,
+.zv-name-target {
+  opacity: 0;
+  transition: opacity 0.6s, transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zv-name-craft--align {
+  opacity: 1;
+  transform: translateX(80px);
+}
+
+.zv-name-target--align {
+  opacity: 1;
+  transform: translateX(-80px);
+}
+
+.zv-name-align-line {
+  stroke-dasharray: 160;
+  stroke-dashoffset: 160;
+  transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1) 0.8s;
+}
+
+.zv-name-align-line--drawn {
+  stroke-dashoffset: 0;
+}
+
+/* Notation text */
+.zv-name-notation {
+  opacity: 0;
+  transition: opacity 0.8s, filter 0.8s;
+  filter: blur(4px);
+}
+
+.zv-name-notation--visible {
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* --- Stage labels --- */
+.zv-name-anim-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.zv-name-stage {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zv-name-stage--active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.zv-name-stage-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #00ff88;
+  margin-bottom: 6px;
+}
+
+.zv-name-stage-text {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+}
+
+/* --- Conclusion lines --- */
+.zv-name-conclusion-line {
+  text-align: center;
+  font-size: 18px;
+  max-width: 560px;
+  margin: 0 auto 8px;
+}
+
+/* --- Nav cards at bottom --- */
+.zv-name-nav-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .zv-name-nav-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.zv-name-nav-card {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 20px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.zv-name-nav-card:hover {
+  border-color: rgba(0, 255, 136, 0.3);
+  box-shadow: 0 2px 16px rgba(0, 255, 136, 0.06);
+}
+
+.zv-name-nav-card-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 6px;
+}
+
+.zv-name-nav-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.zv-name-nav-card-cta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #00ff88;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* --- Manifesto teaser --- */
+.zv-name-teaser-section {
+  text-align: center;
+}
+
+.zv-name-teaser-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: #00ff88;
+  text-decoration: none;
+  margin-top: 16px;
+  transition: color 0.2s;
+}
+
+.zv-name-teaser-cta:hover {
+  color: #33ffaa;
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .zv-name-axis,
+  .zv-name-vector,
+  .zv-name-arrowhead,
+  .zv-name-craft,
+  .zv-name-target,
+  .zv-name-align-line,
+  .zv-name-notation,
+  .zv-name-stage {
+    transition: none;
+  }
+  .zv-name-origin--pulse {
+    animation: none;
+  }
+  .zv-name-axis--drawn { stroke-dashoffset: 0; }
+  .zv-name-vector--drawn { stroke-dashoffset: 0; opacity: 1; }
+  .zv-name-arrowhead--visible { opacity: 1; transform: scale(1); }
+  .zv-name-craft--align { opacity: 1; }
+  .zv-name-target--align { opacity: 1; }
+  .zv-name-notation--visible { opacity: 1; filter: none; }
+  .zv-name-stage--active { opacity: 1; transform: none; }
+}
+
+/* ============================================
+   ENTERPRISE PAGE — Main Site
+   ============================================ */
+
+.zv-enterprise-challenge {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.zv-enterprise-challenge-card {
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid rgba(255, 100, 100, 0.4);
+}
+
+.zv-enterprise-challenge-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 12px;
+}
+
+.zv-enterprise-challenge-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.zv-enterprise-engagement {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.zv-enterprise-engagement-card {
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.2s;
+}
+
+.zv-enterprise-engagement-card:hover {
+  border-color: rgba(0, 255, 136, 0.2);
+}
+
+.zv-enterprise-engagement-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.zv-enterprise-engagement-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.zv-enterprise-engagement-duration {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #00ff88;
+  opacity: 0.7;
+}
+
+.zv-enterprise-engagement-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.7;
+  margin: 0 0 16px;
+}
+
+.zv-enterprise-engagement-outcome {
+  font-size: 14px;
+  color: rgba(0, 255, 136, 0.8);
+  line-height: 1.6;
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-style: italic;
+}
+
+.zv-enterprise-preview {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.zv-enterprise-preview-card {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.2s;
+}
+
+.zv-enterprise-preview-card:hover {
+  border-color: rgba(0, 255, 136, 0.2);
+}
+
+.zv-enterprise-preview-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #00ff88;
+  opacity: 0.6;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.zv-enterprise-preview-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.zv-enterprise-preview-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.zv-enterprise-notify {
+  margin-top: 32px;
+  max-width: 480px;
+}
+
+.zv-enterprise-notify-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 8px;
+}
+
+.zv-enterprise-crosslinks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.zv-enterprise-crosslink {
+  display: block;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+}
+
+.zv-enterprise-crosslink:hover {
+  border-color: rgba(0, 255, 136, 0.3);
+  background: rgba(0, 255, 136, 0.03);
+}
+
+.zv-enterprise-crosslink-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #00ff88;
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.zv-enterprise-crosslink-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.zv-enterprise-crosslink-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.zv-enterprise-crosslink-arrow {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  color: #00ff88;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.zv-enterprise-crosslink:hover .zv-enterprise-crosslink-arrow {
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .zv-enterprise-challenge {
+    grid-template-columns: 1fr;
+  }
+  .zv-enterprise-crosslinks {
+    grid-template-columns: 1fr;
+  }
+  .zv-enterprise-engagement-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+/* ============================================
+   ENTERPRISE PAGE — Open Vector Learn
+   ============================================ */
+
+.ovl-enterprise {
+  max-width: 720px;
+}
+
+.ovl-enterprise-header {
+  margin-bottom: 40px;
+}
+
+.ovl-enterprise-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ovl-accent, #00ff88);
+  border: 1px solid var(--ovl-accent, rgba(0, 255, 136, 0.4));
+  border-radius: 4px;
+  padding: 4px 12px;
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.ovl-enterprise-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ovl-text, #e0e0e0);
+  margin: 0 0 12px;
+}
+
+.ovl-enterprise-subtitle {
+  font-size: 15px;
+  color: var(--ovl-text-muted, rgba(255, 255, 255, 0.6));
+  line-height: 1.6;
+  margin: 0;
+}
+
+.ovl-enterprise-intro {
+  margin-bottom: 40px;
+}
+
+.ovl-enterprise-intro p {
+  font-size: 15px;
+  color: var(--ovl-text, #e0e0e0);
+  line-height: 1.7;
+  margin: 0 0 16px;
+}
+
+.ovl-enterprise-coming {
+  margin-bottom: 40px;
+}
+
+.ovl-enterprise-section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ovl-text, #e0e0e0);
+  margin: 0 0 24px;
+}
+
+.ovl-enterprise-topics {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ovl-enterprise-topic {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid var(--ovl-border, rgba(255, 255, 255, 0.08));
+  border-radius: 8px;
+  background: var(--ovl-bg-elevated, rgba(255, 255, 255, 0.02));
+}
+
+.ovl-enterprise-topic-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--ovl-accent, #00ff88);
+  opacity: 0.6;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.ovl-enterprise-topic-content h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ovl-text, #e0e0e0);
+  margin: 0 0 6px;
+}
+
+.ovl-enterprise-topic-content p {
+  font-size: 13px;
+  color: var(--ovl-text-muted, rgba(255, 255, 255, 0.6));
+  line-height: 1.6;
+  margin: 0;
+}
+
+.ovl-enterprise-contribute {
+  margin-bottom: 40px;
+}
+
+.ovl-enterprise-contribute p {
+  font-size: 15px;
+  color: var(--ovl-text, #e0e0e0);
+  line-height: 1.7;
+  margin: 0 0 16px;
+}
+
+.ovl-enterprise-contribute-cta {
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.ovl-enterprise-contribute-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.ovl-enterprise-notify {
+  margin-top: 32px;
+  max-width: 420px;
+}
+
+.ovl-enterprise-notify-label {
+  font-size: 13px;
+  color: var(--ovl-text-muted, rgba(255, 255, 255, 0.5));
+  margin-bottom: 8px;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   About Page
+   ──────────────────────────────────────────────────────────────── */
+
+.ovl-about {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.ovl-about-header {
+  margin-bottom: 48px;
+}
+
+.ovl-about-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--ovl-text, #fff);
+  margin: 0 0 8px 0;
+}
+
+.ovl-about-subtitle {
+  font-size: 1.05rem;
+  color: var(--ovl-text-muted, rgba(255, 255, 255, 0.55));
+  margin: 0;
+  line-height: 1.5;
+}
+
+.ovl-about-section {
+  margin-bottom: 48px;
+}
+
+.ovl-about-heading {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ovl-text, #fff);
+  margin: 0 0 16px 0;
+}
+
+.ovl-about-body p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--ovl-text-secondary, rgba(255, 255, 255, 0.75));
+  margin: 0 0 12px 0;
+}
+
+.ovl-about-body p:last-child {
+  margin-bottom: 0;
+}
+
+.ovl-about-body a:not(.ovl-btn) {
+  color: var(--ovl-accent, #00ff88);
+  text-decoration: none;
+}
+
+.ovl-about-body a:not(.ovl-btn):hover {
+  color: var(--ovl-accent-hover, #33ffaa);
+}
+
+.ovl-about-contact-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.ovl-about-links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 560px) {
+  .ovl-about-links {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ovl-about-link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 20px;
+  background: var(--ovl-surface, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--ovl-border, rgba(255, 255, 255, 0.08));
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.ovl-about-link-card:hover {
+  border-color: var(--ovl-accent, #00ff88);
+  background: rgba(0, 255, 136, 0.04);
+}
+
+.ovl-about-link-title {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ovl-text, #fff);
+}
+
+.ovl-about-link-desc {
+  font-size: 0.8rem;
+  color: var(--ovl-text-muted, rgba(255, 255, 255, 0.5));
+  line-height: 1.4;
+}
+
+.ovl-about-contribute {
+  border-top: 1px solid var(--ovl-border, rgba(255, 255, 255, 0.08));
+  padding-top: 48px;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   Welcome Modal — first-time user onboarding
+   ──────────────────────────────────────────────────────────────── */
+
+.ovl-welcome-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: ovl-welcome-fade-in 0.3s ease;
+}
+
+@keyframes ovl-welcome-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ovl-welcome-card {
+  background: #111;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  max-width: 480px;
+  width: 100%;
+  padding: 32px;
+  animation: ovl-welcome-slide-up 0.3s ease;
+}
+
+@keyframes ovl-welcome-slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ovl-welcome-header {
+  margin-bottom: 24px;
+}
+
+.ovl-welcome-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  background: #00ff88;
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.ovl-welcome-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 8px 0;
+}
+
+.ovl-welcome-desc {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.ovl-welcome-paths {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.ovl-welcome-path {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.ovl-welcome-path:hover {
+  border-color: rgba(0, 255, 136, 0.4);
+  background: rgba(0, 255, 136, 0.06);
+}
+
+.ovl-welcome-path-label {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.ovl-welcome-path-desc {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.05em;
+}
+
+.ovl-welcome-dismiss {
+  display: block;
+  width: 100%;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  padding: 10px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.ovl-welcome-dismiss:hover {
+  color: rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ────────────────────────────────────────────────────────────────
+   Anon Welcome Modal — sign-in actions
+   ──────────────────────────────────────────────────────────────── */
+
+.ovl-anon-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ovl-anon-signin {
+  display: block;
+  width: 100%;
+  background: #00ff88;
+  color: #0a0a0a;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ovl-anon-signin:hover {
+  background: #33ffaa;
+  box-shadow: 0 2px 16px rgba(0, 255, 136, 0.3);
+}
+
+/* ────────────────────────────────────────────────────────────────
+   Sign-In Banner — persistent bar for anonymous users
+   ──────────────────────────────────────────────────────────────── */
+
+.ovl-signin-banner {
+  background: #0a0a0a;
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  margin-bottom: 16px;
+}
+
+.ovl-signin-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 24px;
+  max-width: 100%;
+}
+
+.ovl-signin-banner-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.02em;
+  flex: 1;
+}
+
+.ovl-signin-banner-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: #0a0a0a;
+  background: #00ff88;
+  border: none;
+  padding: 4px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.ovl-signin-banner-btn:hover {
+  background: #33ffaa;
+}
+
+.ovl-signin-banner-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.2s ease;
+}
+
+.ovl-signin-banner-close:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 768px) {
+  .ovl-signin-banner-inner {
+    padding: 8px 16px;
+  }
+  .ovl-signin-banner-text {
+    font-size: 10px;
+  }
+}
