@@ -353,7 +353,7 @@ a:hover {
 /* --- Rule --- */
 .ov-rule {
   border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 2px solid rgba(0, 0, 0, 0.06);
   margin-bottom: 64px;
 }
 
@@ -501,17 +501,19 @@ a:hover {
 
 .ov-hero-light {
   display: block;
-  font-size: clamp(3rem, 10vw, 7rem);
+  font-size: clamp(2.5rem, 8vw, 5rem);
   font-weight: 300;
-  color: #aaa;
+  color: #ccc;
+  letter-spacing: 0.04em;
 }
 
 .ov-hero-heavy {
   display: block;
-  font-size: clamp(4rem, 14vw, 10rem);
+  font-size: clamp(5rem, 16vw, 12rem);
   font-weight: 900;
   color: #0a0a0a;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
 }
 
 /* --- Body Text --- */
@@ -544,13 +546,14 @@ a:hover {
 /* --- Declaration --- */
 .ov-declaration {
   font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
   font-weight: 600;
   color: #0a0a0a;
-  line-height: 1.7;
-  margin: 40px 0;
-  padding-left: 24px;
-  border-left: 3px solid #0055ff;
+  line-height: 1.6;
+  margin: 56px 0;
+  padding: 32px 32px 32px 28px;
+  border-left: 4px solid var(--color-blue);
+  background: linear-gradient(135deg, rgba(0, 85, 255, 0.03), rgba(0, 221, 192, 0.03));
   max-width: 720px;
 }
 
@@ -565,22 +568,22 @@ a:hover {
 .ov-free-dot {
   width: 10px;
   height: 10px;
-  background: #00aa44;
+  background: var(--color-green);
   border-radius: 50%;
   animation: ov-pulse 2s ease-in-out infinite;
   flex-shrink: 0;
 }
 
 @keyframes ov-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 170, 68, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(0, 170, 68, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 230, 138, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(0, 230, 138, 0); }
 }
 
 .ov-free-text {
   font-family: var(--font-mono);
   font-size: 13px;
-  font-weight: 500;
-  color: #00aa44;
+  font-weight: 600;
+  color: var(--color-green);
   letter-spacing: 0.05em;
 }
 
@@ -645,18 +648,24 @@ a:hover {
   display: flex;
   align-items: baseline;
   gap: 16px;
-  padding: 12px 0;
-  border-bottom: 1px solid #e8e8e8;
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+  transition: padding-left 0.2s ease, background 0.2s ease;
+}
+
+.ov-curriculum-overview-item:hover {
+  padding-left: 8px;
+  background: rgba(0, 0, 0, 0.015);
 }
 
 .ov-curriculum-overview-item:first-child {
-  border-top: 1px solid #e8e8e8;
+  border-top: 1px solid #eee;
 }
 
 .ov-curriculum-overview-num {
   font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 800;
   color: #999;
   flex-shrink: 0;
 }
@@ -872,11 +881,13 @@ a:hover {
 }
 
 .ov-contrast-them {
-  background: #f8f8f8;
+  background: #f5f5f5;
+  opacity: 0.7;
 }
 
 .ov-contrast-us {
   background: #fff;
+  border-left: 3px solid var(--color-green);
 }
 
 .ov-contrast-col-label {
@@ -910,13 +921,15 @@ a:hover {
 }
 
 .ov-contrast-them .ov-contrast-line {
-  color: #999;
+  color: #bbb;
   text-decoration: line-through;
-  text-decoration-color: rgba(0, 0, 0, 0.2);
+  text-decoration-color: rgba(0, 0, 0, 0.15);
+  text-decoration-thickness: 1.5px;
 }
 
 .ov-contrast-us .ov-contrast-line {
   color: #0a0a0a;
+  font-weight: 500;
 }
 
 /* --- Saint-Exupéry --- */
@@ -931,36 +944,40 @@ a:hover {
 
 .ov-quote {
   font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
   font-style: italic;
-  color: #333;
-  line-height: 1.7;
+  font-weight: 400;
+  color: #1a1a1a;
+  line-height: 1.5;
   margin-bottom: 16px;
+  letter-spacing: -0.01em;
 }
 
 .ov-cite {
   display: block;
   font-family: var(--font-mono);
-  font-size: 13px;
-  color: #999;
+  font-size: 12px;
+  color: #aaa;
   font-style: normal;
-  letter-spacing: 0.05em;
-  margin-bottom: 48px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 56px;
 }
 
 .ov-punch {
   font-family: 'Source Serif 4', Georgia, serif;
-  font-size: 1.125rem;
+  font-size: 1.2rem;
   color: #444;
   line-height: 1.7;
   margin-bottom: 24px;
 }
 
 .ov-close {
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  font-weight: 800;
   color: #0a0a0a;
+  letter-spacing: -0.02em;
 }
 
 /* --- Footer --- */
@@ -1021,10 +1038,19 @@ a:hover {
 }
 
 .ov-twin-card {
-  padding: 32px;
+  padding: 36px;
   border: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ov-twin-card:first-child {
+  border-left: 3px solid var(--color-red);
+}
+
+.ov-twin-card:last-child {
+  border-left: 3px solid var(--color-blue);
 }
 
 .ov-twin-card-title {
@@ -6278,17 +6304,28 @@ a:hover {
 .ov-investiture-card {
   display: block;
   text-decoration: none;
-  color: #0a0a0a;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #fff;
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
-  padding: 32px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
   margin-top: 24px;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+.ov-investiture-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 85, 255, 0.08), rgba(168, 85, 247, 0.06), transparent 60%);
+  pointer-events: none;
+}
+
 .ov-investiture-card:hover {
-  border-color: rgba(0, 0, 0, 0.3);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .ov-investiture-badge {
@@ -6297,28 +6334,35 @@ a:hover {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #00aa44;
+  color: var(--color-green);
+  position: relative;
   margin-bottom: 12px;
 }
 
 .ov-investiture-title {
-  font-size: 24px;
-  font-weight: 600;
-  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+  margin: 0 0 12px;
+  color: #fff;
+  position: relative;
 }
 
 .ov-investiture-desc {
   font-size: 15px;
-  line-height: 1.6;
-  color: #555;
-  margin: 0 0 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0 0 20px;
+  max-width: 560px;
+  position: relative;
 }
 
 .ov-investiture-cta {
   font-family: var(--font-mono);
   font-size: 13px;
-  font-weight: 500;
-  color: #00aa44;
+  font-weight: 600;
+  color: var(--color-green);
+  position: relative;
 }
 
 /* --- NotifyForm learn variant (uses OVL CSS variables for theme compat) --- */
