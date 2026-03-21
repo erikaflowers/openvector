@@ -59,7 +59,7 @@ function LearnAboutPage() {
           </p>
           <div className="ovl-about-contact-links">
             <a
-              href="https://github.com/erikaflowers/zerovector/issues"
+              href="https://github.com/erikaflowers/openvector/issues"
               target="_blank"
               rel="noopener noreferrer"
               className="ovl-btn ovl-btn-primary"
@@ -67,7 +67,7 @@ function LearnAboutPage() {
               Open a GitHub Issue
             </a>
             <a
-              href="https://github.com/erikaflowers/zerovector"
+              href="https://github.com/erikaflowers/openvector"
               target="_blank"
               rel="noopener noreferrer"
               className="ovl-btn ovl-btn-outline"

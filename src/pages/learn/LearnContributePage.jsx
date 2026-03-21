@@ -31,9 +31,9 @@ function LearnContributePage() {
           </p>
           <p className="ovl-contribute-founding-body">
             This is not "submit a PR and we will think about it." This is: join us at
-            the beginning. Help write the lessons. Review the guides. Translate the
-            curriculum. Make the platform more accessible. Your name. Your mark. Permanently
-            part of the project's history.
+            the beginning. The entire curriculum is markdown files you can edit in any
+            text editor. Fork the repo, improve a lesson, submit a PR. Your name. Your
+            mark. Permanently part of the project's history.
           </p>
         </div>
 
@@ -45,8 +45,9 @@ function LearnContributePage() {
               <h4>Content Editors</h4>
               <p>
                 Review and improve existing lessons for clarity, accuracy, and flow.
-                You read what is there and make it better, fixing explanations that
-                do not land, tightening prose, catching gaps in logic.
+                Every lesson is a markdown file you can edit in any text editor or
+                markdown app. Fix explanations that do not land, tighten prose,
+                catch gaps in logic, submit a PR.
               </p>
             </div>
           </div>
@@ -55,9 +56,10 @@ function LearnContributePage() {
             <div className="ovl-contribute-role-content">
               <h4>Lesson Authors</h4>
               <p>
-                Write new lessons from real experience. The best curriculum comes from
-                people who have done the thing and want to teach others how. If you have
-                built with AI agents, you have something to teach.
+                Write new lessons from real experience. Create a markdown file with
+                frontmatter, write your content using standard markdown plus our
+                custom block types, and add it to the manifest. If you have built
+                with AI agents, you have something to teach.
               </p>
             </div>
           </div>
@@ -120,7 +122,7 @@ function LearnContributePage() {
         {/* Sign Up */}
         <div className="ovl-contribute-founding-cta">
           <a
-            href="https://github.com/erikaflowers/zerovector/issues/new?template=founding-contributor.md&title=Founding+Contributor+Application"
+            href="https://github.com/erikaflowers/openvector/issues/new?template=founding-contributor.md&title=Founding+Contributor+Application"
             target="_blank"
             rel="noopener noreferrer"
             className="ovl-btn ovl-btn-primary"
@@ -128,7 +130,7 @@ function LearnContributePage() {
             Apply on GitHub
           </a>
           <a
-            href="https://github.com/erikaflowers/zerovector/issues"
+            href="https://github.com/erikaflowers/openvector/issues"
             target="_blank"
             rel="noopener noreferrer"
             className="ovl-btn ovl-btn-outline"
@@ -178,29 +180,32 @@ function LearnContributePage() {
         <h2 className="ovl-contribute-heading">Contribute Code & Content</h2>
         <div className="ovl-contribute-body">
           <p>
-            The Open Vector is a GitHub project. The entire site, curriculum, approach
-            guides, resources, this page, is open source. If you see something that
-            could be better, you can fix it yourself and submit a pull request.
+            The Open Vector is a GitHub project. Every lesson and guide is a
+            standard markdown file in the <code>content/</code> directory. Fork
+            the repo, edit in any text editor, and submit a pull request. No
+            special tools or build steps required.
           </p>
           <div className="ovl-contribute-ways">
             <div className="ovl-contribute-way">
               <div className="ovl-contribute-way-icon">&sect;</div>
               <div className="ovl-contribute-way-content">
-                <h3>Fix or Improve Content</h3>
+                <h3>Edit Existing Lessons</h3>
                 <p>
                   Found a typo? A broken link? An explanation that could be clearer?
-                  Open a PR. Every lesson and guide is a file in the repo. You do not
-                  need permission to make something better.
+                  Every lesson is a markdown file you can open in any editor.
+                  Fork the repo, edit the <code>.md</code> file, submit a PR.
+                  The <code>content/README.md</code> in the repo explains the format.
                 </p>
               </div>
             </div>
             <div className="ovl-contribute-way">
               <div className="ovl-contribute-way-icon">&dagger;</div>
               <div className="ovl-contribute-way-content">
-                <h3>Propose New Lessons or Guides</h3>
+                <h3>Write New Lessons or Guides</h3>
                 <p>
-                  Have expertise in an area the curriculum does not cover yet? Open an
-                  issue describing what you would write. If it fits, write it. The best
+                  Have expertise in an area the curriculum does not cover yet?
+                  Create a new <code>.md</code> file with frontmatter, write your
+                  content, and add the slug to <code>manifest.yaml</code>. The best
                   contributions come from people who have done the thing and want to
                   teach others how.
                 </p>
@@ -232,7 +237,7 @@ function LearnContributePage() {
           </div>
           <div className="ovl-contribute-cta-row">
             <a
-              href="https://github.com/erikaflowers/zerovector"
+              href="https://github.com/erikaflowers/openvector"
               target="_blank"
               rel="noopener noreferrer"
               className="ovl-btn ovl-btn-primary"
@@ -240,7 +245,7 @@ function LearnContributePage() {
               View on GitHub
             </a>
             <a
-              href="https://github.com/erikaflowers/zerovector/issues"
+              href="https://github.com/erikaflowers/openvector/issues"
               target="_blank"
               rel="noopener noreferrer"
               className="ovl-btn ovl-btn-outline"

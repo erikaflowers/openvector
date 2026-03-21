@@ -34,7 +34,7 @@ function LearnSidebar({ levels, activeLevelSlug, activeLessonSlug, approach, act
               </Link>
               <div className="ovl-sidebar-section-label" style={{ marginTop: '16px' }}>Contribute</div>
               <a
-                href="https://github.com/erikaflowers/zerovector"
+                href="https://github.com/erikaflowers/openvector"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="ovl-sidebar-hub-link"
@@ -43,7 +43,7 @@ function LearnSidebar({ levels, activeLevelSlug, activeLessonSlug, approach, act
                 <span>GitHub Repo</span>
               </a>
               <a
-                href="https://github.com/erikaflowers/zerovector/issues"
+                href="https://github.com/erikaflowers/openvector/issues"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="ovl-sidebar-hub-link"
