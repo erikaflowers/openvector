@@ -6037,6 +6037,88 @@ a:hover {
 }
 
 /* --- NotifyForm learn variant (uses OVL CSS variables for theme compat) --- */
+/* --- Notify Form Base --- */
+.zv-notify {
+  width: 100%;
+}
+
+.zv-notify-form {
+  display: flex;
+  gap: 8px;
+}
+
+.zv-notify-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  font-family: var(--font-mono, monospace);
+  font-size: 13px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  background: #fff;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.zv-notify-input:focus {
+  border-color: var(--ovl-accent, #0066cc);
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+}
+
+.zv-notify-input::placeholder {
+  color: #999;
+}
+
+.zv-notify-btn {
+  padding: 8px 16px;
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  background: var(--ovl-accent, #0066cc);
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s ease;
+}
+
+.zv-notify-btn:hover {
+  opacity: 0.9;
+}
+
+.zv-notify-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.zv-notify--success {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.zv-notify-check {
+  font-size: 16px;
+  color: var(--ovl-accent, #0066cc);
+}
+
+.zv-notify-success-text {
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  color: var(--ovl-text-secondary, #666);
+}
+
+.zv-notify-error {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: #cc3333;
+  margin: 4px 0 0;
+}
+
+/* --- Notify Form Learn Overrides --- */
 .zv-notify--learn .zv-notify-input {
   background: var(--ovl-bg-elevated, #f8f8f8);
   color: var(--ovl-text, #1a1a1a);
