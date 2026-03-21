@@ -28,12 +28,15 @@ function OpenVectorPage() {
     document.body.style.margin = '0';
     document.body.style.minHeight = '100vh';
 
-    // Easter egg for curious devs
-    console.log(
-      '%c\u25c6 The Open Vector %c\nBuilt by one person with AI agents.\nNot vibe coded. Design-led.\nhttps://github.com/erikaflowers/openvector',
-      'font-size: 16px; font-weight: bold; color: #0055ff;',
-      'font-size: 12px; color: #666;'
-    );
+    // Easter egg for curious devs (only first visit per session)
+    if (!window.__ovEasterEgg) {
+      window.__ovEasterEgg = true;
+      console.log(
+        '%c\u25c6 The Open Vector %c\nBuilt by one person with AI agents.\nNot vibe coded. Design-led.\nhttps://github.com/erikaflowers/openvector',
+        'font-size: 16px; font-weight: bold; color: #0055ff;',
+        'font-size: 12px; color: #666;'
+      );
+    }
 
     return () => {
       document.body.style.background = '';

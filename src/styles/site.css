@@ -90,7 +90,7 @@ a:hover {
 }
 .zv-error-boundary-icon {
   font-size: 3rem;
-  color: #ff4466;
+  color: var(--color-red, #ff3355);
   margin-bottom: 16px;
   font-weight: 300;
 }
@@ -702,6 +702,9 @@ a:hover {
   font-weight: 700;
   color: #00aa44;
   flex-shrink: 0;
+  width: 32px;
+  text-align: center;
+  line-height: 1.6;
 }
 .ov-pledge-item:nth-child(1) .ov-pledge-icon { color: var(--color-blue); }
 .ov-pledge-item:nth-child(2) .ov-pledge-icon { color: var(--color-green); }
@@ -709,10 +712,6 @@ a:hover {
 .ov-pledge-item:nth-child(4) .ov-pledge-icon { color: var(--color-orange); }
 .ov-pledge-item:nth-child(5) .ov-pledge-icon { color: var(--color-purple); }
 .ov-pledge-item:nth-child(6) .ov-pledge-icon { color: var(--color-red); }
-  width: 32px;
-  text-align: center;
-  line-height: 1.6;
-}
 
 /* --- Curriculum --- */
 .ov-curriculum {
@@ -776,6 +775,7 @@ a:hover {
   font-weight: 800;
   color: #999;
   flex-shrink: 0;
+  min-width: 24px;
 }
 /* Per-level colors on landing page curriculum overview */
 .ov-curriculum-overview-item:nth-child(1) .ov-curriculum-overview-num { color: var(--level-00); }
@@ -784,8 +784,6 @@ a:hover {
 .ov-curriculum-overview-item:nth-child(4) .ov-curriculum-overview-num { color: var(--level-03); }
 .ov-curriculum-overview-item:nth-child(5) .ov-curriculum-overview-num { color: var(--level-04); }
 .ov-curriculum-overview-item:nth-child(6) .ov-curriculum-overview-num { color: var(--level-05); }
-  min-width: 24px;
-}
 
 .ov-curriculum-overview-title {
   font-family: var(--font-display);
@@ -1202,7 +1200,6 @@ a:hover {
   border-radius: 0;
   transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), background 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   cursor: pointer;
-  transition: all 0.3s var(--ease-out);
   text-decoration: none;
 }
 
@@ -1357,6 +1354,27 @@ a:hover {
   --level-03: var(--color-orange);
   --level-04: var(--color-purple);
   --level-05: var(--color-red);
+}
+
+/* --- Global Focus Visible --- */
+/* Keyboard focus ring for all interactive elements */
+.ov-page :focus-visible,
+.ovl-page :focus-visible {
+  outline: 2px solid var(--ovl-accent, #0055ff);
+  outline-offset: 2px;
+}
+
+/* Remove default focus ring for mouse users */
+.ov-page :focus:not(:focus-visible),
+.ovl-page :focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Invert focus ring on dark backgrounds */
+.ov-launch-banner :focus-visible,
+.ov-investiture-card :focus-visible,
+.ovl-nav :focus-visible {
+  outline-color: #fff;
 }
 
 .ovl-page {
@@ -1529,7 +1547,7 @@ a:hover {
   background: rgba(255, 68, 102, 0.08);
 }
 .ovl-nav-support-heart {
-  color: #ff4466;
+  color: var(--color-red, #ff3355);
   font-size: 16px;
   line-height: 1;
 }
@@ -1630,7 +1648,7 @@ a:hover {
 .ovl-sidebar-level-header {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  gap: 8px;
   padding: 10px 24px;
   text-decoration: none;
   color: var(--ovl-text-secondary);
@@ -1844,7 +1862,7 @@ a:hover {
 .ovl-rail-level-link {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding: 10px 16px;
   border-bottom: 1px solid var(--ovl-border);
   color: var(--ovl-text) !important;
@@ -2110,7 +2128,7 @@ a:hover {
 .ovl-level-lesson-meta {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
@@ -2255,7 +2273,7 @@ a:hover {
   margin: 12px 0 0 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .ovl-resource-item {
@@ -2600,7 +2618,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
   padding: 14px 24px;
   border: 1px solid var(--ovl-border-strong);
@@ -2929,7 +2947,7 @@ a:hover {
 .ovl-sidebar-hub-stat {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding: 6px 24px;
 }
 
@@ -4483,7 +4501,7 @@ a:hover {
 .ovl-template-header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding: 10px 16px;
   border-bottom: 1px solid var(--ovl-accent-medium);
 }
@@ -4618,7 +4636,7 @@ a:hover {
 .ovl-chat-prompt {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding: 14px 16px;
   border: 1px solid var(--ovl-border);
   background: var(--ovl-bg);
@@ -5380,7 +5398,7 @@ a:hover {
 
 .ovl-knowledge-check-item {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: flex-start;
 }
 
@@ -5435,7 +5453,7 @@ a:hover {
 @media (max-width: 768px) {
   .ovl-knowledge-check-toggle {
     padding: 14px 16px;
-    gap: 10px;
+    gap: 8px;
   }
 
   .ovl-knowledge-check-list {
@@ -5951,7 +5969,7 @@ a:hover {
 .ovl-progress-lesson {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding: 8px 12px;
   border-radius: 6px;
   text-decoration: none;
@@ -6321,7 +6339,7 @@ a:hover {
   -webkit-appearance: none;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
   padding: 8px 10px;
   background: transparent;
