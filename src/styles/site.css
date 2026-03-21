@@ -171,8 +171,66 @@ a:hover {
 
 /* Gentler scroll animations */
 .ov-page .zv-animate {
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+/* Hero entrance choreography */
+.ov-hero .ov-label {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: ov-hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+
+.ov-hero-light {
+  opacity: 0;
+  animation: ov-hero-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
+.ov-hero-heavy:first-of-type {
+  opacity: 0;
+  animation: ov-hero-slide 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+}
+
+.ov-hero-heavy:last-of-type {
+  opacity: 0;
+  animation: ov-hero-slide 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+}
+
+.ov-launch-banner {
+  opacity: 0;
   transform: translateY(16px);
-  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  animation: ov-hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+}
+
+.ov-hero .ov-body:first-of-type {
+  opacity: 0;
+  animation: ov-hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+}
+
+.ov-hero .ov-body-bold {
+  opacity: 0;
+  animation: ov-hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1s forwards;
+}
+
+.ov-hero .ov-declaration {
+  opacity: 0;
+  animation: ov-hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.1s forwards;
+}
+
+.ov-hero .ov-free-indicator {
+  opacity: 0;
+  animation: ov-hero-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 1.25s forwards;
+}
+
+@keyframes ov-hero-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ov-hero-slide {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 /* --- Layout --- */
@@ -487,8 +545,20 @@ a:hover {
   .ov-launch-banner::after,
   .ov-launch-beacon,
   .ovl-mark-complete-btn--done,
-  .ovl-sidebar-check {
+  .ovl-sidebar-check,
+  .ov-hero .ov-label,
+  .ov-hero-light,
+  .ov-hero-heavy,
+  .ov-launch-banner,
+  .ov-hero .ov-body,
+  .ov-hero .ov-body-bold,
+  .ov-hero .ov-declaration,
+  .ov-hero .ov-free-indicator,
+  .zv-visible .ov-pledge-item,
+  .zv-visible .ov-curriculum-overview-item {
     animation: none;
+    opacity: 1;
+    transform: none;
   }
   .ov-btn:hover,
   .ov-btn:active,
@@ -614,6 +684,18 @@ a:hover {
   align-items: flex-start;
 }
 
+/* Stagger pledge items when parent becomes visible */
+.zv-visible .ov-pledge-item {
+  animation: ov-hero-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+.zv-visible .ov-pledge-item:nth-child(1) { animation-delay: 0s; }
+.zv-visible .ov-pledge-item:nth-child(2) { animation-delay: 0.08s; }
+.zv-visible .ov-pledge-item:nth-child(3) { animation-delay: 0.16s; }
+.zv-visible .ov-pledge-item:nth-child(4) { animation-delay: 0.24s; }
+.zv-visible .ov-pledge-item:nth-child(5) { animation-delay: 0.32s; }
+.zv-visible .ov-pledge-item:nth-child(6) { animation-delay: 0.4s; }
+
 .ov-pledge-icon {
   font-family: var(--font-mono);
   font-size: 1.75rem;
@@ -675,6 +757,18 @@ a:hover {
 .ov-curriculum-overview-item:first-child {
   border-top: 1px solid #eee;
 }
+
+/* Stagger curriculum level rows */
+.zv-visible .ov-curriculum-overview-item {
+  animation: ov-hero-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+.zv-visible .ov-curriculum-overview-item:nth-child(1) { animation-delay: 0s; }
+.zv-visible .ov-curriculum-overview-item:nth-child(2) { animation-delay: 0.06s; }
+.zv-visible .ov-curriculum-overview-item:nth-child(3) { animation-delay: 0.12s; }
+.zv-visible .ov-curriculum-overview-item:nth-child(4) { animation-delay: 0.18s; }
+.zv-visible .ov-curriculum-overview-item:nth-child(5) { animation-delay: 0.24s; }
+.zv-visible .ov-curriculum-overview-item:nth-child(6) { animation-delay: 0.3s; }
 
 .ov-curriculum-overview-num {
   font-family: var(--font-mono);
