@@ -4,7 +4,7 @@ import { useProgress } from '../../contexts/ProgressContext';
 import LessonBadge from '../../components/learn/LessonBadge';
 import NotifyForm from '../../components/NotifyForm';
 import useSEO from '../../hooks/useSEO';
-import { approachCategories } from '../../content/learn/approach';
+// approachCategories now comes from learn.approach.categories
 import recommendedReading from '../../content/recommended-reading';
 
 function LearnHubPage() {
@@ -181,7 +181,7 @@ function LearnHubPage() {
             <h2 className="ovl-hub-card-title">Approach</h2>
             <p className="ovl-hub-card-desc">
               Step-by-step walkthroughs. IKEA instructions for the Zero Vector workflow.
-              {learn.approach && ` ${learn.approach.guides.length} guides across ${approachCategories.length} categories.`}
+              {learn.approach && ` ${learn.approach.guides.length} guides across ${(learn.approach.categories || []).length} categories.`}
             </p>
             <span className="ovl-hub-card-action">Browse guides &rarr;</span>
           </div>

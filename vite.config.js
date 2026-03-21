@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import learnContentPlugin from './vite-plugin-learn-content.js';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [learnContentPlugin(), react()],
   root: path.resolve(__dirname),
   base: '/',
   build: {

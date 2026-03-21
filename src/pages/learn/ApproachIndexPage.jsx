@@ -3,7 +3,7 @@ import { SignInPrompt } from '../../components/learn/SignInPrompt';
 import LessonBadge from '../../components/learn/LessonBadge';
 import RightRail from '../../components/learn/RightRail';
 import useSEO from '../../hooks/useSEO';
-import { approachCategories } from '../../content/learn/approach';
+// (approach.categories || []) now comes from learn.approach.categories
 
 function ApproachIndexPage() {
   const { learn } = useOutletContext();
@@ -168,7 +168,7 @@ function ApproachIndexPage() {
               Start anywhere, but the Getting Started category is designed for day one.
             </p>
           </div>
-          {approachCategories.map(cat => {
+          {(approach.categories || []).map(cat => {
             const guides = approach.guides.filter(g => g.category === cat.key);
             if (guides.length === 0) return null;
             return (
@@ -213,7 +213,7 @@ function ApproachIndexPage() {
                 <span className="ovl-rail-stat-label">Guides</span>
               </div>
               <div className="ovl-rail-stat">
-                <span className="ovl-rail-stat-count">{approachCategories.length}</span>
+                <span className="ovl-rail-stat-count">{(approach.categories || []).length}</span>
                 <span className="ovl-rail-stat-label">Categories</span>
               </div>
               <div className="ovl-rail-stat">

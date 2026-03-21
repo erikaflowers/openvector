@@ -1,0 +1,185 @@
+# ============================================
+# OPEN VECTOR — Content Manifest
+# ============================================
+#
+# This file defines the hierarchy and ordering of all learning content.
+# Lesson metadata (title, subtitle, duration, etc.) lives in each .md file's frontmatter.
+# This manifest controls WHERE lessons appear and in WHAT ORDER.
+#
+# To add a lesson: create the .md file, then add its slug here.
+# To reorder: change the position in the list.
+# To move between levels: move the slug to a different level's lessons list.
+
+nav:
+  brand: The Open Vector
+  badge: LEARN
+  backLabel: About Open Vector
+
+index:
+  title: The Open Vector Curriculum
+  subtitle: 'From "I have never opened a terminal" to "I ship my own vision."'
+  intro: Choose a level to begin. Each builds on the last, but you can jump ahead if you already have the foundation.
+
+levels:
+  - slug: 00-orientation
+    number: "00"
+    title: Orientation
+    subtitle: What is this machine, actually?
+    status: available
+    desc: The foundational understanding that got skipped. What is a terminal. What is a file system. What is Git. The early computer stuff that nobody teaches designers because everyone assumes someone else already did.
+    prereqs: None. This is the starting line.
+    outcomes:
+      - Understand what Zero Vector Design is and what you are building toward
+      - Navigate your computer from the terminal
+      - Understand how files and folders are organized
+      - Use Git for version control
+      - Push code to a repository on GitHub
+      - Deploy a project to the internet
+      - Understand how domain names and DNS work
+    lessons:
+      - what-is-zero-vector
+      - terminal
+      - file-systems
+      - git-basics
+      - repos
+      - deployment
+      - dns
+
+  - slug: 01-foundation
+    number: "01"
+    title: Foundation
+    subtitle: Think before you build. Then build while you think.
+    status: available
+    desc: Systems thinking. Architecture before code. The nouns-and-verbs exercise. Planning methodology. This is what separates Zero-Vector from vibe coding.
+    prereqs: Level 00 (Orientation) or equivalent comfort with terminal, Git, and file systems.
+    outcomes:
+      - Think in systems, not features
+      - Architect software before writing a line of code
+      - Identify nouns and verbs in any product idea
+      - Plan a project from concept to shipping
+      - Understand VECTOR.md as the central artifact of Zero Vector methodology
+      - Model data relationships like a designer
+      - Organize information so it makes sense to humans and machines
+    lessons:
+      - systems-thinking
+      - architecture
+      - nouns-and-verbs
+      - planning
+      - vector-md
+      - data-modeling
+      - information-architecture
+
+  - slug: 02-the-medium
+    number: "02"
+    title: The Medium
+    subtitle: Hands on the rock. No gloves.
+    status: available
+    desc: Working in code with AI agents. Claude Code, prompting, iteration. Building your first real thing that lives on the internet.
+    prereqs: Level 01 (Foundation). You should be comfortable with systems thinking and planning before you start building.
+    outcomes:
+      - Work with Claude Code as your AI engineering partner
+      - Write effective prompts that produce real results
+      - Iterate on code through conversation, not memorization
+      - Understand React well enough to read and direct it
+      - Deploy a real project to production
+      - Ship something real that you built with AI
+    lessons:
+      - claude-code
+      - prompting
+      - iteration
+      - react-basics
+      - deploy
+      - your-first-ship
+
+  - slug: 03-the-pipeline
+    number: "03"
+    title: The Pipeline
+    subtitle: Every phase. Every handoff. Collapsed.
+    status: available
+    desc: Applying Zero-Vector across the entire concept-to-customer arc. One project, end to end. Not theory. Practice.
+    prereqs: Level 02 (The Medium). You should have shipped at least one project before tackling the full pipeline.
+    outcomes:
+      - Conduct real user research without a research team
+      - Synthesize findings into actionable insights
+      - Frame a product around jobs-to-be-done
+      - Ideate, prototype, and validate with AI as your crew
+      - Ship a product through the complete concept-to-customer arc
+      - Use the Investiture scaffold to structure a new project from day one
+    lessons:
+      - research
+      - synthesis
+      - jtbd
+      - ideation
+      - prototyping
+      - validation
+      - shipping
+      - investiture
+
+  - slug: 04-orchestration
+    number: "04"
+    title: Orchestration
+    subtitle: One mind, many hands.
+    status: available
+    desc: Multiple agents. CLAUDE.md instruction files. The crew model. Building systems, not features.
+    prereqs: Level 03 (The Pipeline). You need hands-on shipping experience before orchestrating multiple agents.
+    outcomes:
+      - Write CLAUDE.md files that give agents persistent context
+      - Run multiple AI agents on the same project
+      - Design staged prompts for complex workflows
+      - Orchestrate agents as a team, not a tool
+      - Build quality gates that catch problems before they ship
+      - Implement the Crew Model for production-scale projects
+    lessons:
+      - claude-md
+      - multi-agent
+      - staged-prompts
+      - orchestration
+      - quality-gates
+      - the-crew-model
+
+  - slug: 05-auteur
+    number: "05"
+    title: Auteur
+    subtitle: Your practice. Your framework. Your contribution.
+    status: available
+    desc: You are no longer following the curriculum. You are building your own. The student becomes the practitioner. The practitioner becomes the auteur.
+    prereqs: Level 04 (Orchestration). This level assumes you have built and shipped real projects with AI agents.
+    outcomes:
+      - Develop your own personal methodology
+      - Design frameworks that others can follow
+      - Teach Zero-Vector principles to your team or community
+      - Contribute back to the open source movement
+      - Build and lead a community of practice
+      - Practice as a Systems Auteur — one mind, complete vision
+    lessons:
+      - personal-methodology
+      - framework-design
+      - teaching
+      - contribution
+      - community
+      - auteur-practice
+
+approach:
+  title: The Approach
+  subtitle: IKEA instructions for the Zero Vector workflow.
+  intro: The curriculum teaches you to think. The Approach shows you what to do. Step-by-step walkthroughs for every part of the design-led engineering workflow — from your first terminal session to coordinating a crew of AI agents.
+  categories:
+    - key: getting-started
+      label: Getting Started
+    - key: planning
+      label: Planning
+    - key: working-with-agents
+      label: Working with Agents
+    - key: build-workflow
+      label: The Build Workflow
+  guides:
+    - first-session
+    - scaffold-project
+    - writing-a-prd
+    - building-use-cases
+    - project-plan
+    - effective-instructions
+    - multiple-agents
+    - revision-history
+    - scaffold-feature
+    - debugging-with-ai

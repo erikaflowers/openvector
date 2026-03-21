@@ -10,9 +10,7 @@ import AnonWelcomeModal from '../components/AnonWelcomeModal';
 import SignInBanner from '../components/learn/SignInBanner';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import '../styles/site.css';
-import en from '../content/en';
-
-const { learn } = en;
+import learn from 'virtual:learn-content';
 
 function LearnLayout() {
   const { levelSlug, lessonSlug, guideSlug } = useParams();

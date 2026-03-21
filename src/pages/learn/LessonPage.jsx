@@ -1,5 +1,5 @@
 import { Link, useParams, useOutletContext } from 'react-router-dom';
-import LessonRenderer from '../../components/learn/LessonRenderer';
+import MarkdownRenderer from '../../components/learn/MarkdownRenderer';
 import KnowledgeCheck from '../../components/learn/KnowledgeCheck';
 import MarkCompleteButton from '../../components/learn/MarkCompleteButton';
 import LessonBadge from '../../components/learn/LessonBadge';
@@ -29,13 +29,11 @@ function LessonPage() {
     );
   }
 
-  // Build table of contents from sections with headings
-  const toc = (lesson.content?.sections || [])
-    .filter(s => s.heading)
-    .map(s => ({
-      heading: s.heading,
-      id: s.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-    }));
+  // Build table of contents from pre-extracted headings
+  const toc = (lesson.headings || []).map(h => ({
+    heading: h.text,
+    id: h.id,
+  }));
 
   return (
     <div className="ovl-with-rail">
@@ -49,7 +47,7 @@ function LessonPage() {
           <h1 className="ovl-lesson-title">{lesson.title}</h1>
           <p className="ovl-lesson-subtitle">{lesson.subtitle}</p>
         </header>
-        <LessonRenderer sections={lesson.content?.sections} />
+        <MarkdownRenderer content={lesson.markdownBody} />
         <KnowledgeCheck questions={lesson.knowledgeCheck} />
         <MarkCompleteButton levelSlug={levelSlug} lessonSlug={lessonSlug} />
       </article>

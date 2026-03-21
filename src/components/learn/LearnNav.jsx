@@ -3,9 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { SignInButton } from './SignInPrompt';
 import LearnSearch from './LearnSearch';
 import ThemeSwitcher from './ThemeSwitcher';
-import en from '../../content/en';
-
-const { learn } = en;
+import learn from 'virtual:learn-content';
 
 const networkItems = [
   { href: 'https://zerovector.design', label: 'Zero Vector' },

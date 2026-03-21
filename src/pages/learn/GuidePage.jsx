@@ -1,10 +1,10 @@
 import { Link, useParams, useOutletContext } from 'react-router-dom';
-import LessonRenderer from '../../components/learn/LessonRenderer';
+import MarkdownRenderer from '../../components/learn/MarkdownRenderer';
 import MarkCompleteButton from '../../components/learn/MarkCompleteButton';
 import LessonBadge from '../../components/learn/LessonBadge';
 import RightRail from '../../components/learn/RightRail';
 import useSEO from '../../hooks/useSEO';
-import { approachCategories } from '../../content/learn/approach';
+// Categories now come from the virtual module via learn.approach.categories
 
 function GuidePage() {
   const { guideSlug } = useParams();
@@ -13,7 +13,7 @@ function GuidePage() {
 
   const guide = approach.guides.find(g => g.slug === guideSlug);
   const category = guide
-    ? approachCategories.find(c => c.key === guide.category)
+    ? (approach.categories || []).find(c => c.key === guide.category)
     : null;
 
   useSEO({
@@ -32,17 +32,11 @@ function GuidePage() {
     );
   }
 
-  // Build table of contents from sections with headings or step titles
-  const toc = (guide.content?.sections || [])
-    .filter(s => s.heading || (s.type === 'step' && s.title))
-    .map(s => {
-      const label = s.heading || s.title;
-      const prefix = s.type === 'step' ? `${s.number}. ` : '';
-      return {
-        heading: `${prefix}${label}`,
-        id: label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-      };
-    });
+  // Build table of contents from pre-extracted headings
+  const toc = (guide.headings || []).map(h => ({
+    heading: h.text,
+    id: h.id,
+  }));
 
   // Resolve prerequisites to actual lesson data
   const prereqs = (guide.prerequisites || []).map(path => {
@@ -79,7 +73,7 @@ function GuidePage() {
             ))}
           </div>
         )}
-        <LessonRenderer sections={guide.content?.sections} />
+        <MarkdownRenderer content={guide.markdownBody} />
         <MarkCompleteButton levelSlug="approach" lessonSlug={guideSlug} />
       </article>
       <RightRail>

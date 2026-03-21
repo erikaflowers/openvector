@@ -3,7 +3,7 @@ import { useProgress } from '../../contexts/ProgressContext';
 import LessonBadge from './LessonBadge';
 import NotifyForm from '../NotifyForm';
 import { topicFilters } from '../../content/learn/resources';
-import { approachCategories } from '../../content/learn/approach';
+// (approach?.categories || []) now comes from the approach prop (approach.categories)
 import { SUGGESTED_PROMPTS } from '../../pages/learn/LearnChatPage';
 
 function LearnSidebar({ levels, activeLevelSlug, activeLessonSlug, approach, activeGuideSlug, open, onClose }) {
@@ -97,7 +97,7 @@ function LearnSidebar({ levels, activeLevelSlug, activeLessonSlug, approach, act
               <Link to="/learn/approach" className="ovl-sidebar-home" onClick={onClose}>
                 All Guides
               </Link>
-              {approachCategories.map(cat => {
+              {(approach?.categories || []).map(cat => {
                 const guides = (approach?.guides || []).filter(g => g.category === cat.key);
                 if (guides.length === 0) return null;
                 const hasActiveGuide = guides.some(g => g.slug === activeGuideSlug);

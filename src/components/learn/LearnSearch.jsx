@@ -1,30 +1,30 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Fuse from 'fuse.js';
-import en from '../../content/en';
-
-const { learn } = en;
+import learn from 'virtual:learn-content';
 
 function buildIndex() {
   const items = [];
 
-  // Extract searchable text from sections
-  function extractText(sections) {
-    const headings = [];
-    const bodyText = [];
-    (sections || []).forEach(s => {
-      if (s.heading) headings.push(s.heading);
-      if (s.title) headings.push(s.title);
-      if (Array.isArray(s.body)) bodyText.push(...s.body);
-      else if (typeof s.body === 'string') bodyText.push(s.body);
-    });
-    return { headings: headings.join(' '), body: bodyText.join(' ') };
+  // Extract searchable text from markdown body
+  function extractSearchText(lesson) {
+    const headings = (lesson.headings || []).map(h => h.text).join(' ');
+    // Strip markdown syntax for search body
+    const body = (lesson.markdownBody || '')
+      .replace(/^#{1,6}\s+/gm, '')     // headings
+      .replace(/```[\s\S]*?```/g, '')   // code blocks
+      .replace(/:::\w+.*$/gm, '')       // directive markers
+      .replace(/^>/gm, '')             // blockquotes
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links → text
+      .replace(/\n+/g, ' ')
+      .trim();
+    return { headings, body };
   }
 
   // Add all lessons
   learn.levels.forEach(level => {
     level.lessons.forEach(lesson => {
-      const { headings, body } = extractText(lesson.content?.sections);
+      const { headings, body } = extractSearchText(lesson);
       items.push({
         type: 'lesson',
         title: lesson.title,
@@ -40,7 +40,7 @@ function buildIndex() {
 
   // Add approach guides
   (learn.approach?.guides || []).forEach(guide => {
-    const { headings, body } = extractText(guide.content?.sections);
+    const { headings, body } = extractSearchText(guide);
     items.push({
       type: 'guide',
       title: guide.title,
