@@ -1949,6 +1949,19 @@ a:hover {
   background: var(--ovl-accent-hover);
 }
 
+.ovl-rail-bug-link {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ovl-text-tertiary);
+  text-align: center;
+  padding: 10px 16px;
+  transition: color 0.15s ease;
+}
+.ovl-rail-bug-link:hover {
+  color: var(--ovl-text-secondary);
+}
+
 @media (max-width: 900px) {
   .ovl-with-rail {
     grid-template-columns: 1fr;
