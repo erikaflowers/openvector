@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
 
 function bugReportUrl(pathname) {
-  const pageUrl = `https://learn.zerovector.design${pathname}`;
+  const pageUrl = `https://open.zerovector.design${pathname}`;
   const title = encodeURIComponent(`Bug report: ${pathname}`);
   const body = encodeURIComponent(`**Page:** ${pageUrl}\n\n**What happened:**\n\n`);
   return `https://github.com/erikaflowers/openvector/issues/new?title=${title}&body=${body}&labels=bug`;
