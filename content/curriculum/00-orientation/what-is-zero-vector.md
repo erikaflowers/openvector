@@ -55,7 +55,7 @@ Level 00, Orientation, is where you are now. You will learn the tools of the tra
 
 Level 01, Foundation, teaches you how to think in systems. Architecture, planning, data modeling, information architecture. This is the conceptual backbone that makes everything else possible. You will also meet VECTOR.md, the central artifact of the Zero Vector methodology.
 
-Level 02, The Build, is where you get your hands dirty. You will set up a real development environment, scaffold a project, and start building with AI agents doing the heavy lifting under your direction.
+Level 02, The Medium, is where you get your hands dirty. You will set up a real development environment, scaffold a project, and start building with AI agents doing the heavy lifting under your direction.
 
 Level 03, The Pipeline, walks you through the full product development cycle: research, synthesis, jobs to be done, ideation, prototyping, validation, shipping. And you will meet Investiture, the framework that ties it all together.
 
