@@ -75,7 +75,7 @@ Let us walk through the Netlify workflow, since it is what we use:
 
 2. Click "Add new site" → "Import an existing project" → select GitHub.
 
-3. Pick your repository from the list.
+3. Pick the repository you want to deploy from the list of your existing Github repos.
 
 4. Set the build command: npm run build.
 
