@@ -94,7 +94,7 @@ git push -u origin main
 ```
 
 :::exercise{title="Clone and Explore"}
-Go to github.com and find any public repository that interests you (or search for "awesome" lists, which are curated collections of tools and resources). Copy the clone URL (the green "Code" button → HTTPS URL). Open your terminal, navigate to where you keep projects (cd ~/Desktop or similar), and run git clone <paste-url-here>. Enter the folder with cd <project-name>. Run ls -la to see the file structure. Run cat README.md to read the project description right in your terminal. Run git log --oneline to see the commit history. You are now inside someone else's project, reading their work, and seeing their history.
+Go to github.com and find any public repository that interests you (or use the Search option in the Github header to search for "awesome lists", curated collections of tools and resources). Copy the clone URL (the green "Code" button → HTTPS URL). Open your terminal, navigate to where you keep projects (cd ~/Desktop or similar), and run git clone <paste-url-here>. Enter the folder with cd <project-name>. Run ls -la to see the file structure. Run cat README.md to read the project description right in your terminal. Run git log --oneline to see the commit history. You are now inside someone else's project, reading their work, and seeing their history.
 :::
 
 :::resources{title="Go Deeper"}
