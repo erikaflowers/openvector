@@ -7,10 +7,13 @@
  * All CSS classes match the existing OVL design system — no style changes needed.
  */
 
+import { createContext, useContext } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkDirective from 'remark-directive';
 import { remarkCustomDirectives } from '../../utils/remark-custom-directives';
+
+const InsidePreContext = createContext(false);
 
 function headingId(text) {
   const str = typeof text === 'string' ? text : extractText(text);
@@ -23,6 +26,16 @@ function extractText(children) {
   if (Array.isArray(children)) return children.map(extractText).join('');
   if (children?.props?.children) return extractText(children.props.children);
   return '';
+}
+
+/** Custom component: Prerequisite block (used inside exercise blocks) */
+function PrereqBlock({ children, title }) {
+  return (
+    <div className="ovl-exercise-prereq">
+      <div className="ovl-prereq-label">{title || 'Before you start'}</div>
+      <div className="ovl-prereq-body">{children}</div>
+    </div>
+  );
 }
 
 /** Custom component: Exercise block */
@@ -88,7 +101,9 @@ const components = {
     <blockquote className="ovl-block ovl-block-callout">{children}</blockquote>
   ),
   pre: ({ children }) => (
-    <pre className="ovl-block ovl-block-code">{children}</pre>
+    <InsidePreContext.Provider value={true}>
+      <pre className="ovl-block ovl-block-code">{children}</pre>
+    </InsidePreContext.Provider>
   ),
   a: ({ href, children }) => {
     if (href?.startsWith('http')) {
@@ -96,14 +111,14 @@ const components = {
     }
     return <a href={href}>{children}</a>;
   },
-  ul: ({ children }) => (
-    <ul className="ovl-resource-list">{children}</ul>
-  ),
-  li: ({ children }) => (
-    <li className="ovl-resource-item">{children}</li>
-  ),
+  code: ({ children, className }) => {
+    const insidePre = useContext(InsidePreContext)
+    if (insidePre || className) return <code className={className}>{children}</code>
+    return <code className="ovl-inline-code">{children}</code>
+  },
 
   // Custom directive components
+  prereq: PrereqBlock,
   exercise: ExerciseBlock,
   'template-block': TemplateBlock,
   step: StepBlock,

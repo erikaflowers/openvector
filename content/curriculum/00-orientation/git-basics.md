@@ -48,17 +48,17 @@ git commit -m "Add landing page layout and base styles"
 
 ## The Core Commands
 
-git init starts tracking a project. Run this once in a project folder and Git begins watching. It creates a hidden .git folder where all the history lives.
+`git init` starts tracking a project. Run this once in a project folder and Git begins watching. It creates a hidden .git folder where all the history lives.
 
-git status is your best friend. Shows what has changed, what is staged, what is not. Run this constantly. When in doubt, run git status.
+`git status` is your best friend. Shows what has changed, what is staged, what is not. Run this constantly. When in doubt, run `git status`.
 
-git add stages changes. git add filename.js stages one file. git add . stages everything that changed. Be intentional about what you stage.
+`git add` stages changes. `git add filename.js` stages one file. `git add .` stages everything that changed. Be intentional about what you stage.
 
-git commit -m "message" saves a snapshot. The -m flag lets you write the message inline. Everything in the staging area becomes a permanent part of history.
+`git commit -m "message"` saves a snapshot. The `-m` flag lets you write the message inline. Everything in the staging area becomes a permanent part of history.
 
-git log shows the history. Shows every commit, who made it, when, and the message. Press q to exit the log view.
+`git log` shows the history. Shows every commit, who made it, when, and the message. Press q to exit the log view.
 
-git diff shows what changed. Shows the exact lines that were added, removed, or modified since your last commit. Invaluable for reviewing your work before committing.
+`git diff` shows what changed. Shows the exact lines that were added, removed, or modified since your last commit. Invaluable for reviewing your work before committing.
 
 ```
 git init                          # Start tracking this folder
@@ -87,19 +87,42 @@ The convention: start with a verb in imperative mood (Add, Fix, Update, Remove, 
 
 Here is the most important thing about Git: you almost cannot lose work. If you committed it, it is saved. Even if you make a mess, the history is still there.
 
-If you are unsure what state things are in, run git status. It always tells you the truth.
+If you are unsure what state things are in, run `git status`. It always tells you the truth.
 
-If you made changes you want to undo before committing, git checkout -- filename restores a file to its last committed state.
+If you made changes you want to undo before committing, `git checkout -- filename` restores a file to its last committed state.
 
-If you committed something you did not mean to, git revert creates a new commit that undoes the previous one without erasing history.
+If you committed something you did not mean to, `git revert` creates a new commit that undoes the previous one without erasing history.
 
 The only way to truly lose work is to delete uncommitted changes. So the rule is simple: commit early, commit often. A commit costs nothing. Losing an hour of work costs a lot.
 
 > When in doubt, commit. You can always reorganize history later. But you cannot recover work you never committed.
 
-:::exercise{title="Your First Repository"}
-Open your terminal. Create a project folder: mkdir git-practice && cd git-practice. Initialize Git: git init. You should see "Initialized empty Git repository." Create a file: touch README.md. Run git status; it shows README.md as untracked. Stage it: git add README.md. Run git status again; it is now staged. Commit: git commit -m "Initial commit with README". Run git log to see your first commit. Now open README.md in any text editor, add a line of text, save it. Run git diff, and you can see exactly what changed. Stage and commit: git add . && git commit -m "Add description to README". Run git log, and you now have two commits. You have a time machine.
+::::exercise{title="Your First Repository"}
+
+:::prereq
+Confirm Git is installed: run `git --version` in your terminal. If you see a version number, you are ready. If not:
+
+- **Mac:** Run `xcode-select --install` in your terminal. When it finishes, Git will be available. Alternatively, download the installer from [git-scm.com](https://git-scm.com/download/mac).
+- **Windows:** Download Git for Windows from [git-scm.com](https://git-scm.com/download/win) and run the installer with default settings. It includes Git Bash, a terminal that works with the commands in this lesson.
 :::
+
+- Open your terminal
+- Create a project folder: `mkdir git-practice && cd git-practice`
+- Initialize Git: `git init`
+- You should see "Initialized empty Git repository." 
+- Create a file: `touch README.md`
+- Run `git status`; it shows README.md as untracked 
+- Stage it: `git add README.md`
+- Run `git status` again; it is now staged 
+- Commit: `git commit -m "Initial commit with README"`
+- Run `git log` to see your first commit
+- Now open README.md in any text editor, add a line of text, save it
+- Run `git diff`, and you can see exactly what changed
+- Stage and commit: `git add . && git commit -m "Add description to README"`
+- Run `git log`, and you now have two commits
+
+You have a time machine.
+::::
 
 :::resources{title="Go Deeper"}
 - [Pro Git (free book)](https://git-scm.com/book/en/v2). The definitive Git reference. Chapters 1-3 cover everything a beginner needs.

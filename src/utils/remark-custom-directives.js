@@ -60,6 +60,7 @@ export function remarkCustomDirectives() {
           template: 'template-block',
           step: 'step',
           resources: 'resources',
+          prereq: 'prereq',
         };
 
         // Only process directives we explicitly support.
