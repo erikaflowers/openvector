@@ -10,6 +10,9 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+[context.deploy-preview]
+  ignore = "exit 1"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
