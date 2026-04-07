@@ -98,7 +98,16 @@ It struggles with ambiguity. "Make it better" is a bad instruction. Better how? 
 It can produce code you do not understand. This is the most important risk. If you accept code without understanding it, you are vibe coding, letting the AI drive while you sit in the back seat. The Zero Vector approach: always understand what the agent built and why. If you do not understand it, ask the agent to explain before moving on.
 
 :::exercise{title="Start Your First Session"}
-Create a new folder: mkdir claude-practice && cd claude-practice. Initialize a project: npm create vite@latest . -- --template react (accept the defaults). Install dependencies: npm install. Start Claude Code: claude. Your first instruction: "Read the project structure and explain what each file does." Let it explore and explain. Then: "Create a simple component called Greeting that takes a name prop and displays Hello, {name}." Review the code it writes. Does it match the existing patterns? Approve it, then run npm run dev to see your app.
+- Create a new folder: `mkdir claude-practice && cd claude-practice`
+- Initialize a project: `npm create vite@latest . -- --template react` (accept the defaults)
+- Install dependencies: `npm install`
+- Start Claude Code: `claude`
+- Your first instruction: "Read the project structure and explain what each file does."
+- Let it explore and explain.
+- Then: "Create a simple component called Greeting that takes a name prop and displays 'Hello, {name}' and update App.jsx to use the Greeting component."
+- Review the code it writes. Does it match the existing patterns?
+- Approve it, if requested
+- Run the app: `npm run dev`
 :::
 
 :::resources{title="Go Deeper"}
