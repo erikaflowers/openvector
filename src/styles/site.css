@@ -2240,12 +2240,13 @@ a:hover {
   border-radius: 4px;
 }
 
-.ovl-exercise-prereq {
-  background: rgba(0, 230, 138, 0.05);
-  border: 1px solid rgba(0, 230, 138, 0.2);
+.ovl-block-prereq {
+  margin: 36px 0;
+  padding: 24px;
+  border: 1px solid rgba(255, 208, 0, 0.3);
+  border-left: 3px solid var(--color-yellow);
+  background: rgba(255, 208, 0, 0.04);
   border-radius: 4px;
-  padding: 16px 20px;
-  margin-bottom: 20px;
 }
 
 .ovl-prereq-label {
@@ -2253,8 +2254,8 @@ a:hover {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: rgba(0, 230, 138, 0.8);
+  letter-spacing: 0.1em;
+  color: var(--color-yellow);
   margin-bottom: 8px;
 }
 
@@ -2274,6 +2275,33 @@ a:hover {
 }
 
 .ovl-exercise-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin-bottom: 8px;
+}
+
+.ovl-block-extracredit {
+  margin: 36px 0;
+  padding: 24px;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-left: 3px solid var(--color-purple);
+  background: rgba(168, 85, 247, 0.04);
+  border-radius: 4px;
+}
+
+.ovl-extracredit-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-purple);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.ovl-extracredit-title {
   font-family: var(--font-display);
   font-size: 1.1rem;
   font-weight: 700;

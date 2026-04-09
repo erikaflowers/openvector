@@ -28,12 +28,23 @@ function extractText(children) {
   return '';
 }
 
-/** Custom component: Prerequisite block (used inside exercise blocks) */
+/** Custom component: Prerequisite block */
 function PrereqBlock({ children, title }) {
   return (
-    <div className="ovl-exercise-prereq">
+    <div className="ovl-block ovl-block-prereq">
       <div className="ovl-prereq-label">{title || 'Before you start'}</div>
       <div className="ovl-prereq-body">{children}</div>
+    </div>
+  );
+}
+
+/** Custom component: Extra Credit block */
+function ExtraCreditBlock({ children, title }) {
+  return (
+    <div className="ovl-block ovl-block-extracredit">
+      <div className="ovl-extracredit-label">Extra Credit</div>
+      {title && <h3 className="ovl-extracredit-title">{title}</h3>}
+      <div className="ovl-extracredit-body">{children}</div>
     </div>
   );
 }
@@ -119,6 +130,7 @@ const components = {
 
   // Custom directive components
   prereq: PrereqBlock,
+  extracredit: ExtraCreditBlock,
   exercise: ExerciseBlock,
   'template-block': TemplateBlock,
   step: StepBlock,

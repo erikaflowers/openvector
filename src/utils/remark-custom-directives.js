@@ -9,6 +9,7 @@
  *   :::template{title="..."}  → <template-block title="..."> (content treated as raw text)
  *   :::step{number="01" title="..."} → <step number="01" title="...">
  *   :::resources{title="..."}  → <resources title="...">
+ *   :::extracredit{title="..."}  → <extracredit title="...">
  */
 
 import { visit } from 'unist-util-visit';
@@ -61,6 +62,7 @@ export function remarkCustomDirectives() {
           step: 'step',
           resources: 'resources',
           prereq: 'prereq',
+          extracredit: 'extracredit',
         };
 
         // Only process directives we explicitly support.
