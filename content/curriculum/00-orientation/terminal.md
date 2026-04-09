@@ -25,21 +25,36 @@ When you open a terminal, you are talking directly to your operating system. No 
 
 ## Why Designers Need This
 
-Because every AI coding tool runs in a terminal. Claude Code, Cursor, Copilot: they all live here. If you cannot navigate a terminal, you cannot use the most powerful creative tools ever built.
+It is true that AI coding tools are increasingly available through graphical interfaces. Claude has a Code tab in its desktop app. Cursor and Copilot work inside visual editors. You can build real things without ever opening a terminal.
 
-More importantly: the terminal teaches you how computers actually think. Not how GUI designers want you to think computers think. The real thing. And understanding the real thing is what separates intentional creation from vibe coding.
+But those GUI tools are wrappers around the command line, not replacements for it. When something breaks, when you need to debug a build, when the GUI does not expose the option you need, you end up in the terminal. The developers who are most effective with AI tools are the ones who understand what is happening underneath.
+
+More importantly: the terminal teaches you how computers actually think. Not how GUI designers want you to think computers think. The real thing. And understanding the real thing is what separates intentional creation from vibe coding. Throughout this curriculum, we work in the command line, because that is where the deepest understanding lives.
 
 ## Opening Your Terminal
 
 On Mac: press Cmd+Space, type "Terminal", press Enter. You will see a window with a blinking cursor. That is it. You are in.
 
+```
+Last login: Mon Apr 6 15:32:22 on console
+user@mac ~ % █
+```
+
 On Windows: press the Windows key, type "PowerShell", press Enter. Same idea, different name.
+
+```
+PS C:\Users\you> █
+```
 
 On Linux: you already know where it is.
 
+```
+user@linux:~$ █
+```
+
 ## The Basics
 
-Every terminal command follows the same pattern: a verb, optionally followed by a target. ls means "list." cd means "change directory." mkdir means "make directory." The commands are short because the people who invented them were typing on slow connections and every keystroke mattered.
+Every terminal command follows the same pattern: a verb, optionally followed by a target. `ls` means "list." `cd` means "change directory." `mkdir` means "make directory." The commands are short because the people who invented them were typing on slow connections and every keystroke mattered.
 
 You will learn these naturally as you build. For now, the only thing that matters is that you opened a terminal, typed a command, and something happened. That is the foundation everything else builds on.
 
@@ -47,25 +62,25 @@ You will learn these naturally as you build. For now, the only thing that matter
 
 You do not need to memorize a hundred commands. You need about ten. Here are the ones you will use constantly:
 
-pwd (Print Working Directory). Shows where you are right now. Think of it as "What folder am I in?"
+`pwd` (Print Working Directory). Shows where you are right now. Think of it as "What folder am I in?"
 
-ls (List). Shows what is in the current folder. Files, folders, everything visible.
+`ls` (List). Shows what is in the current folder. Files, folders, everything visible.
 
-cd (Change Directory). Moves you into a different folder. cd Documents takes you into Documents. cd .. takes you up one level. cd ~ takes you home.
+`cd` (Change Directory). Moves you into a different folder. `cd Documents` takes you into Documents. `cd ..` takes you up one level. `cd ~` takes you home.
 
-mkdir (Make Directory). Creates a new folder. mkdir my-project creates a folder called my-project.
+`mkdir` (Make Directory). Creates a new folder. `mkdir my-project` creates a folder called my-project.
 
-touch creates an empty file. touch index.html makes a blank HTML file. On Windows, use New-Item index.html instead.
+`touch` creates an empty file. `touch index.html` makes a blank HTML file. On Windows, use `New-Item index.html` instead.
 
-cp (Copy). cp file.txt backup.txt copies a file. Add -r to copy entire folders.
+`cp` (Copy). `cp file.txt backup.txt` copies a file. Add `-r` to copy entire folders.
 
-mv (Move, or rename). mv old.txt new.txt renames a file. mv file.txt ~/Desktop/ moves it.
+`mv` (Move, or rename). `mv old.txt new.txt` renames a file. `mv file.txt ~/Desktop/` moves it.
 
-rm (Remove). Deletes a file. rm file.txt is gone, with no Trash and no undo. Add -r for folders. Treat this command with respect.
+`rm` (Remove). Deletes a file. `rm file.txt` is gone, with no Trash and no undo. Add `-r` for folders. Treat this command with respect.
 
-cat (Concatenate). Displays the contents of a file in the terminal. cat readme.txt shows you what is inside.
+`cat` (Concatenate). Displays the contents of a file in the terminal. `cat readme.txt` shows you what is inside.
 
-clear clears your screen. Does not delete anything. Just tidies up.
+`clear` clears your screen. Does not delete anything. Just tidies up.
 
 ```
 pwd                     # Where am I?
@@ -80,11 +95,11 @@ cd ..                   # Go back up one level
 
 ## Flags and Options
 
-Most commands accept flags, which are modifiers that change their behavior. Flags start with a dash. ls -l shows a detailed list. ls -a shows hidden files. ls -la does both.
+Most commands accept flags, which are modifiers that change their behavior. Flags start with a dash. `ls -l` shows a detailed list. `ls -a` shows hidden files. `ls -la` does both.
 
-The pattern is always: command -flags target. That is it. If you ever want to know what flags a command supports, type the command followed by --help. For example: ls --help. This works for almost everything.
+The pattern is always: `command -flags target`. That is it. If you ever want to know what flags a command supports, type the command followed by `--help`. For example: `ls --help`. This works for almost everything.
 
-Single-letter flags use one dash: -l, -a, -r. Full-word flags use two dashes: --help, --version, --recursive. Some commands support both: -r and --recursive do the same thing.
+Single-letter flags use one dash: `-l`, `-a`, `-r`. Full-word flags use two dashes: `--help`, `--version`, `--recursive`. Some commands support both: `-r` and `--recursive` do the same thing.
 
 ## Tab Completion and History
 
@@ -102,7 +117,7 @@ You will type something wrong. The terminal will give you an error. This is fine
 
 "command not found" means you misspelled something or the program is not installed. Check the spelling.
 
-"No such file or directory" means the path is wrong. Run pwd to check where you are, and ls to see what is actually there.
+"No such file or directory" means the path is wrong. Run `pwd` to check where you are, and `ls` to see what is actually there.
 
 "Permission denied" means the system is protecting something. You will learn about permissions later. For now, do not force it.
 
@@ -110,10 +125,21 @@ If a command seems stuck and nothing is happening, press Ctrl+C. This cancels th
 
 If your terminal looks completely broken (weird characters, no prompt, nothing makes sense), type reset and press Enter. It resets the display without losing anything.
 
-Remember: you cannot break your computer by typing commands in a terminal. The only dangerous command is rm (delete), and even then, you have to actively tell it what to delete. Relax. Experiment.
+Remember: you cannot break your computer by typing commands in a terminal. The only dangerous command is `rm` (delete), and even then, you have to actively tell it what to delete. Relax. Experiment.
 
 :::exercise{title="Navigate, Create, Explore"}
-Open your terminal. Run pwd to see where you are. Run cd ~/Desktop to navigate to your Desktop (or cd $HOME/Desktop on some systems). Run mkdir terminal-practice to create a folder. Run cd terminal-practice to go inside it. Run touch hello.txt to create a file. Run ls to confirm it is there. Run cat hello.txt; it is empty, that is fine. Run cd .. to go back up. You just navigated, created, and explored. That is 90% of terminal use.
+Open your terminal. 
+
+- Run `pwd` to see where you are 
+- Run `cd ~/Desktop` to navigate to your Desktop (or `cd $HOME/Desktop` on some systems) 
+- Run `mkdir terminal-practice` to create a folder 
+- Run `cd terminal-practice` to go inside it
+- Run `touch hello.txt` to create a file
+- Run `ls` to confirm it is there
+- Run `cat hello.txt`; it is empty, that is fine
+- Run `cd ..` to go back up
+
+You just navigated, created, and explored. That is 90% of terminal use.
 :::
 
 :::resources{title="Go Deeper"}
