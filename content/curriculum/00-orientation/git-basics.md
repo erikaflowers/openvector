@@ -15,6 +15,13 @@ knowledgeCheck:
   - question: The lesson says "commit early, commit often." What is the risk of waiting too long between commits, and why is a frequent small commit better than a rare large one?
 ---
 
+:::prereq
+Confirm Git is installed: run `git --version` in your terminal. If you see a version number, you are ready. If not:
+
+- **Mac:** Run `xcode-select --install` in your terminal. When it finishes, Git will be available. Alternatively, download the installer from [git-scm.com](https://git-scm.com/download/mac).
+- **Windows:** Download Git for Windows from [git-scm.com](https://git-scm.com/download/win) and run the installer with default settings. It includes Git Bash, a terminal that works with the commands in this lesson.
+:::
+
 ## What Is Version Control?
 
 Imagine writing a novel and being able to rewind to any paragraph you ever wrote, on any day, and see exactly what changed, who changed it, and why. That is version control.
@@ -97,14 +104,7 @@ The only way to truly lose work is to delete uncommitted changes. So the rule is
 
 > When in doubt, commit. You can always reorganize history later. But you cannot recover work you never committed.
 
-::::exercise{title="Your First Repository"}
-
-:::prereq
-Confirm Git is installed: run `git --version` in your terminal. If you see a version number, you are ready. If not:
-
-- **Mac:** Run `xcode-select --install` in your terminal. When it finishes, Git will be available. Alternatively, download the installer from [git-scm.com](https://git-scm.com/download/mac).
-- **Windows:** Download Git for Windows from [git-scm.com](https://git-scm.com/download/win) and run the installer with default settings. It includes Git Bash, a terminal that works with the commands in this lesson.
-:::
+:::exercise{title="Your First Repository"}
 
 - Open your terminal
 - Create a project folder: `mkdir git-practice && cd git-practice`
@@ -122,7 +122,7 @@ Confirm Git is installed: run `git --version` in your terminal. If you see a ver
 - Run `git log`, and you now have two commits
 
 You have a time machine.
-::::
+:::
 
 :::resources{title="Go Deeper"}
 - [Pro Git (free book)](https://git-scm.com/book/en/v2). The definitive Git reference. Chapters 1-3 cover everything a beginner needs.
