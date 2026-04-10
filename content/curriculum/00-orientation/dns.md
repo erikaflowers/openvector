@@ -68,15 +68,16 @@ Here is where the previous lesson and this one meet:
 
 You deployed your site (Deployment lesson). Netlify gave you a URL like `my-project.netlify.app`. It works. People can visit it. But you want your own domain, `my-project.com`, pointing there instead.
 
-The process: 
-- Go to your domain registrar's DNS settings
-- Add a `CNAME` record pointing your domain to `my-project.netlify.app`
-- Tell Netlify about your custom domain in the site settings
-- Wait
+The process:
 
-That is the whole process. 
+- Buy a domain from a registrar (**Namecheap**, **Cloudflare**, **Porkbun**).
+- In Netlify: Site settings → Domain management → Add custom domain.
+- Netlify tells you what DNS records to set.
+- Go to your registrar's DNS settings and add a `CNAME` record pointing your domain to `my-project.netlify.app`.
+- Wait for propagation (covered in the next section of this lesson).
+- Netlify automatically provisions an SSL certificate. Your site is live on your own domain, with HTTPS, for free.
 
-Two configuration changes (one at your registrar, one at your hosting platform) and your custom domain serves your deployed site. Netlify even handles the SSL certificate automatically.
+That is the whole process. Two configuration changes (one at your registrar, one at your hosting platform) and your custom domain serves your deployed site.
 
 ## Propagation
 
