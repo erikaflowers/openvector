@@ -5,7 +5,7 @@ subtitle: Your first interface was a command line. It still is.
 duration: 20 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: '2026-04-10'
 knowledgeCheck:
   - question: What does "cd" stand for, and why is it one of the most-used commands in any terminal workflow?
     hint: Think about what you do constantly when working on projects, like moving between folders.
@@ -97,9 +97,11 @@ cd ..                   # Go back up one level
 
 Most commands accept flags, which are modifiers that change their behavior. Flags start with a dash. `ls -l` shows a detailed list. `ls -a` shows hidden files. `ls -la` does both.
 
-The pattern is always: `command -flags target`. That is it. If you ever want to know what flags a command supports, type the command followed by `--help`. For example: `ls --help`. This works for almost everything.
+The pattern is always: `command -flags target`. That is it. If you ever want to know what a command does and what flags it supports, type `man command`. For example: `man ls` pulls up the manual page for `ls`. Press `q` to quit and return to the prompt. `man` is short for "manual" and it works on every Unix system, including macOS and Linux.
 
-Single-letter flags use one dash: `-l`, `-a`, `-r`. Full-word flags use two dashes: `--help`, `--version`, `--recursive`. Some commands support both: `-r` and `--recursive` do the same thing.
+You will also see `command --help` used a lot, especially in tutorials written for Linux. It works on most Linux tools, but not on all of macOS's built-in commands, which come from a different lineage called BSD. `ls --help` on a Mac will give you an error, not a help page. When in doubt, reach for `man`.
+
+Single-letter flags use one dash: `-l`, `-a`, `-r`. Full-word flags use two dashes, like `--recursive` or `--verbose`. Some commands offer both forms: `-r` and `--recursive` often mean the same thing. The exact flags each command supports vary — when you want to know, check `man command`.
 
 ## Tab Completion and History
 
