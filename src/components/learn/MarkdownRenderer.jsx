@@ -28,10 +28,10 @@ function extractText(children) {
   return '';
 }
 
-/** Custom component: Prerequisite block (used inside exercise blocks) */
+/** Custom component: Prerequisite block */
 function PrereqBlock({ children, title }) {
   return (
-    <div className="ovl-exercise-prereq">
+    <div className="ovl-block ovl-block-prereq">
       <div className="ovl-prereq-label">{title || 'Before you start'}</div>
       <div className="ovl-prereq-body">{children}</div>
     </div>
