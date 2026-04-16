@@ -5095,31 +5095,17 @@ a:hover {
   flex-shrink: 0;
 }
 
-/* --- Workflows Page (Coming Soon) --- */
+/* --- Workflow Catalog --- */
 
-.ovl-workflows {
-  max-width: 760px;
+.ovl-wf-catalog {
+  max-width: 900px;
 }
 
-.ovl-workflows-header {
+.ovl-wf-catalog-header {
   margin-bottom: 40px;
 }
 
-.ovl-workflows-badge {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-orange);
-  border: 1px solid var(--color-orange);
-  border-radius: 3px;
-  padding: 3px 10px;
-  margin-bottom: 12px;
-}
-
-.ovl-workflows-title {
+.ovl-wf-catalog-title {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 4vw, 2.4rem);
   font-weight: 800;
@@ -5128,125 +5114,1012 @@ a:hover {
   letter-spacing: -0.02em;
 }
 
-.ovl-workflows-subtitle {
+.ovl-wf-catalog-subtitle {
   font-size: 1.1rem;
   line-height: 1.6;
+  color: var(--ovl-text-secondary);
+  margin: 0 0 12px;
+  max-width: 600px;
+}
+
+.ovl-wf-catalog-desc {
+  font-size: 0.95rem;
+  line-height: 1.7;
   color: var(--ovl-text-secondary);
   margin: 0;
   max-width: 600px;
 }
 
-.ovl-workflows-intro {
-  margin-bottom: 48px;
+.ovl-wf-catalog-loading,
+.ovl-wf-catalog-empty {
+  padding: 40px 0;
+  color: var(--ovl-text-secondary);
 }
 
-.ovl-workflows-intro-body p {
+.ovl-wf-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* --- Workflow Card --- */
+
+.ovl-wf-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--ovl-border);
+  border-radius: 8px;
+  background: var(--ovl-bg-elevated);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.ovl-wf-card:hover {
+  border-color: var(--ovl-accent);
+  box-shadow: 0 2px 12px rgba(0, 85, 255, 0.08);
+}
+
+.ovl-wf-card--purchased {
+  border-color: var(--ovl-success);
+}
+
+.ovl-wf-card-cover {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--ovl-bg-surface);
+}
+
+.ovl-wf-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ovl-wf-card-cover--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ovl-wf-card-cover-glyph {
+  font-size: 2.5rem;
+  color: var(--ovl-text-tertiary);
+  opacity: 0.4;
+}
+
+.ovl-wf-card-body {
+  padding: 16px 20px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ovl-wf-card-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ovl-text);
+  margin: 0 0 4px;
+}
+
+.ovl-wf-card-subtitle {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ovl-text-secondary);
+  margin: 0 0 12px;
+  flex: 1;
+}
+
+.ovl-wf-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ovl-wf-card-price {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ovl-accent);
+}
+
+.ovl-wf-card-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.ovl-wf-card-badge--purchased {
+  color: var(--ovl-success);
+  border: 1px solid var(--ovl-success);
+}
+
+/* --- Workflow Detail Page --- */
+
+.ovl-wf-detail {
+  max-width: 760px;
+}
+
+.ovl-wf-detail-loading {
+  padding: 40px 0;
+  color: var(--ovl-text-secondary);
+}
+
+.ovl-wf-detail-success {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  background: rgba(0, 170, 68, 0.08);
+  border: 1px solid var(--ovl-success);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--ovl-success);
+  animation: ovl-wf-fade-in 0.3s ease;
+}
+
+.ovl-wf-detail-success-icon {
+  font-size: 1.2rem;
+}
+
+.ovl-wf-detail-back {
+  font-size: 0.85rem;
+  color: var(--ovl-text-tertiary);
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.ovl-wf-detail-back:hover {
+  color: var(--ovl-accent);
+}
+
+.ovl-wf-detail-header {
+  margin-bottom: 24px;
+}
+
+.ovl-wf-detail-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 800;
+  color: var(--ovl-text);
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+
+.ovl-wf-detail-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ovl-text-secondary);
+  margin: 0;
+}
+
+.ovl-wf-detail-cover {
+  margin-bottom: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ovl-wf-detail-cover img {
+  width: 100%;
+  display: block;
+}
+
+.ovl-wf-detail-desc {
+  margin-bottom: 32px;
+}
+
+.ovl-wf-detail-desc p {
   font-size: 1rem;
   line-height: 1.7;
+  color: var(--ovl-text);
+  margin: 0;
+}
+
+.ovl-wf-detail-section-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
   color: var(--ovl-text);
   margin: 0 0 16px;
 }
 
-.ovl-workflows-section-title {
+.ovl-wf-detail-pages {
+  margin-bottom: 40px;
+}
+
+.ovl-wf-detail-page-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ovl-wf-detail-page-item {
+  border-bottom: 1px solid var(--ovl-border);
+}
+
+.ovl-wf-detail-page-item:first-child {
+  border-top: 1px solid var(--ovl-border);
+}
+
+.ovl-wf-detail-page-item a,
+.ovl-wf-detail-page-locked {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.1s;
+}
+
+.ovl-wf-detail-page-item a:hover {
+  background: var(--ovl-bg-hover);
+}
+
+.ovl-wf-detail-page-item--locked .ovl-wf-detail-page-title {
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-wf-detail-page-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ovl-text-tertiary);
+  min-width: 24px;
+  text-align: center;
+}
+
+.ovl-wf-detail-page-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ovl-text);
+  flex: 1;
+}
+
+.ovl-wf-detail-page-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ovl-success);
+  border: 1px solid var(--ovl-success);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
+.ovl-wf-detail-page-check {
+  color: var(--ovl-success);
+  font-size: 0.9rem;
+}
+
+.ovl-wf-detail-page-lock {
+  font-size: 0.8rem;
+  opacity: 0.4;
+}
+
+.ovl-wf-detail-page-duration {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-wf-detail-page-item--done .ovl-wf-detail-page-title {
+  color: var(--ovl-success);
+}
+
+/* Detail CTA */
+
+.ovl-wf-detail-cta {
+  margin-bottom: 40px;
+}
+
+.ovl-wf-detail-cta-card {
+  padding: 28px;
+  border: 1px solid var(--ovl-accent);
+  border-radius: 8px;
+  background: var(--ovl-accent-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.ovl-wf-detail-cta-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ovl-wf-detail-cta-price {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--ovl-text);
+}
+
+.ovl-wf-detail-cta-label {
+  font-size: 0.85rem;
+  color: var(--ovl-text-secondary);
+}
+
+/* --- Purchase Button --- */
+
+.ovl-purchase {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ovl-purchase-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 28px;
+  background: var(--ovl-accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.ovl-purchase-btn:hover:not(:disabled) {
+  background: var(--ovl-accent-hover);
+}
+
+.ovl-purchase-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ovl-purchase-price {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.ovl-purchase-error {
+  font-size: 0.85rem;
+  color: var(--color-red);
+  margin: 0;
+}
+
+/* --- Workflow Progress Bar --- */
+
+.ovl-wf-progress {
+  margin-bottom: 28px;
+}
+
+.ovl-wf-progress-bar {
+  height: 6px;
+  background: var(--ovl-bg-surface);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.ovl-wf-progress-fill {
+  height: 100%;
+  background: var(--ovl-success);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.ovl-wf-progress-text {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ovl-text-tertiary);
+}
+
+/* --- Workflow Page View --- */
+
+.ovl-wf-page {
+  max-width: 760px;
+}
+
+.ovl-wf-page-loading {
+  padding: 40px 0;
+  color: var(--ovl-text-secondary);
+}
+
+.ovl-wf-page-gate {
+  max-width: 480px;
+  margin: 80px auto;
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.ovl-wf-page-gate h2 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
   font-weight: 700;
   color: var(--ovl-text);
-  margin: 0 0 20px;
+  margin: 0 0 12px;
 }
 
-.ovl-workflows-features {
-  margin-bottom: 48px;
+.ovl-wf-page-gate p {
+  font-size: 1rem;
+  color: var(--ovl-text-secondary);
+  margin: 0 0 24px;
 }
 
-.ovl-workflows-feature-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+.ovl-wf-page-header {
+  margin-bottom: 24px;
 }
 
-.ovl-workflows-feature {
+.ovl-wf-page-back {
+  font-size: 0.85rem;
+  color: var(--ovl-text-tertiary);
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.ovl-wf-page-back:hover {
+  color: var(--ovl-accent);
+}
+
+.ovl-wf-page-meta {
+  margin-bottom: 8px;
+}
+
+.ovl-wf-page-number {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ovl-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ovl-wf-page-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 800;
+  color: var(--ovl-text);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* --- Video Player --- */
+
+.ovl-wf-video {
+  margin-bottom: 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+}
+
+.ovl-wf-video mux-player {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+/* --- Workflow Page Content --- */
+
+.ovl-wf-page-content {
+  margin-bottom: 40px;
+}
+
+/* --- Mark Complete Button --- */
+
+.ovl-wf-page-complete {
+  margin-bottom: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ovl-border);
+}
+
+.ovl-wf-page-complete-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid var(--ovl-border-strong);
+  border-radius: 6px;
+  background: var(--ovl-bg-elevated);
+  color: var(--ovl-text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.ovl-wf-page-complete-btn:hover {
+  border-color: var(--ovl-accent);
+  background: var(--ovl-accent-subtle);
+}
+
+.ovl-wf-page-complete-btn--done {
+  border-color: var(--ovl-success);
+  color: var(--ovl-success);
+}
+
+.ovl-wf-page-complete-btn--done:hover {
+  border-color: var(--ovl-text-tertiary);
+  color: var(--ovl-text-tertiary);
+  background: var(--ovl-bg-elevated);
+}
+
+.ovl-wf-page-complete-check {
+  font-size: 1rem;
+}
+
+/* --- Workflow Page Navigation --- */
+
+.ovl-wf-page-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-top: 1px solid var(--ovl-border);
+  gap: 16px;
+}
+
+.ovl-wf-page-nav-left,
+.ovl-wf-page-nav-right {
+  flex: 1;
+}
+
+.ovl-wf-page-nav-right {
+  text-align: right;
+}
+
+.ovl-wf-page-nav-center {
+  flex-shrink: 0;
+}
+
+.ovl-wf-page-nav-count {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-wf-page-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--ovl-accent);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+.ovl-wf-page-nav-btn:hover {
+  opacity: 0.8;
+}
+
+.ovl-wf-page-nav-arrow {
+  font-size: 1rem;
+}
+
+.ovl-wf-page-nav-label {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Admin Styles --- */
+
+.ovl-admin {
+  max-width: 800px;
+}
+
+.ovl-admin-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.ovl-admin-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--ovl-text);
+  margin: 0;
+}
+
+.ovl-admin-back {
+  font-size: 0.85rem;
+  color: var(--ovl-text-tertiary);
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.ovl-admin-back:hover {
+  color: var(--ovl-accent);
+}
+
+.ovl-admin-slug {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ovl-text-tertiary);
+  display: block;
+  margin-top: 4px;
+}
+
+.ovl-admin-error {
+  color: var(--color-red);
+  font-size: 0.9rem;
+  margin: 8px 0;
+  padding: 10px 14px;
+  background: rgba(255, 51, 85, 0.06);
+  border: 1px solid rgba(255, 51, 85, 0.2);
+  border-radius: 6px;
+}
+
+.ovl-admin-success {
+  color: var(--ovl-success);
+  font-size: 0.9rem;
+  margin: 8px 0;
+  padding: 10px 14px;
+  background: rgba(0, 170, 68, 0.06);
+  border: 1px solid rgba(0, 170, 68, 0.2);
+  border-radius: 6px;
+}
+
+.ovl-admin-empty {
+  color: var(--ovl-text-secondary);
+  padding: 24px 0;
+}
+
+/* Admin Form */
+
+.ovl-admin-form {
+  margin-bottom: 24px;
   padding: 20px;
   border: 1px solid var(--ovl-border);
   border-radius: 8px;
   background: var(--ovl-bg-elevated);
 }
 
-.ovl-workflows-feature-icon {
-  font-size: 20px;
-  color: var(--ovl-accent);
-  margin-bottom: 8px;
+.ovl-admin-form--inset {
+  margin: 12px 0;
+  background: var(--ovl-bg-surface);
 }
 
-.ovl-workflows-feature h3 {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
+.ovl-admin-field {
+  margin-bottom: 16px;
+}
+
+.ovl-admin-field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   font-weight: 600;
-  color: var(--ovl-text);
-  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ovl-text-secondary);
+  margin-bottom: 6px;
 }
 
-.ovl-workflows-feature p {
-  font-size: 0.875rem;
+.ovl-admin-field input,
+.ovl-admin-field textarea,
+.ovl-admin-field select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--ovl-border-strong);
+  border-radius: 4px;
+  background: var(--ovl-bg);
+  color: var(--ovl-text);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+}
+
+.ovl-admin-field input:focus,
+.ovl-admin-field textarea:focus,
+.ovl-admin-field select:focus {
+  outline: none;
+  border-color: var(--ovl-accent);
+  box-shadow: 0 0 0 2px rgba(0, 85, 255, 0.1);
+}
+
+.ovl-admin-textarea--code {
+  font-family: var(--font-mono) !important;
+  font-size: 0.82rem !important;
   line-height: 1.6;
-  color: var(--ovl-text-secondary);
+}
+
+.ovl-admin-row {
+  display: flex;
+  gap: 16px;
+}
+
+.ovl-admin-row > .ovl-admin-field {
+  flex: 1;
+}
+
+.ovl-admin-meta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.ovl-admin-meta-item {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-admin-btn-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Admin List */
+
+.ovl-admin-list {
+  border: 1px solid var(--ovl-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ovl-admin-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid var(--ovl-border);
+  transition: background 0.1s;
+}
+
+.ovl-admin-list-item:last-child {
+  border-bottom: none;
+}
+
+.ovl-admin-list-item:hover {
+  background: var(--ovl-bg-hover);
+}
+
+.ovl-admin-list-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ovl-admin-list-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ovl-text);
+}
+
+.ovl-admin-list-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-admin-list-status {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Admin Sections */
+
+.ovl-admin-section {
+  margin-bottom: 40px;
+}
+
+.ovl-admin-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.ovl-admin-section-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ovl-text);
   margin: 0;
 }
 
-.ovl-workflows-notify {
-  margin-bottom: 48px;
-}
-
-.ovl-workflows-notify-card {
-  padding: 32px;
-  border: 1px solid var(--ovl-accent);
+.ovl-admin-section--danger {
+  padding: 20px;
+  border: 1px solid rgba(255, 51, 85, 0.2);
   border-radius: 8px;
-  background: var(--ovl-accent-subtle);
+  background: rgba(255, 51, 85, 0.03);
 }
 
-.ovl-workflows-notify-card h2 {
+.ovl-admin-section--danger p {
+  font-size: 0.9rem;
+  color: var(--ovl-text-secondary);
+  margin: 8px 0 16px;
+}
+
+/* Admin Page List */
+
+.ovl-admin-page-list {
+  border: 1px solid var(--ovl-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ovl-admin-page-item {
+  border-bottom: 1px solid var(--ovl-border);
+}
+
+.ovl-admin-page-item:last-child {
+  border-bottom: none;
+}
+
+.ovl-admin-page-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.ovl-admin-page-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ovl-text-tertiary);
+  min-width: 24px;
+  text-align: center;
+}
+
+.ovl-admin-page-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ovl-admin-page-title {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--ovl-text);
+}
+
+.ovl-admin-page-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ovl-text-tertiary);
+}
+
+.ovl-admin-page-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.ovl-admin-action {
+  padding: 4px 8px;
+  border: 1px solid var(--ovl-border);
+  border-radius: 4px;
+  background: var(--ovl-bg);
+  color: var(--ovl-text-secondary);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.1s;
+}
+
+.ovl-admin-action:hover:not(:disabled) {
+  border-color: var(--ovl-accent);
+  color: var(--ovl-accent);
+}
+
+.ovl-admin-action:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.ovl-admin-action--danger:hover:not(:disabled) {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+/* Admin Guard */
+
+.ovl-admin-guard {
+  max-width: 480px;
+  margin: 80px auto;
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.ovl-admin-guard h2 {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--ovl-text);
-  margin: 0 0 8px;
+  margin: 0 0 12px;
 }
 
-.ovl-workflows-notify-card p {
-  font-size: 0.9rem;
-  line-height: 1.5;
+.ovl-admin-guard-text {
   color: var(--ovl-text-secondary);
-  margin: 0 0 20px;
+  font-size: 0.95rem;
 }
 
-.ovl-workflows-notify-form {
-  max-width: 420px;
+/* Small button variant */
+
+.ovl-btn--sm {
+  padding: 6px 14px;
+  font-size: 0.82rem;
 }
 
-.ovl-workflows-contribute {
-  margin-bottom: 48px;
+/* Danger button variant */
+
+.ovl-btn--danger {
+  display: inline-block;
+  padding: 8px 20px;
+  background: var(--color-red);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
 }
 
-.ovl-workflows-contribute p {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--ovl-text);
-  margin: 0 0 20px;
+.ovl-btn--danger:hover {
+  opacity: 0.85;
 }
 
-.ovl-workflows-contribute-cta {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+/* Fade-in animation */
+
+@keyframes ovl-wf-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+
+/* Mobile */
 
 @media (max-width: 768px) {
-  .ovl-workflows-feature-grid {
+  .ovl-wf-catalog-grid {
     grid-template-columns: 1fr;
   }
 
-  .ovl-workflows-notify-card {
-    padding: 24px;
+  .ovl-wf-detail-cta-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ovl-wf-page-nav-label {
+    max-width: 100px;
+  }
+
+  .ovl-admin-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .ovl-admin-page-row {
+    flex-wrap: wrap;
+  }
+
+  .ovl-admin-page-actions {
+    width: 100%;
+    margin-top: 8px;
   }
 }
 

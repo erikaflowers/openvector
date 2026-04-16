@@ -1,10 +1,97 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useProgress } from '../../contexts/ProgressContext';
+import { useWorkflows } from '../../contexts/WorkflowContext';
+import { supabase } from '../../lib/supabase';
 import LessonBadge from './LessonBadge';
 import NotifyForm from '../NotifyForm';
 import { topicFilters } from '../../content/learn/resources';
 // (approach?.categories || []) now comes from the approach prop (approach.categories)
 import { SUGGESTED_PROMPTS } from '../../pages/learn/LearnChatPage';
+
+function WorkflowsSidebar({ onClose }) {
+  const { hasPurchasedBySlug } = useWorkflows();
+  const { workflowSlug, pageSlug } = useParams();
+  const [workflows, setWorkflows] = useState([]);
+  const [pages, setPages] = useState([]);
+
+  useEffect(() => {
+    if (!supabase) return;
+    supabase
+      .from('workflows')
+      .select('id, slug, title, price_cents')
+      .eq('status', 'published')
+      .order('sort_order', { ascending: true })
+      .then(({ data }) => setWorkflows(data || []));
+  }, []);
+
+  // Fetch pages for the active workflow
+  useEffect(() => {
+    if (!workflowSlug || !supabase) {
+      setPages([]);
+      return;
+    }
+    supabase
+      .from('workflow_pages')
+      .select('slug, title, page_number')
+      .eq('workflow_id', workflows.find((w) => w.slug === workflowSlug)?.id)
+      .order('page_number', { ascending: true })
+      .then(({ data }) => setPages(data || []));
+  }, [workflowSlug, workflows]);
+
+  return (
+    <div className="ovl-sidebar-workflows">
+      <Link to="/learn/workflows" className="ovl-sidebar-home" onClick={onClose}>
+        All Workflows
+      </Link>
+      {workflowSlug && pages.length > 0 ? (
+        <>
+          <div className="ovl-sidebar-section-label" style={{ marginTop: '8px' }}>Pages</div>
+          <div className="ovl-sidebar-lessons">
+            {pages.map((page) => (
+              <Link
+                key={page.slug}
+                to={`/learn/workflows/${workflowSlug}/${page.slug}`}
+                className={`ovl-sidebar-lesson ${page.slug === pageSlug ? 'ovl-sidebar-lesson--active' : ''}`}
+                onClick={onClose}
+              >
+                <span className="ovl-sidebar-lesson-label">
+                  {page.page_number}. {page.title}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="ovl-sidebar-section-label" style={{ marginTop: '8px' }}>Available</div>
+          {workflows.map((wf) => (
+            <Link
+              key={wf.slug}
+              to={`/learn/workflows/${wf.slug}`}
+              className={`ovl-sidebar-lesson ${wf.slug === workflowSlug ? 'ovl-sidebar-lesson--active' : ''}`}
+              onClick={onClose}
+            >
+              <span className="ovl-sidebar-lesson-label">{wf.title}</span>
+              {hasPurchasedBySlug(wf.slug) ? (
+                <span className="ovl-sidebar-check">{'\u2713'}</span>
+              ) : (
+                <span className="ovl-sidebar-hub-badge">
+                  ${(wf.price_cents / 100).toFixed(0)}
+                </span>
+              )}
+            </Link>
+          ))}
+          {workflows.length === 0 && (
+            <p className="ovl-sidebar-workflows-text" style={{ fontSize: '0.8rem', padding: '8px 12px', opacity: 0.6 }}>
+              No workflows available yet.
+            </p>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
 
 function LearnSidebar({ levels, activeLevelSlug, activeLessonSlug, approach, activeGuideSlug, open, onClose }) {
   const { isComplete, enabled } = useProgress();
@@ -131,44 +218,7 @@ function LearnSidebar({ levels, activeLevelSlug, activeLessonSlug, approach, act
               })}
             </div>
           ) : isWorkflows ? (
-            <div className="ovl-sidebar-workflows">
-              <div className="ovl-sidebar-section-label">Workflows</div>
-              <div className="ovl-sidebar-workflows-coming">
-                <div className="ovl-sidebar-workflows-badge">Coming Soon</div>
-                <p className="ovl-sidebar-workflows-text">
-                  Structured, self-paced courses are in development. Each workflow will appear here as a guided path you can follow from start to finish.
-                </p>
-              </div>
-              <div className="ovl-sidebar-section-label" style={{ marginTop: '20px' }}>Planned</div>
-              <div className="ovl-sidebar-workflows-list">
-                <div className="ovl-sidebar-workflows-item ovl-sidebar-workflows-item--coming">
-                  <span className="ovl-sidebar-workflows-dot" />
-                  <span>Your First Project</span>
-                </div>
-                <div className="ovl-sidebar-workflows-item ovl-sidebar-workflows-item--coming">
-                  <span className="ovl-sidebar-workflows-dot" />
-                  <span>Portfolio Site from Scratch</span>
-                </div>
-                <div className="ovl-sidebar-workflows-item ovl-sidebar-workflows-item--coming">
-                  <span className="ovl-sidebar-workflows-dot" />
-                  <span>Multi-Agent Project</span>
-                </div>
-              </div>
-              <div className="ovl-sidebar-section-label" style={{ marginTop: '20px' }}>Get Involved</div>
-              <Link to="/learn/contribute" className="ovl-sidebar-hub-link" onClick={onClose}>
-                <span className="ovl-sidebar-hub-glyph">&dagger;</span>
-                <span>Propose a Workflow</span>
-              </Link>
-              <a
-                href="https://github.com/erikaflowers/openvector/issues"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ovl-sidebar-hub-link"
-              >
-                <span className="ovl-sidebar-hub-glyph">&para;</span>
-                <span>Open Issues</span>
-              </a>
-            </div>
+            <WorkflowsSidebar onClose={onClose} />
           ) : isResources ? (
             <div className="ovl-sidebar-resources">
               <div className="ovl-sidebar-section-label">Browse by Topic</div>

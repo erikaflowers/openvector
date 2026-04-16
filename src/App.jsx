@@ -17,6 +17,10 @@ import LearnEnterprisePage from './pages/learn/LearnEnterprisePage';
 import ApproachIndexPage from './pages/learn/ApproachIndexPage';
 import GuidePage from './pages/learn/GuidePage';
 import LearnWorkflowsPage from './pages/learn/LearnWorkflowsPage';
+import WorkflowDetailPage from './pages/learn/WorkflowDetailPage';
+import WorkflowPageView from './pages/learn/WorkflowPageView';
+import AdminWorkflowsPage from './pages/learn/AdminWorkflowsPage';
+import AdminWorkflowEditPage from './pages/learn/AdminWorkflowEditPage';
 
 function App() {
   return (
@@ -30,6 +34,10 @@ function App() {
         <Route path="approach" element={<ApproachIndexPage />} />
         <Route path="approach/:guideSlug" element={<GuidePage />} />
         <Route path="workflows" element={<LearnWorkflowsPage />} />
+        <Route path="workflows/:workflowSlug" element={<WorkflowDetailPage />} />
+        <Route path="workflows/:workflowSlug/:pageSlug" element={<WorkflowPageView />} />
+        <Route path="admin/workflows" element={<AdminWorkflowsPage />} />
+        <Route path="admin/workflows/:workflowSlug" element={<AdminWorkflowEditPage />} />
         <Route path="resources" element={<LearnResourcesPage />} />
         <Route path="chat" element={<LearnChatPage />} />
         <Route path="contribute" element={<LearnContributePage />} />

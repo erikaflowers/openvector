@@ -21,6 +21,8 @@ The Open Vector is the curriculum arm of [Zero Vector](https://zerovector.design
 
 Plus 12 **Approach guides** — step-by-step walkthroughs for common tasks like scaffolding a project, writing a PRD, or debugging with AI.
 
+Plus **Workflows** — paid video courses with sequential pages, video walkthroughs, and written content. Purchase once, lifetime access. Built on Stripe + Mux.
+
 ## Running Locally
 
 ```bash
@@ -32,33 +34,55 @@ npm install
 Create a `.env` file (see `.env.example`):
 
 ```
+# Supabase (shared with zerovector.design)
 VITE_SUPABASE_URL=
 VITE_SUPABASE_ANON_KEY=
-ANTHROPIC_API_KEY=
 SUPABASE_URL=
 SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
+
+# AI learning companion
+ANTHROPIC_API_KEY=
+
+# Stripe (for paid workflows)
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+VITE_STRIPE_PUBLISHABLE_KEY=
+
+# Mux (for workflow video hosting)
+MUX_TOKEN_ID=
+MUX_TOKEN_SECRET=
+MUX_SIGNING_KEY_ID=
+MUX_SIGNING_KEY_PRIVATE=
 ```
 
 Start the dev server:
 
 ```bash
-npm run dev          # Vite on port 5173
+npm run dev          # Vite on port 5174
 ```
 
-For Netlify Functions (AI chat):
+For Netlify Functions (AI chat, Stripe, Mux):
 
 ```bash
 npm run dev:netlify  # Netlify Dev proxy on port 3007
+```
+
+For testing Stripe purchases locally, run in a second terminal:
+
+```bash
+stripe listen --forward-to localhost:3007/.netlify/functions/stripe-webhook
 ```
 
 ## Stack
 
 - **React 19** + **Vite 7** SPA
 - **React Router 7** — client-side routing
-- **Supabase** — Google OAuth + progress tracking
+- **Supabase** — Google OAuth, progress tracking, workflow content + purchases (shared DB with zerovector.design)
+- **Stripe** — Checkout Sessions + webhooks for workflow purchases
+- **Mux** — signed, domain-locked video hosting for workflow content
 - **Fuse.js** — client-side lesson search
-- **Netlify Functions** — AI learning companion (Claude Sonnet)
+- **Netlify Functions** — AI learning companion (Claude Sonnet), Stripe integration, protected content delivery
 - **Custom CSS** — no frameworks, prefixed `.ov-` (landing) and `.ovl-` (learn)
 
 ## Project Structure
@@ -67,21 +91,31 @@ npm run dev:netlify  # Netlify Dev proxy on port 3007
 src/
 ├── pages/                  # Page components
 │   ├── OpenVectorPage.jsx  # Landing page (/)
-│   └── learn/              # All /learn/* pages
+│   └── learn/              # All /learn/* pages (curriculum, workflows, admin)
 ├── components/
-│   └── learn/              # OV-specific components (nav, sidebar, search, etc.)
+│   └── learn/              # OV-specific components (nav, sidebar, search, workflow, admin)
 ├── layouts/
 │   └── LearnLayout.jsx     # Learn shell (nav, sidebar, breadcrumbs)
-├── content/
-│   ├── open.js             # Landing page content
-│   └── learn/              # Curriculum content (6 levels + approach guides)
-├── contexts/               # Auth, progress tracking, theme
+├── content/                # Curriculum markdown (parsed by vite-plugin-learn-content)
+├── contexts/               # Auth, progress, workflows, theme
 ├── hooks/                  # useSEO, useInView
 ├── lib/
 │   └── supabase.js         # Supabase client
 └── styles/
     └── site.css            # All styles
+netlify/
+└── functions/              # learn-chat, workflow content/purchase/admin, Stripe webhook
+supabase/
+└── migrations/             # SQL schema for paid workflows
 ```
+
+## Paid Workflows
+
+Open Vector supports paid, structured video courses. Admins create workflows at `/learn/admin/workflows` — each creates a Stripe Product + Price automatically. Users purchase via Stripe Checkout and get lifetime access. Content is stored in Supabase and gated server-side. Videos are served via signed Mux URLs (15-minute expiry, domain-locked).
+
+The first page of every workflow is a free preview — no purchase required.
+
+See `CLAUDE.md` for full architecture details, gotchas, and admin instructions.
 
 ## Contributing
 

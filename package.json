@@ -10,14 +10,18 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.74.0",
+    "@mux/mux-node": "^12.8.1",
+    "@mux/mux-player-react": "^3.11.7",
     "@supabase/supabase-js": "^2.95.3",
     "fuse.js": "^7.1.0",
+    "jsonwebtoken": "^9.0.3",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.12.0",
     "remark-directive": "^4.0.0",
     "remark-gfm": "^4.0.1",
+    "stripe": "^22.0.1",
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
