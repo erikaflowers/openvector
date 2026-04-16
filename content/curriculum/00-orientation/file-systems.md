@@ -25,9 +25,18 @@ Folders can contain other folders, which can contain other folders, forming a tr
 
 ## Paths
 
-A path is the full address of a file or folder. On Mac and Linux, paths use forward slashes: /Users/yourname/Desktop/project/index.html. On Windows, it is backslashes: C:\Users\yourname\Desktop\project\index.html. The concept is the same.
+A path is the full address of a file or folder. On Mac and Linux, paths use forward slashes:
 
-There are two kinds of paths. An absolute path starts from the very top of the tree (the root) and spells out the full address: /Users/yourname/Desktop/project. A relative path starts from wherever you currently are: ./src/App.jsx means "from here, go into src, find App.jsx."
+`/Users/yourname/Desktop/project/index.html`
+
+On Windows, it is backslashes:
+
+`C:\Users\yourname\Desktop\project\index.html`
+
+The concept is the same.
+
+There are two kinds of paths. An absolute path starts from the very top of the tree (the root) and spells out the full address: 
+`/Users/yourname/Desktop/project`. A relative path starts from wherever you currently are: `./src/App.jsx` This means "from here, go into src, find App.jsx."
 
 Why does this matter? Every import statement in code uses paths. Every file reference in a config file uses paths. Every terminal command that targets a file uses a path. If you understand paths, you understand how code finds things.
 
@@ -46,35 +55,42 @@ C:\Users\yourname\Desktop\project\index.html
 
 Every user on a computer has a home directory. This is your personal space, where your Desktop, Documents, Downloads, and project folders live.
 
-On Mac: /Users/yourname. On Linux: /home/yourname. On Windows: C:\Users\yourname. In the terminal, the tilde symbol (~) is a shortcut for your home directory. So ~/Desktop means /Users/yourname/Desktop. You will see the tilde everywhere.
+On Mac: `/Users/yourname`. On Linux: `/home/yourname`. On Windows: `C:\Users\yourname`. In the terminal, the tilde symbol (`~`) is a shortcut for your home directory. So `~/Desktop` means `/Users/yourname/Desktop`. You will see the tilde everywhere.
 
-The root directory (just /) is the very top of the entire file system. Everything branches down from there: system files, applications, user directories, all of it. You will rarely need to go to root, but knowing it exists helps you read absolute paths.
+```
+# Home directories by OS
+/Users/yourname          # Mac
+/home/yourname           # Linux
+C:\Users\yourname        # Windows
+```
+
+The root directory (just `/`) is the very top of the entire file system. Everything branches down from there: system files, applications, user directories, all of it. You will rarely need to go to root, but knowing it exists helps you read absolute paths.
 
 ## Hidden Files and Dotfiles
 
 Files and folders that start with a dot (.) are hidden by default. You will not see them in Finder or File Explorer unless you ask. But they are there, and they matter enormously.
 
-.gitignore tells Git which files to ignore. .env stores secret keys and passwords. .eslintrc configures your code linter. CLAUDE.md gives instructions to AI agents. These "dotfiles" are configuration. They control how your tools behave.
+`.gitignore` tells Git which files to ignore. `.env` stores secret keys and passwords. `.eslintrc` configures your code linter. `CLAUDE.md` gives instructions to AI agents. These "dotfiles" are configuration. They control how your tools behave.
 
-To see hidden files in the terminal: ls -a. To see them in Mac Finder: press Cmd+Shift+Period. To see them in Windows Explorer: View → Show → Hidden items.
+To see hidden files in the terminal: `ls -a`. To see them in Mac Finder: press `Cmd+Shift+Period`. To see them in Windows Explorer: `View → Show → Hidden items`.
 
-A word of caution: .env files often contain passwords and API keys. Never commit them to Git. Never share them publicly. The .gitignore file exists specifically to prevent this.
+A word of caution: `.env` files often contain passwords and API keys. Never commit them to Git. Never share them publicly. The `.gitignore` file exists specifically to prevent this.
 
 ## Project Structure
 
 When you work on a web project, you will see a common pattern in how files are organized. Understanding this pattern means you can open any project and quickly find what you need.
 
-src/ is your source code. Your components, pages, styles, and logic live here. This is where you do your work.
+`src/` is your source code. Your components, pages, styles, and logic live here. This is where you do your work.
 
-public/ is for static assets served as-is. Images, fonts, favicon. These do not get processed by the build tool.
+`public/` is for static assets served as-is. Images, fonts, favicon. These do not get processed by the build tool.
 
-node_modules/ contains every library your project depends on. This folder is enormous and auto-generated. Never edit it. Never commit it to Git.
+`node_modules/` contains every library your project depends on. This folder is enormous and auto-generated. Never edit it. Never commit it to Git.
 
-package.json is your project's identity card. Lists its name, dependencies, and scripts (commands like "npm run dev").
+`package.json` is your project's identity card. Lists its name, dependencies, and scripts (commands like `npm run dev`).
 
-dist/ or build/ is the compiled output. When you build your project for production, the optimized files land here. This is what gets deployed.
+`dist/` or `build/` is the compiled output. When you build your project for production, the optimized files land here. This is what gets deployed.
 
-You do not need to memorize this. You need to recognize it. When you see src/, you know where the real code is. When you see node_modules/, you know to leave it alone.
+You do not need to memorize this. You need to recognize it. When you see `src/`, you know where the real code is. When you see `node_modules/`, you know to leave it alone.
 
 ```
 my-project/
@@ -92,7 +108,18 @@ my-project/
 ```
 
 :::exercise{title="Explore Your File System"}
-Open your terminal. Run pwd to see where you are. Run ls -la to see everything in your current directory, including hidden files. Count the dotfiles; you will probably see more than you expected. Now navigate to your Desktop: cd ~/Desktop. Create a practice project structure: mkdir -p my-project/src my-project/public. Run ls my-project to see the folders you created. Navigate inside: cd my-project. Run touch package.json .gitignore README.md to create the key files. Run ls -a to see everything, including the hidden .gitignore. You just built a project skeleton by hand.
+Open your terminal. 
+- Run `pwd` to see where you are
+- Run `ls -la` to see everything in your current directory, including hidden files
+- Count the dotfiles; you will probably see more than you expected
+- Now navigate to your Desktop: `cd ~/Desktop`
+- Create a practice project structure: `mkdir -p my-project/src my-project/public`
+- Run `ls my-project` to see the folders you created
+- Navigate inside: `cd my-project`
+- Run `touch package.json .gitignore README.md` to create the key files
+- Run `ls -a` to see everything, including the hidden `.gitignore`
+
+You just built a project skeleton by hand.
 :::
 
 :::resources{title="Go Deeper"}

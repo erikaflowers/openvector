@@ -74,7 +74,14 @@ Open Vector is the free, open curriculum arm of Zero Vector Design. The philosop
 Everything here is free. No trials, no premium tiers, no "sign up for the full version." If you do the work, you get the skills.
 
 :::exercise{title="Before You Begin"}
-Make sure you have: a computer (Mac, Windows, or Linux, all of which work), an internet connection (you will be installing tools and cloning repositories), willingness to type commands (this curriculum uses the terminal extensively, and if that feels unfamiliar, good, that is why Level 00 exists), and curiosity (the most important prerequisite is wanting to understand how things work, not just that they work). You do not need prior coding experience. You do not need a computer science degree. You do not need to know what a terminal is yet. That is what the next lesson teaches.
+Make sure you have: 
+
+- a computer (Mac, Windows, or Linux, all of which work)
+- an internet connection (you will be installing tools and cloning repositories)
+- willingness to type commands (this curriculum uses the terminal extensively, and if that feels unfamiliar, good, that is why Level 00 exists)
+- curiosity (the most important prerequisite is wanting to understand how things work, not just that they work)
+
+You do not need prior coding experience. You do not need a computer science degree. You do not need to know what a terminal is yet. That is what the next lesson teaches.
 :::
 
 :::resources{title="Links"}

@@ -2240,12 +2240,13 @@ a:hover {
   border-radius: 4px;
 }
 
-.ovl-exercise-prereq {
-  background: rgba(0, 230, 138, 0.05);
-  border: 1px solid rgba(0, 230, 138, 0.2);
+.ovl-block-prereq {
+  margin: 36px 0;
+  padding: 24px;
+  border: 1px solid rgba(255, 208, 0, 0.3);
+  border-left: 3px solid var(--color-yellow);
+  background: rgba(255, 208, 0, 0.04);
   border-radius: 4px;
-  padding: 16px 20px;
-  margin-bottom: 20px;
 }
 
 .ovl-prereq-label {
@@ -2253,8 +2254,8 @@ a:hover {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: rgba(0, 230, 138, 0.8);
+  letter-spacing: 0.1em;
+  color: var(--color-yellow);
   margin-bottom: 8px;
 }
 
