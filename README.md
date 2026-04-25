@@ -1,6 +1,6 @@
 # The Open Vector
 
-A free, open learning platform for design-led engineering with AI. Six levels. Sixty lessons. From terminal basics to Systems Auteur.
+A free, open learning platform for design-led engineering with AI. Six levels. Forty lessons. From terminal basics to Systems Auteur.
 
 **Live at [open.zerovector.design](https://open.zerovector.design)**
 
@@ -19,7 +19,7 @@ The Open Vector is the curriculum arm of [Zero Vector](https://zerovector.design
 | 04 | Orchestration | Multi-agent workflows, CLAUDE.md, staged prompts, crew model |
 | 05 | Auteur | Personal methodology, framework design, teaching, contribution |
 
-Plus 12 **Approach guides** — step-by-step walkthroughs for common tasks like scaffolding a project, writing a PRD, or debugging with AI.
+Plus 11 **Approach guides** — step-by-step walkthroughs for common tasks like scaffolding a project, writing a PRD, or debugging with AI.
 
 ## Running Locally
 
@@ -43,7 +43,7 @@ SUPABASE_SERVICE_ROLE_KEY=
 Start the dev server:
 
 ```bash
-npm run dev          # Vite on port 5173
+npm run dev          # Vite on port 5174
 ```
 
 For Netlify Functions (AI chat):
@@ -63,34 +63,55 @@ npm run dev:netlify  # Netlify Dev proxy on port 3007
 
 ## Project Structure
 
+Lesson content lives in the top-level `content/` directory as markdown files — that is where to go to add or edit a lesson.
+
 ```
-src/
-├── pages/                  # Page components
-│   ├── OpenVectorPage.jsx  # Landing page (/)
-│   └── learn/              # All /learn/* pages
-├── components/
-│   └── learn/              # OV-specific components (nav, sidebar, search, etc.)
+content/                         Markdown lesson content (source of truth for curriculum)
+├── manifest.yaml                Defines levels, lessons, approach guides, and their order
+├── curriculum/                  One folder per level, one .md file per lesson
+│   ├── 00-orientation/
+│   ├── 01-foundation/
+│   ├── 02-the-medium/
+│   ├── 03-the-pipeline/
+│   ├── 04-orchestration/
+│   └── 05-auteur/
+└── approach/                    Step-by-step guide markdown files
+
+src/                             React application source
+├── App.jsx                      Root component, all route definitions
+├── main.jsx                     Entry point
+├── pages/
+│   ├── OpenVectorPage.jsx       Landing page (/)
+│   └── learn/                   All /learn/* page components
 ├── layouts/
-│   └── LearnLayout.jsx     # Learn shell (nav, sidebar, breadcrumbs)
-├── content/
-│   ├── open.js             # Landing page content
-│   └── learn/              # Curriculum content (6 levels + approach guides)
-├── contexts/               # Auth, progress tracking, theme
-├── hooks/                  # useSEO, useInView
+│   └── LearnLayout.jsx          Learn shell (nav, sidebar, breadcrumbs, pagination)
+├── components/
+│   ├── learn/                   Learn-specific components (MarkdownRenderer, LearnNav, LearnSidebar, LearnSearch, RightRail, KnowledgeCheck)
+│   └── (shared)                 Animate.jsx, AnonWelcomeModal.jsx, DecryptText.jsx, ErrorBoundary.jsx, icons.jsx, NotifyForm.jsx, WelcomeModal.jsx
+├── contexts/                    UserContext, ProgressContext, ThemeContext
+├── hooks/                       useInView.js, useMousePosition.js, useSEO.js
 ├── lib/
-│   └── supabase.js         # Supabase client
+│   └── supabase.js              Supabase client
+├── content/                     Static JS config for non-lesson pages (en.js, open.js, recommended-reading.js); learn/ subtree holds changelog, glossary, resources, themes (NOT lesson markdown)
+├── utils/
+│   └── remark-custom-directives.js  Remark plugin for custom block directives
 └── styles/
-    └── site.css            # All styles
+    └── site.css                 All styles (single file, CSS custom properties)
+
+vite-plugin-learn-content.js     Custom Vite plugin: reads manifest + markdown, serves as virtual:learn-content
+netlify/
+└── functions/
+    └── learn-chat.js            Serverless function for AI chat feature
 ```
 
 ## Contributing
 
-The Open Vector is open source and contributions are welcome. Lessons are plain JavaScript objects in `src/content/learn/` — no markdown, no CMS. See `src/content/learn/_template.js` for the lesson format.
+The Open Vector is open source and contributions are welcome. Lessons are markdown files with YAML frontmatter — no JavaScript, no CMS. See `content/README.md` for the full content authoring guide.
 
 To contribute a lesson or guide:
 1. Fork the repo
-2. Create a new file in the appropriate level directory
-3. Add it to the level's `index.js`
+2. Create a markdown file in `content/curriculum/{level-slug}/` (or `content/approach/` for approach guides)
+3. Add the lesson slug to `content/manifest.yaml` under the appropriate level
 4. Submit a PR
 
 ## License

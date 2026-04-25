@@ -202,6 +202,31 @@ A list of external links with descriptions.
 
 **Renders as:** Blue-accented box with a heading and a styled link list. All links open in a new tab.
 
+### Prereq
+
+A prerequisite block nested inside an `:::exercise` directive. Use it to surface setup or verification steps the reader must complete before attempting the exercise.
+
+```markdown
+::::exercise{title="Your First Repository"}
+
+:::prereq
+Confirm Git is installed: run `git --version` in your terminal. If you see a version number, you are ready. If not:
+
+- **Mac:** Run `xcode-select --install`. When it finishes, Git will be available.
+- **Windows:** Download Git for Windows from [git-scm.com](https://git-scm.com/download/win) and run the installer with default settings.
+:::
+
+- Open your terminal
+- Create a project folder: `mkdir git-practice && cd git-practice`
+::::
+```
+
+**Attributes:** None.
+
+**Usage note:** `prereq` is a nested directive, so the outer `:::exercise` fence must use four colons (`::::`) to distinguish it from the inner `:::prereq` fence.
+
+**Renders as:** A styled block inside the exercise container, visually separated from the exercise steps. Signals to the reader that this must be true before proceeding.
+
 ---
 
 ## Adding a New Directive

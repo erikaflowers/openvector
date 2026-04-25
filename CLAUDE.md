@@ -6,7 +6,7 @@ The Open Vector is a free learning platform for design-led engineering, hosted a
 
 - **Framework:** React 19 + Vite 7 SPA
 - **Routing:** React Router v7 (client-side, SPA catch-all redirect in netlify.toml)
-- **Markdown:** react-markdown + remark-gfm + remark-directive (custom directives for exercise, template, step, resources blocks)
+- **Markdown:** react-markdown + remark-gfm + remark-directive (custom directives for exercise, template, step, resources, prereq blocks)
 - **Auth:** Google OAuth via Supabase
 - **Search:** Fuse.js (client-side fuzzy search)
 - **AI Chat:** Anthropic SDK, runs through Netlify Functions
@@ -50,12 +50,30 @@ src/
       LearnNav.jsx          Top navigation bar
       LearnSearch.jsx       Fuzzy search (Fuse.js)
       KnowledgeCheck.jsx    End-of-lesson reflection questions
+    Animate.jsx           Shared animation component
+    AnonWelcomeModal.jsx  Modal shown to signed-out users
+    DecryptText.jsx       Shared text reveal effect
+    ErrorBoundary.jsx     React error boundary
+    icons.jsx             Icon library
+    NotifyForm.jsx        Email notification form
+    WelcomeModal.jsx      Post-sign-in welcome modal
   contexts/
     UserContext.jsx        Auth state (Supabase Google OAuth)
     ProgressContext.jsx    Lesson completion tracking
     ThemeContext.jsx       Light/dark theme
+  hooks/
+    useInView.js           Intersection observer hook
+    useMousePosition.js    Mouse position tracking hook
+    useSEO.js              Page metadata / SEO hook
+  lib/
+    supabase.js            Supabase client
+  content/                 Static JS config for non-lesson pages (NOT lesson markdown — that lives in the top-level content/ directory)
+    en.js                  i18n-style copy strings
+    open.js                Landing page copy
+    recommended-reading.js Reading list data
+    learn/                 Legacy curriculum files (changelog.js, glossary.js, resources.js, themes.js, index.js are live; remaining files are dead code pending cleanup)
   utils/
-    remark-custom-directives.js   Remark plugin for :::exercise, :::template, :::step, :::resources
+    remark-custom-directives.js   Remark plugin for :::exercise, :::template, :::step, :::resources, :::prereq
   styles/
     site.css              All styles (single file, CSS custom properties)
 netlify/
@@ -111,6 +129,10 @@ Step content.
 
 :::resources{title="Go Deeper"}
 - [Link](url). Description of the resource.
+:::
+
+:::prereq
+Confirm the required tool is installed before continuing. Instructions for each OS if needed.
 :::
 ```
 
