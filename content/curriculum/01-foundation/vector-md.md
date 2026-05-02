@@ -21,23 +21,23 @@ You have spent the first four lessons of this level learning to think in systems
 
 In traditional software development, this thinking lives in Confluence pages nobody reads, in Figma files that drift from reality, in Slack threads that disappear into the void. The thinking happens, and then it evaporates.
 
-VECTOR.md is where it lives instead.
+`VECTOR.md` is where it lives instead.
 
-A VECTOR.md file is a single markdown document that captures your project's intent, architecture, and constraints in a format that both humans and AI agents can read. It is the written artifact of all the systems thinking and planning work you have been doing. One file. One source of truth. Always in the repo, always up to date, always informing every decision.
+A `VECTOR.md` file is a single markdown document that captures your project's intent, architecture, and constraints in a format that both humans and AI agents can read. It is the written artifact of all the systems thinking and planning work you have been doing. One file. One source of truth. Always in the repo, always up to date, always informing every decision.
 
 ## The Context Problem
 
 AI agents have no memory between sessions. Every time you start a conversation with an AI assistant, it knows nothing about your project, your users, your architecture decisions, or why you chose React over Svelte. You have to re-explain everything. Every. Single. Time.
 
-This is the fundamental problem VECTOR.md solves.
+This is the fundamental problem `VECTOR.md` solves.
 
-When an AI agent reads your VECTOR.md at the start of a session, it instantly has the context it needs: who the users are, what problem you are solving, what architecture decisions have been made, what constraints exist, what has already been built. The agent goes from blank slate to informed collaborator in seconds.
+When an AI agent reads your `VECTOR.md` at the start of a session, it instantly has the context it needs: who the users are, what problem you are solving, what architecture decisions have been made, what constraints exist, what has already been built. The agent goes from blank slate to informed collaborator in seconds.
 
-But VECTOR.md is not just for AI agents. It is for you. It forces you to articulate your thinking clearly enough that a machine can understand it. And if a machine can understand it, that means your thinking is precise. Vague ideas hiding in your head become concrete decisions on the page.
+But `VECTOR.md` is not just for AI agents. It is for you. It forces you to articulate your thinking clearly enough that a machine can understand it. And if a machine can understand it, that means your thinking is precise. Vague ideas hiding in your head become concrete decisions on the page.
 
-## What Goes in a VECTOR.md?
+## What Goes in a `VECTOR.md`?
 
-A VECTOR.md typically contains these sections (though every project adapts the format to its needs):
+A `VECTOR.md` typically contains these sections (though every project adapts the format to its needs):
 
 Project Overview captures what you are building and why. Not a marketing pitch. A clear, honest description of the problem you are solving and the approach you are taking.
 
@@ -53,7 +53,7 @@ Constraints captures what you cannot or will not do. Budget limits, timeline, te
 
 Current State describes what exists right now. What is built, what is broken, what is next. This section changes frequently and keeps everyone (including AI agents) oriented.
 
-> CLAUDE.md tells agents how to behave. VECTOR.md tells agents what they're building. Together, these two files form the complete context stack for AI-assisted development. The agent knows its role, its constraints, and its communication style (CLAUDE.md). And it knows the project, the users, and the architecture (VECTOR.md). You will learn about CLAUDE.md in Level 04.
+> `CLAUDE.md` tells agents how to behave. `VECTOR.md` tells agents what they're building. Together, these two files form the complete context stack for AI-assisted development. The agent knows its role, its constraints, and its communication style (`CLAUDE.md`). And it knows the project, the users, and the architecture (`VECTOR.md`). You will learn about `CLAUDE.md` in Level 04.
 
 ```
 # VECTOR.md — Recipe Keeper
@@ -120,7 +120,7 @@ friendly.
 
 ## How This Connects to What You've Learned
 
-Look at that example VECTOR.md again. Every section maps to something you have already studied in this level:
+Look at that example `VECTOR.md` again. Every section maps to something you have already studied in this level:
 
 Systems Thinking (Lesson 1) taught you to see the whole system before zooming into parts. The Project Overview and Architecture sections capture that systems-level view.
 
@@ -130,14 +130,21 @@ Nouns & Verbs (Lesson 3) taught you to identify the core entities and actions. T
 
 Planning (Lesson 4) taught you to sequence work and identify dependencies. The Current State section keeps that plan honest by tracking reality.
 
-VECTOR.md is not a separate concept. It is the container for all the thinking you have been learning to do. The artifact that holds the architecture, the plan, and the intent in one place.
+`VECTOR.md` is not a separate concept. It is the container for all the thinking you have been learning to do. The artifact that holds the architecture, the plan, and the intent in one place.
 
 :::exercise{title="Read a VECTOR.md"}
-Go to the Investiture scaffold repository at github.com/erikaflowers/investiture and find the VECTOR.md file. Open it and answer these questions: (1) What problem is the project solving? (2) Who are the users? (3) What architecture decisions were made, and what reasons are given? (4) What constraints are listed? (5) How does the Current State section help an AI agent who is reading this for the first time? You do not need to understand every technical term. Focus on the structure: how the document is organized, what information it prioritizes, and how it would help someone (or something) get up to speed quickly.
+- Go to the Investiture scaffold repository at github.com/erikaflowers/investiture and find the `VECTOR.md` file
+- Open it and answer these questions:
+  - What problem is the project solving?
+  - Who are the users?
+  - What architecture decisions were made, and what reasons are given?
+  - What constraints are listed?
+  - How does the Current State section help an AI agent who is reading this for the first time?
+- You do not need to understand every technical term. Focus on the structure: how the document is organized, what information it prioritizes, and how it would help someone (or something) get up to speed quickly.
 :::
 
 :::resources{title="Links"}
-- [Investiture Scaffold Repository](https://github.com/erikaflowers/investiture): A real VECTOR.md in a real project.
+- [Investiture Scaffold Repository](https://github.com/erikaflowers/investiture): A real `VECTOR.md` in a real project.
 - [Investiture Framework](https://zerovector.design/investiture): The Investiture framework page on Zero Vector.
 - [Zero Vector Substack](https://eflowers.substack.com): Articles on the methodology.
 :::
