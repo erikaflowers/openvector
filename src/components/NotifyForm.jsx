@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 /**
- * NotifyForm — Email signup via Kestris subscribe proxy.
+ * NotifyForm — Email signup via the in-repo /.netlify/functions/subscribe proxy.
  * Supports multiple tags (zerovector, enterprise, founding-contributor, etc.)
  *
  * @param {string} variant - 'dark' (white text on dark/blue bg) or 'light' (dark text on light bg)
@@ -25,7 +25,7 @@ function NotifyForm({ variant = 'dark', tag = 'zerovector' }) {
     setErrorMessage('');
 
     try {
-      const response = await fetch('https://kestris.ai/api/subscribe', {
+      const response = await fetch('/.netlify/functions/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, tag }),
