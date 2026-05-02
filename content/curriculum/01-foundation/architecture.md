@@ -74,9 +74,9 @@ This sounds abstract until you build something with state in the wrong place. Th
 
 Let us trace the architecture of a real application, a site like Zero Vector:
 
-The source code lives in src/. Inside, pages/ contains one file per route. components/ contains reusable pieces. styles/ contains CSS. content/ contains the text and data. This is separation of concerns at the file level.
+The source code lives in `src/`. Inside, `pages/` contains one file per route. `components/` contains reusable pieces. `styles/` contains CSS. `content/` contains the text and data. This is separation of concerns at the file level.
 
-The router maps URLs to pages: /learn/curriculum/00-orientation/terminal shows the LessonPage component with data from the terminal lesson file. The URL is the single source of truth; no hidden state decides what you see.
+The router maps URLs to pages: `/learn/curriculum/00-orientation/terminal` shows the `LessonPage` component with data from the terminal lesson file. The URL is the single source of truth; no hidden state decides what you see.
 
 The layout components (navigation, sidebar) wrap the content. They do not know what content is inside them. The content components do not know what layout surrounds them. They communicate through well-defined props and context.
 
@@ -89,7 +89,13 @@ Zero Vector practitioners design the architecture before the first prompt. This 
 Why does this matter so much with AI agents? Because an agent will happily build whatever you ask for, even if it contradicts what you asked for yesterday. Without architecture, you end up with a codebase that is a patchwork of disconnected decisions. With architecture, every piece the agent builds fits into a coherent whole. The architecture is your blueprint. The agent is the builder. Builders without blueprints make sheds, not houses.
 
 :::exercise{title="Sketch Before You Build"}
-Think of a simple app (a to-do list, a recipe collection, a bookmark manager). Before writing any code, sketch its architecture on paper. Draw three boxes: frontend, backend, database. In each box, list what it is responsible for. Draw arrows showing what data flows between them. Now zoom into the frontend: draw the main components (layout, navigation, list, form, detail view). Draw arrows showing how data flows between them. Where does state live? This 10-minute sketch will save you hours of refactoring.
+- Think of a simple app (a to-do list, a recipe collection, a bookmark manager)
+- Before writing any code, sketch its architecture on paper
+- Draw three boxes: frontend, backend, database. In each box, list what it is responsible for
+- Draw arrows showing what data flows between them
+- Now zoom into the frontend: draw the main components (layout, navigation, list, form, detail view)
+- Draw arrows showing how data flows between them. Where does state live?
+- This 10-minute sketch will save you hours of refactoring.
 :::
 
 :::resources{title="Go Deeper"}
