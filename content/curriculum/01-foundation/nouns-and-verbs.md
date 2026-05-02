@@ -94,7 +94,7 @@ System verbs are actions the system performs without user input: validate (check
 
 This exercise is especially powerful when working with AI coding tools. The better you can describe what you are building in structured language, the better your AI collaborator can help.
 
-Instead of telling Claude Code "build me a recipe app," you can say: "I need a Recipe data model with title, ingredients (array of strings), steps (array of strings), cookTime (integer, minutes), and authorId (foreign key to Users). Create a REST API with endpoints for creating, reading, updating, and deleting recipes. Add a search endpoint that filters by ingredient."
+Instead of telling Claude Code "build me a recipe app," you can say: "I need a `Recipe` data model with `title`, `ingredients` (array of strings), `steps` (array of strings), `cookTime` (integer, minutes), and `authorId` (foreign key to `Users`). Create a REST API with endpoints for creating, reading, updating, and deleting recipes. Add a search endpoint that filters by ingredient."
 
 That prompt came directly from the Nouns & Verbs exercise. You identified the nouns (Recipe, with its fields), identified the verbs (create, read, update, delete, search), and translated them into specific technical requirements. The AI now has clear instructions instead of vibes.
 
@@ -105,7 +105,14 @@ In Zero Vector, nouns and verbs become the foundation of your data model and you
 This matters because AI agents are remarkably good at building CRUD operations, API endpoints, and database schemas when the entities are well-defined. They struggle when the entities are fuzzy. "Build me a recipe app" produces mediocre results. "Build me an app with Recipes, Ingredients, Collections, and Shopping Lists, where users can scale recipes, search by ingredient, and generate shopping lists from selected recipes" produces something you can actually ship. The nouns and verbs are the prompt.
 
 :::exercise{title="Extract Your Architecture"}
-Think of a project you want to build, or use this prompt: "A personal finance tracker where users log expenses, categorize spending, set monthly budgets, and view reports showing where their money goes." Write two or three sentences describing it. Underline every noun. Underline every verb. List the nouns on the left side of a page and the verbs on the right. Draw lines connecting verbs to the nouns they act on. Now look at your nouns list; those are your database tables. Look at your verbs list; those are your features. You just designed the skeleton of an application in five minutes.
+- Think of a project you want to build, or use this prompt: "A personal finance tracker where users log expenses, categorize spending, set monthly budgets, and view reports showing where their money goes."
+- Write two or three sentences describing it
+- Underline every noun. Underline every verb.
+- List the nouns on the left side of a page and the verbs on the right
+- Draw lines connecting verbs to the nouns they act on
+- Now look at your nouns list; those are your database tables
+- Look at your verbs list; those are your features
+- You just designed the skeleton of an application in five minutes.
 :::
 
 :::resources{title="Go Deeper"}
