@@ -22,7 +22,7 @@ This is why experienced engineers start with the data model before writing a sin
 
 An entity is a thing your application tracks. If you did the Nouns & Verbs exercise, your core nouns are your entities. A Recipe is an entity. A User is an entity. An Order is an entity.
 
-Each entity has fields: the specific pieces of information you store about it. A Recipe entity might have: title (text), description (text), cookTime (number, in minutes), servings (number), createdAt (date), authorId (reference to a User).
+Each entity has fields: the specific pieces of information you store about it. A Recipe entity might have: `title` (text), `description` (text), `cookTime` (number, in minutes), `servings` (number), `createdAt` (date), `authorId` (reference to a User).
 
 Choosing the right fields is a design decision. Do you store cooking time as a single number (minutes) or as two fields (hours and minutes)? Do you store the author's name directly on the recipe, or just a reference to their user profile? Each choice has consequences.
 
@@ -59,7 +59,7 @@ Collection
 
 Entities do not exist in isolation. They are connected. Understanding these connections is the core of data modeling.
 
-One-to-many: One user can create many recipes, but each recipe has exactly one author. The recipe stores a reference to the user (authorId). This is the most common relationship in software.
+One-to-many: One user can create many recipes, but each recipe has exactly one author. The recipe stores a reference to the user (`authorId`). This is the most common relationship in software.
 
 Many-to-many: A recipe can belong to many collections, and a collection can contain many recipes. Neither side "owns" the other. This usually requires a join table, a third table that tracks which recipes are in which collections.
 
@@ -71,7 +71,7 @@ When you draw your data model on paper, draw lines between entities. Write "1" o
 
 Every field has a type: text, number, date, boolean (true/false), array (list). Choosing the right type prevents entire categories of bugs.
 
-If cookTime is a number, nobody can accidentally store "about thirty minutes" in it. If email has a uniqueness constraint, no two users can register with the same address. If servings has a minimum of 1, you cannot create a recipe for zero people.
+If `cookTime` is a number, nobody can accidentally store "about thirty minutes" in it. If `email` has a uniqueness constraint, no two users can register with the same address. If `servings` has a minimum of 1, you cannot create a recipe for zero people.
 
 Constraints are rules that your data must follow. They are enforced by the database, not by your application code. This matters because data can enter your system from many places: your UI, your API, a database migration, an import script. The database is the last line of defense.
 
@@ -130,7 +130,13 @@ In Zero Vector, your data model is one of the most important things you hand to 
 The inverse is equally true. A vague or inconsistent data model produces vague, inconsistent code. If your model has a "stuff" table with columns named "data1" through "data5," no AI agent in the world can build something coherent on top of it. The quality of your data model directly determines the quality of AI-generated code. Invest the thinking here, and the build phase gets dramatically easier.
 
 :::exercise{title="Model Your Project"}
-Take the project you planned in the Planning lesson (or the reading tracker). List every entity, the things your app needs to remember. For each entity, list its fields with types (title: string, pageCount: number, isFinished: boolean). Draw the relationships between entities: which ones reference each other? Mark each relationship as one-to-one, one-to-many, or many-to-many. Write one entity as a JSON object with sample data. You now have a data model. When you start building, this model becomes your database schema and your API contract.
+- Take the project you planned in the Planning lesson (or the reading tracker)
+- List every entity, the things your app needs to remember
+- For each entity, list its fields with types (`title: string`, `pageCount: number`, `isFinished: boolean`)
+- Draw the relationships between entities: which ones reference each other?
+- Mark each relationship as one-to-one, one-to-many, or many-to-many
+- Write one entity as a JSON object with sample data
+- You now have a data model. When you start building, this model becomes your database schema and your API contract.
 :::
 
 :::resources{title="Go Deeper"}
