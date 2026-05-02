@@ -14,14 +14,14 @@ function CompletionCard({ level }) {
   const shareUrl = `https://open.zerovector.design/learn/curriculum/${level.slug}`;
 
   function handleCopy() {
-    navigator.clipboard.writeText(`${shareText}\n${shareUrl}`).then(() => {
+    navigator.clipboard.writeText(shareUrl).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
   }
 
   function handleLinkedIn() {
-    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+    const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`;
     window.open(url, '_blank', 'width=600,height=400');
   }
 
