@@ -110,5 +110,5 @@ Pick a project you actually want to build (or use the reading tracker from this 
 - [Shape Up by Basecamp](https://basecamp.com/shapeup): A free book on how to scope and plan projects. "Shaping" is professional decomposition. Brilliant and practical.
 - [The Mythical Man-Month (essays)](https://en.wikipedia.org/wiki/The_Mythical_Man-Month): Classic software engineering wisdom. The chapter on conceptual integrity is about planning.
 - [Getting Real by Basecamp](https://basecamp.com/gettingreal): A manifesto on building less and shipping faster. The chapter on scope is gold.
-- [CLAUDE.md: Writing Instructions for AI](https://docs.anthropic.com/en/docs/claude-code/tutorials#create-a-claude-md-file): How to write a CLAUDE.md file, your plan for AI collaboration.
+- [CLAUDE.md: Writing Instructions for AI](https://code.claude.com/docs/en/best-practices#write-an-effective-claude-md): How to write a CLAUDE.md file, your plan for AI collaboration.
 :::
