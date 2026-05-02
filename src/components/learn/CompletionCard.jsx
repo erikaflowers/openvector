@@ -11,7 +11,7 @@ function CompletionCard({ level }) {
   if (percent < 100) return null;
 
   const shareText = `I completed ${level.number} ${level.title} on the Open Vector — the free Zero-Vector Design curriculum.`;
-  const shareUrl = `https://zerovector.design/learn/curriculum/${level.slug}`;
+  const shareUrl = `https://open.zerovector.design/learn/curriculum/${level.slug}`;
 
   function handleCopy() {
     navigator.clipboard.writeText(`${shareText}\n${shareUrl}`).then(() => {
