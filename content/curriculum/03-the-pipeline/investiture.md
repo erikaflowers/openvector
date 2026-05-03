@@ -89,10 +89,16 @@ your-project/
 ```
 
 :::exercise{title="Try It"}
-Create a test directory (mkdir investiture-test && cd investiture-test && git init) and run npx investiture init. Watch what it installs. Browse the .claude/skills/ directory and read one of the SKILL.md files. Notice how each skill declares what it reads, what it checks, and what it produces. Open vector/schemas/ and pick a schema. Notice the machine-readable structure. Now open Claude Code in that directory and run /invest-backfill. Watch it survey the (empty) project and generate starter doctrine. Read the VECTOR.md it creates. Ask yourself: if an AI agent read these files, how much would it understand before writing a single line of code? That is the power of a structured scaffold.
+- Create a test directory: `mkdir investiture-test && cd investiture-test && git init`.
+- Run `npx investiture init`. Watch what it installs.
+- Browse the `.claude/skills/` directory and read one of the `SKILL.md` files. Notice how each skill declares what it reads, what it checks, and what it produces.
+- Open `vector/schemas/` and pick a schema. Notice the machine-readable structure.
+- Open Claude Code in that directory and run `/invest-backfill`. Watch it survey the (empty) project and generate starter doctrine.
+- Read the `VECTOR.md` it creates.
+- Ask yourself: if an AI agent read these files, how much would it understand before writing a single line of code? That is the power of a structured scaffold.
 :::
 
-:::resources{title="Links"}
+:::resources{title="Go Deeper"}
 - [Investiture on GitHub](https://github.com/erikaflowers/investiture). npx investiture init, or clone the full scaffold.
 - [Investiture Framework Page](https://zerovector.design/investiture). The Investiture deep dive on Zero Vector.
 - [VECTOR.md Lesson (Level 01)](/learn/curriculum/01-foundation/vector-md). The artifact that gives agents project context.
