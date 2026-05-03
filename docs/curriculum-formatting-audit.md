@@ -59,7 +59,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [x] **your-first-ship.md** — Bulletize exercise (L85 prose; convert the inline numbered five-step process into bullets).
 
 ### 03-the-pipeline
-- [ ] **research.md** — Bulletize exercise (L63 prose).
+- [x] **research.md** — Bulletize exercise (L63 prose).
 - [ ] **synthesis.md** — Bulletize exercise (L67 prose).
 - [ ] **jtbd.md** — Bulletize exercise (L69 prose).
 - [ ] **ideation.md** — Bulletize exercise (L65 prose).
