@@ -99,7 +99,7 @@ You can also check specific record types: `dig zerovector.design CNAME` or `dig 
 
 There are also web-based tools like [dnschecker.org](https://dnschecker.org) that show you what DNS servers around the world are reporting for your domain. This is useful during propagation to see how far your change has spread.
 
-```
+```bash
 # Look up the A record for a domain
 dig zerovector.design
 
