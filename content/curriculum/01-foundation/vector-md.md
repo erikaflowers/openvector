@@ -55,7 +55,7 @@ Current State describes what exists right now. What is built, what is broken, wh
 
 > CLAUDE.md tells agents how to behave. VECTOR.md tells agents what they're building. Together, these two files form the complete context stack for AI-assisted development. The agent knows its role, its constraints, and its communication style (CLAUDE.md). And it knows the project, the users, and the architecture (VECTOR.md). You will learn about CLAUDE.md in Level 04.
 
-```
+```markdown
 # VECTOR.md — Recipe Keeper
 
 ## Project Overview
@@ -136,7 +136,7 @@ VECTOR.md is not a separate concept. It is the container for all the thinking yo
 Go to the Investiture scaffold repository at github.com/erikaflowers/investiture and find the VECTOR.md file. Open it and answer these questions: (1) What problem is the project solving? (2) Who are the users? (3) What architecture decisions were made, and what reasons are given? (4) What constraints are listed? (5) How does the Current State section help an AI agent who is reading this for the first time? You do not need to understand every technical term. Focus on the structure: how the document is organized, what information it prioritizes, and how it would help someone (or something) get up to speed quickly.
 :::
 
-:::resources{title="Links"}
+:::resources{title="Go Deeper"}
 - [Investiture Scaffold Repository](https://github.com/erikaflowers/investiture): A real VECTOR.md in a real project.
 - [Investiture Framework](https://zerovector.design/investiture): The Investiture framework page on Zero Vector.
 - [Zero Vector Substack](https://eflowers.substack.com): Articles on the methodology.

@@ -46,7 +46,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [ ] **architecture.md** — clean. (L39 ASCII architecture diagram stays bare.)
 - [ ] **nouns-and-verbs.md** — clean. (L40 text breakdown stays bare.)
 - [ ] **planning.md** — clean. (L49 decomposition outline stays bare.)
-- [ ] **vector-md.md** — L58: markdown sample (a VECTOR.md example) needs ` ```markdown`. L139: `:::resources{title="Links"}` → `"Go Deeper"`.
+- [x] **vector-md.md** — L58: markdown sample (a VECTOR.md example) needs ` ```markdown`. L139: `:::resources{title="Links"}` → `"Go Deeper"`.
 - [ ] **data-modeling.md** — L98: JSON example needs ` ```json`. L31 stays bare (schema pseudocode, not strict JSON).
 - [ ] **information-architecture.md** — clean. (L78 URL examples with `#` comments stay bare — illustrative paths, not bash.)
 
