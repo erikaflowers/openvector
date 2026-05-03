@@ -63,7 +63,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [x] **synthesis.md** — Bulletize exercise (L67 prose).
 - [x] **jtbd.md** — Bulletize exercise (L69 prose).
 - [x] **ideation.md** — Bulletize exercise (L65 prose).
-- [ ] **prototyping.md** — Bulletize exercise (L69 prose).
+- [x] **prototyping.md** — Bulletize exercise (L69 prose).
 - [ ] **validation.md** — Bulletize exercise (L73 prose).
 - [ ] **shipping.md** — Bulletize exercise (L81 prose).
 - [ ] **investiture.md** — L95: `:::resources{title="Links"}` → `"Go Deeper"`. L72 file tree stays bare. Bulletize exercise (L91 prose); within bullets, backtick `mkdir investiture-test && cd ... && git init`, `npx investiture init`, `.claude/skills/`, `SKILL.md`, `vector/schemas/`, `/invest-backfill`, `VECTOR.md`.
