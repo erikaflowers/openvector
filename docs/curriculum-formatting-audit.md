@@ -38,7 +38,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [ ] **file-systems.md** — clean. (L43, L60 paths and L95 file tree all stay bare.)
 - [x] **git-basics.md** — L70: bash fence (`git init` etc.) needs ` ```bash`. L47 stays bare (numbered explanation, not commands).
 - [x] **repos.md** — L34, L86: bash fences (`git clone`, `git push`) need ` ```bash`.
-- [ ] **deployment.md** — L52: bash fence (`npm run build` + comments) needs ` ```bash`.
+- [x] **deployment.md** — L52: bash fence (`npm run build` + comments) needs ` ```bash`.
 - [ ] **dns.md** — L102: bash fence (`dig`) needs ` ```bash`. L52 stays bare (DNS record examples, not executable).
 
 ### 01-foundation
