@@ -84,7 +84,7 @@ Make sure you have:
 You do not need prior coding experience. You do not need a computer science degree. You do not need to know what a terminal is yet. That is what the next lesson teaches.
 :::
 
-:::resources{title="Links"}
+:::resources{title="Go Deeper"}
 - [Zero Vector Design](https://zerovector.design). The Zero Vector Design home.
 - [The Zero Vector Manifesto](https://zerovector.design/philosophy). The philosophy in full.
 - [Substack: Erika Flowers](https://eflowers.substack.com). Essays on the methodology and the movement.

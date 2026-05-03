@@ -24,7 +24,7 @@ Name and identity. Not for fun, but for clarity. When you say "Heavy handles the
 
 Role description. What does this agent do? "Frontend specialist: owns components, styling, accessibility, and client-side performance." The role is the lens through which the agent makes decisions.
 
-Domain boundaries. What files and systems does this agent own? "Everything in src/components/ and src/styles/. Does not modify API code or database schemas." Boundaries prevent conflicts.
+Domain boundaries. What files and systems does this agent own? "Everything in `src/components/` and `src/styles/`. Does not modify API code or database schemas." Boundaries prevent conflicts.
 
 Communication style. How does this agent talk? Some agents should be terse and technical. Others should be explanatory and thorough. The style should match the domain: a code reviewer should be direct, a documentation writer should be clear.
 
@@ -38,7 +38,7 @@ Each domain is a potential crew member. You do not need all of them immediately.
 
 For a solo builder, a practical starting crew is three agents: a builder (writes features), a reviewer (critiques code), and a planner (designs approaches before building). This trio covers the three modes of work (creation, evaluation, and strategy) that are hardest for one mind to do simultaneously.
 
-```
+```markdown
 # Example: Three-Agent Crew
 
 ## Heavy (Builder)
@@ -108,7 +108,11 @@ You brief the builder again with the reviewer's findings: "Fix these three issue
 Total wall clock time: maybe 45 minutes. The quality is higher than if one agent had done everything because each step was focused and verified.
 
 :::exercise{title="Design Your Crew"}
-Write the CLAUDE.md for a three-agent crew for a project you care about. Define each agent's name, role, domain (specific files and directories), communication style, and coordination rules. Be specific. "Owns the frontend" is too vague. "Owns src/components/, src/hooks/, and src/styles/. Does not modify files in api/ or scripts/" is clear. Then run one work session using at least two of the three agents on a real task. Notice how the separation changes the quality of the output.
+- Write the `CLAUDE.md` for a three-agent crew for a project you care about.
+- Define each agent's name, role, domain (specific files and directories), communication style, and coordination rules.
+- Be specific. "Owns the frontend" is too vague. "Owns `src/components/`, `src/hooks/`, and `src/styles/`. Does not modify files in `api/` or `scripts/`" is clear.
+- Run one work session using at least two of the three agents on a real task.
+- Notice how the separation changes the quality of the output.
 :::
 
 :::resources{title="Go Deeper"}

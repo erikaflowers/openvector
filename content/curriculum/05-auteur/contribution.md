@@ -61,7 +61,12 @@ Contribute at a rhythm that fits your life. One blog post a month. One documenta
 Set boundaries early. If you open-source a project, decide upfront how much maintenance you are willing to do. A clear README that says "this is a personal project, no guarantees on issue response times" sets expectations and protects your energy.
 
 :::exercise{title="Make Your First Contribution"}
-Choose one: (1) Open-source a project from this curriculum. Push it to GitHub with a README and MIT license. (2) Find a documentation page for a tool you use that confused you. Submit a pull request improving it, even if the improvement is just a clearer example. (3) Find a question on a forum or community channel about something you know and write a thorough answer. Do one of these today. The first contribution is the hardest. Every one after it is easier.
+- Choose one of these three options:
+  - Open-source a project from this curriculum. Push it to GitHub with a README and MIT license.
+  - Find a documentation page for a tool you use that confused you. Submit a pull request improving it, even if the improvement is just a clearer example.
+  - Find a question on a forum or community channel about something you know and write a thorough answer.
+- Do one of these today.
+- The first contribution is the hardest. Every one after it is easier.
 :::
 
 :::resources{title="Go Deeper"}

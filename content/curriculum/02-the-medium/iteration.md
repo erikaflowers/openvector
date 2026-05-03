@@ -73,7 +73,15 @@ With AI agents, divergent iteration is fast: "Show me three different approaches
 Know which mode you are in. Divergent iteration should feel exploratory and open. Convergent iteration should feel like polishing. If you are polishing too early (before the structure is right) or exploring too late (when you should be shipping), adjust.
 
 :::exercise{title="Build in Five Steps"}
-Pick a small component (a profile card, a pricing table, a testimonial block). Build it in exactly five prompts, committing after each one: (1) the basic structure and data, (2) the layout and spacing, (3) responsive behavior, (4) one interactive feature (hover state, expand/collapse, link), (5) final polish. After each prompt, check the browser and commit before continuing. Notice how each step builds cleanly on the last. This is the rhythm.
+- Pick a small component (a profile card, a pricing table, a testimonial block).
+- Build it in exactly five prompts, committing after each one:
+  - The basic structure and data.
+  - The layout and spacing.
+  - Responsive behavior.
+  - One interactive feature (hover state, expand/collapse, link).
+  - Final polish.
+- After each prompt, check the browser and commit before continuing.
+- Notice how each step builds cleanly on the last. This is the rhythm.
 :::
 
 :::resources{title="Go Deeper"}

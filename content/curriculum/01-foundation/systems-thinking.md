@@ -78,7 +78,12 @@ In Zero Vector, systems thinking is the prerequisite for everything. Before you 
 This is what separates a Zero Vector practitioner from someone copy-pasting prompts. You understand the forces acting on the system. You see the feedback loops, the dependencies, the second-order effects. When you direct an agent with that understanding, the output is coherent. Without it, you get code that technically works but does not fit together.
 
 :::exercise{title="Map a System You Use Every Day"}
-Pick an app you use daily (a music streaming service, a food delivery app, a social media platform). On paper (or a whiteboard), draw the major parts: the user, the content, the recommendation engine, the payment system, the content creators. Now draw arrows showing how they connect. What flows between them? Data? Money? Attention? Find one feedback loop in your diagram. Find one dependency chain (A needs B which needs C). You have just done systems thinking. This is the skill: seeing connections, not just parts.
+- Pick an app you use daily (a music streaming service, a food delivery app, a social media platform)
+- On paper (or a whiteboard), draw the major parts: the user, the content, the recommendation engine, the payment system, the content creators
+- Now draw arrows showing how they connect. What flows between them? Data? Money? Attention?
+- Find one feedback loop in your diagram
+- Find one dependency chain (A needs B which needs C)
+- You have just done systems thinking. This is the skill: seeing connections, not just parts.
 :::
 
 :::resources{title="Go Deeper"}

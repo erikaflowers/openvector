@@ -67,7 +67,13 @@ This is not rushing. This is being disciplined about scope. You are not building
 One day of prototyping and testing teaches you more than two weeks of planning.
 
 :::exercise{title="Build a Prototype"}
-Take the winning idea from the Ideation lesson. Identify the one thing you want to test, the riskiest assumption. Build the minimum prototype that tests it. If you have Claude Code, spend 30 minutes building a working version. If not, sketch six screens on paper showing the key flow. Then show it to one person and ask: "Does this make sense? Would you use this? What is missing?" Write down their answers. You just completed one cycle of prototype-and-test.
+- Take the winning idea from the Ideation lesson.
+- Identify the one thing you want to test — the riskiest assumption.
+- Build the minimum prototype that tests it.
+  - If you have Claude Code, spend 30 minutes building a working version.
+  - If not, sketch six screens on paper showing the key flow.
+- Show it to one person and ask: "Does this make sense? Would you use this? What is missing?"
+- Write down their answers. You just completed one cycle of prototype-and-test.
 :::
 
 :::resources{title="Go Deeper"}
