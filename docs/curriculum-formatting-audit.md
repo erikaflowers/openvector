@@ -70,7 +70,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 
 ### 04-orchestration
 - [x] **claude-md.md** — L33: markdown sample needs ` ```markdown`. Bulletize exercise (L112 prose).
-- [ ] **multi-agent.md** — L39 prose: backtick `src/components/`, `api/`. Bulletize exercise (L75 prose).
+- [x] **multi-agent.md** — L39 prose: backtick `src/components/`, `api/`. Bulletize exercise (L75 prose).
 - [ ] **staged-prompts.md** — Bulletize exercise (L96 prose). L55 prompt text stays bare.
 - [ ] **orchestration.md** — L48 prose: backtick `GET /api/recipes/search?q=pasta`, the response-shape JSON, and the `"items"` / `"results"` field-name examples. Bulletize exercise (L89 prose).
 - [ ] **quality-gates.md** — Bulletize exercise (L85 prose).
