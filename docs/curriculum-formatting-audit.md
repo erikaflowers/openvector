@@ -34,7 +34,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 
 ### 00-orientation
 - [x] **what-is-zero-vector.md** — L87: `:::resources{title="Links"}` → `"Go Deeper"`.
-- [ ] **terminal.md** — L85: bash fence (commands with `#` comments) needs ` ```bash`. L38, L45, L51 stay bare (login banner / shell prompt examples).
+- [x] **terminal.md** — L85: bash fence (commands with `#` comments) needs ` ```bash`. L38, L45, L51 stay bare (login banner / shell prompt examples).
 - [ ] **file-systems.md** — clean. (L43, L60 paths and L95 file tree all stay bare.)
 - [ ] **git-basics.md** — L70: bash fence (`git init` etc.) needs ` ```bash`. L47 stays bare (numbered explanation, not commands).
 - [ ] **repos.md** — L34, L86: bash fences (`git clone`, `git push`) need ` ```bash`.
