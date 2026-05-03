@@ -95,7 +95,7 @@ JSON has two structures: objects (key-value pairs, wrapped in curly braces) and 
 
 Understanding JSON means you can read any API response, any config file, and any data structure in your application. It is the shape of modern web data.
 
-```
+```json
 // A recipe as JSON — this is what an API sends to the frontend:
 {
   "id": "rec_001",
