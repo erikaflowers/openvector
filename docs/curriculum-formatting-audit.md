@@ -82,7 +82,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [x] **teaching.md** — Bulletize exercise (L73 prose).
 - [x] **contribution.md** — Bulletize exercise (L63 prose; convert the inline `(1)/(2)/(3)` options into bullets).
 - [x] **community.md** — Bulletize exercise (L61 prose).
-- [ ] **auteur-practice.md** — Bulletize exercise (L81 prose).
+- [x] **auteur-practice.md** — Bulletize exercise (L81 prose).
 
 ## Tally
 
