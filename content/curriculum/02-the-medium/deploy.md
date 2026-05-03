@@ -26,7 +26,7 @@ Your code is committed and pushed: The hosting platform deploys from your GitHub
 
 No secrets in the code: Check that .env is in your .gitignore. API keys, passwords, and tokens should never be committed. If they are, rotate them immediately.
 
-```
+```bash
 # The deploy checklist in terminal commands:
 
 # 1. Build successfully?
@@ -94,7 +94,12 @@ Build error: something in your code that works in dev but fails in production (o
 Read the error. Fix the cause. Push again. Netlify rebuilds automatically.
 
 :::exercise{title="Deploy Your Project"}
-Take the project you have been building (or create a fresh one with npm create vite@latest my-site -- --template react). Make sure it builds: npm run build. Create a GitHub repo and push your code. Sign up for Netlify, import the repo, set build command to "npm run build" and publish directory to "dist." Deploy. Click the URL. You are on the internet. Change something in your code, commit, push, and watch Netlify auto-deploy the update.
+- Take the project you have been building (or create a fresh one with `npm create vite@latest my-site -- --template react`).
+- Make sure it builds: `npm run build`.
+- Create a GitHub repo and push your code.
+- Sign up for Netlify, import the repo, set build command to `npm run build` and publish directory to `dist`.
+- Deploy. Click the URL. You are on the internet.
+- Change something in your code, commit, push, and watch Netlify auto-deploy the update.
 :::
 
 :::resources{title="Go Deeper"}
