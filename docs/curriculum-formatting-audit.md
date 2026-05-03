@@ -8,7 +8,7 @@ Fixes are packaged **by level** — one branch and one PR per level, one commit 
 
 - Branch name pattern: `fix-curriculum-fmt-{level-slug}-02may` (e.g. `fix-curriculum-fmt-00-orientation-02may`).
 - Open the PR when every file in that level is committed and its checkbox below is ticked.
-- Five PRs total: levels **00, 01, 02, 03, 04**. Level **05** is fully clean — no PR needed.
+- **Six PRs total: levels 00, 01, 02, 03, 04, 05.**
 
 ## Canon
 
@@ -18,12 +18,15 @@ Fixes are packaged **by level** — one branch and one PR per level, one commit 
 4. **Heading hierarchy:** body uses `##` for sections, `###` for subsections. No body H1; the title comes from frontmatter. ✅ All 40 files conform.
 5. **List bullets:** unordered lists use `-` (hyphen). ✅ All 40 files conform.
 6. **Spacing:** single blank line between sections, no triple blank lines. ✅ All 40 files conform.
+7. **Bulletized exercises:** `:::exercise{title="..."}` content is a bulleted action list (lines starting with `-`), not paragraph prose. Levels 00 and 01 already conform; levels 02–05 are mostly prose and need conversion.
+8. **Inline code in prose:** wrap in single backticks for literal commands (`npm run build`, `git push`), CLI flags (`--version`), file/folder names (`.env`, `dist/`, `CLAUDE.md`), file paths (`/Users/...`, `~/projects`), code identifiers (`useState`, `BookList`), API endpoints/payloads, and environment variable names (`BUTTONDOWN_API_KEY`). **Do not** backtick general concepts ("the database"), product names in prose (React, Git, Vite, Netlify), or capitalized concept names. Apply this rule both in main prose **and** inside the new exercise bullets.
 
 ## Cross-cutting
 
 - **Code fences:** every code block in the curriculum (45 blocks across 20 lessons) uses bare ` ``` `. The fixes per lesson below add language hints only where content is identifiably a language; diagrams, prompts, and pseudocode stay bare.
 - **`:::resources{title="Links"}`:** 3 lessons deviate from "Go Deeper" canon. Listed inline below.
-- **Lessons with no code blocks** are clean by default unless flagged for the resources-title issue.
+- **Bulletized exercises:** 25 of the 26 exercises in levels 02–05 are paragraph prose. The lone exception is `02-the-medium/claude-code.md`. Levels 00 and 01 are already done. The fix per lesson is the same shape: convert the prose paragraph(s) inside `:::exercise` into a bulleted action list, matching the canon set in `01-foundation/architecture.md`.
+- **Inline code in prose:** levels 00–01 already done. In 02–05, most files are clean but a handful have specific gaps in main prose; flagged inline below. When bulletizing exercises, also apply inline-code formatting to literal commands, paths, and identifiers within the new bullets — these are not flagged exhaustively below since they fall out naturally from the bulletization pass.
 
 ## Lessons
 
@@ -46,45 +49,46 @@ Fixes are packaged **by level** — one branch and one PR per level, one commit 
 - [ ] **information-architecture.md** — clean. (L78 URL examples with `#` comments stay bare — illustrative paths, not bash.)
 
 ### 02-the-medium
-- [ ] **claude-code.md** — L33, L45: bash fences (`curl ... | bash`, `cd`/`claude`) need ` ```bash`.
-- [ ] **prompting.md** — clean. (L31 weak-vs-better prompt examples stay bare — dialogue, not code.)
-- [ ] **iteration.md** — clean (no code blocks).
-- [ ] **react-basics.md** — L27, L68, L100: JSX examples need ` ```jsx`.
-- [ ] **deploy.md** — L29: bash fence (deploy checklist with `npm run build` etc.) needs ` ```bash`.
-- [ ] **your-first-ship.md** — clean (no code blocks).
+- [ ] **claude-code.md** — L33, L45: bash fences (`curl ... | bash`, `cd`/`claude`) need ` ```bash`. Exercise already bulletized ✓.
+- [ ] **prompting.md** — Bulletize exercise (L92 prose). L31 prompt examples stay bare.
+- [ ] **iteration.md** — Bulletize exercise (L75 prose; convert the inline `(1)…(5)` steps into bullets).
+- [ ] **react-basics.md** — L27, L68, L100: JSX examples need ` ```jsx`. L126 prose: backtick `src/components/`, `src/pages/`, `src/styles/`, `src/content/`. Bulletize exercise (L146 prose).
+- [ ] **deploy.md** — L29: bash fence needs ` ```bash`. Bulletize exercise (L96 prose); within bullets, backtick `npm create vite@latest...`, `npm run build`, `dist`, etc.
+- [ ] **your-first-ship.md** — Bulletize exercise (L85 prose; convert the inline numbered five-step process into bullets).
 
 ### 03-the-pipeline
-- [ ] **research.md** — clean.
-- [ ] **synthesis.md** — clean.
-- [ ] **jtbd.md** — clean.
-- [ ] **ideation.md** — clean.
-- [ ] **prototyping.md** — clean.
-- [ ] **validation.md** — clean.
-- [ ] **shipping.md** — clean.
-- [ ] **investiture.md** — L95: `:::resources{title="Links"}` → `"Go Deeper"`. L72 file tree stays bare.
+- [ ] **research.md** — Bulletize exercise (L63 prose).
+- [ ] **synthesis.md** — Bulletize exercise (L67 prose).
+- [ ] **jtbd.md** — Bulletize exercise (L69 prose).
+- [ ] **ideation.md** — Bulletize exercise (L65 prose).
+- [ ] **prototyping.md** — Bulletize exercise (L69 prose).
+- [ ] **validation.md** — Bulletize exercise (L73 prose).
+- [ ] **shipping.md** — Bulletize exercise (L81 prose).
+- [ ] **investiture.md** — L95: `:::resources{title="Links"}` → `"Go Deeper"`. L72 file tree stays bare. Bulletize exercise (L91 prose); within bullets, backtick `mkdir investiture-test && cd ... && git init`, `npx investiture init`, `.claude/skills/`, `SKILL.md`, `vector/schemas/`, `/invest-backfill`, `VECTOR.md`.
 
 ### 04-orchestration
-- [ ] **claude-md.md** — L33: markdown sample (a CLAUDE.md example) needs ` ```markdown`.
-- [ ] **multi-agent.md** — clean.
-- [ ] **staged-prompts.md** — clean. (L55 prompt text stays bare.)
-- [ ] **orchestration.md** — clean.
-- [ ] **quality-gates.md** — clean.
-- [ ] **the-crew-model.md** — L41: markdown sample (a crew-config example) needs ` ```markdown`.
+- [ ] **claude-md.md** — L33: markdown sample needs ` ```markdown`. Bulletize exercise (L112 prose).
+- [ ] **multi-agent.md** — L39 prose: backtick `src/components/`, `api/`. Bulletize exercise (L75 prose).
+- [ ] **staged-prompts.md** — Bulletize exercise (L96 prose). L55 prompt text stays bare.
+- [ ] **orchestration.md** — L48 prose: backtick `GET /api/recipes/search?q=pasta`, the response-shape JSON, and the `"items"` / `"results"` field-name examples. Bulletize exercise (L89 prose).
+- [ ] **quality-gates.md** — Bulletize exercise (L85 prose).
+- [ ] **the-crew-model.md** — L41: markdown sample needs ` ```markdown`. L27 prose: backtick `src/components/`, `src/styles/`. Bulletize exercise (L110 prose); within bullets, backtick `src/components/`, `src/hooks/`, `src/styles/`, `api/`, `scripts/`.
 
 ### 05-auteur
-- [ ] **personal-methodology.md** — clean.
-- [ ] **framework-design.md** — clean.
-- [ ] **teaching.md** — clean.
-- [ ] **contribution.md** — clean.
-- [ ] **community.md** — clean.
-- [ ] **auteur-practice.md** — clean.
+- [ ] **personal-methodology.md** — Bulletize exercise (L75 prose).
+- [ ] **framework-design.md** — Bulletize exercise (L73 prose).
+- [ ] **teaching.md** — Bulletize exercise (L73 prose).
+- [ ] **contribution.md** — Bulletize exercise (L63 prose; convert the inline `(1)/(2)/(3)` options into bullets).
+- [ ] **community.md** — Bulletize exercise (L61 prose).
+- [ ] **auteur-practice.md** — Bulletize exercise (L81 prose).
 
 ## Tally
 
 - **40 lessons audited.**
-- **17 lessons need changes** (16 for code-fence hints + 3 for `:::resources` title; some overlap).
-- **23 lessons clean.**
-- Estimated unique fence-hint additions: ~17 across the 16 affected files.
+- **33 lessons need changes** across all 6 levels.
+- **7 lessons clean** (all in 00-orientation and 01-foundation).
+- Levels 00 and 01: code-fence hints + 3 `:::resources` title fixes only (already inline-coded and bulletized).
+- Levels 02–05: 25 of 26 exercises need bulletizing; plus code-fence hints, the third `:::resources` fix, and a handful of inline-code gaps in main prose.
 
 ## Out of scope (per issue #14, Step 1)
 
