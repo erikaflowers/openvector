@@ -74,7 +74,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [x] **staged-prompts.md** — Bulletize exercise (L96 prose). L55 prompt text stays bare.
 - [x] **orchestration.md** — L48 prose: backtick `GET /api/recipes/search?q=pasta`, the response-shape JSON, and the `"items"` / `"results"` field-name examples. Bulletize exercise (L89 prose).
 - [x] **quality-gates.md** — Bulletize exercise (L85 prose).
-- [ ] **the-crew-model.md** — L41: markdown sample needs ` ```markdown`. L27 prose: backtick `src/components/`, `src/styles/`. Bulletize exercise (L110 prose); within bullets, backtick `src/components/`, `src/hooks/`, `src/styles/`, `api/`, `scripts/`.
+- [x] **the-crew-model.md** — L41: markdown sample needs ` ```markdown`. L27 prose: backtick `src/components/`, `src/styles/`. Bulletize exercise (L110 prose); within bullets, backtick `src/components/`, `src/hooks/`, `src/styles/`, `api/`, `scripts/`.
 
 ### 05-auteur
 - [ ] **personal-methodology.md** — Bulletize exercise (L75 prose).
