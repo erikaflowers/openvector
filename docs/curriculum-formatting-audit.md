@@ -80,7 +80,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [x] **personal-methodology.md** — Bulletize exercise (L75 prose).
 - [x] **framework-design.md** — Bulletize exercise (L73 prose).
 - [x] **teaching.md** — Bulletize exercise (L73 prose).
-- [ ] **contribution.md** — Bulletize exercise (L63 prose; convert the inline `(1)/(2)/(3)` options into bullets).
+- [x] **contribution.md** — Bulletize exercise (L63 prose; convert the inline `(1)/(2)/(3)` options into bullets).
 - [ ] **community.md** — Bulletize exercise (L61 prose).
 - [ ] **auteur-practice.md** — Bulletize exercise (L81 prose).
 
