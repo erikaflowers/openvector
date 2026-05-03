@@ -53,7 +53,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 ### 02-the-medium
 - [x] **claude-code.md** — L33, L45: bash fences (`curl ... | bash`, `cd`/`claude`) need ` ```bash`. Exercise already bulletized ✓.
 - [x] **prompting.md** — Bulletize exercise (L92 prose). L31 prompt examples stay bare.
-- [ ] **iteration.md** — Bulletize exercise (L75 prose; convert the inline `(1)…(5)` steps into bullets).
+- [x] **iteration.md** — Bulletize exercise (L75 prose; convert the inline `(1)…(5)` steps into bullets).
 - [ ] **react-basics.md** — L27, L68, L100: JSX examples need ` ```jsx`. L126 prose: backtick `src/components/`, `src/pages/`, `src/styles/`, `src/content/`. Bulletize exercise (L146 prose).
 - [ ] **deploy.md** — L29: bash fence needs ` ```bash`. Bulletize exercise (L96 prose); within bullets, backtick `npm create vite@latest...`, `npm run build`, `dist`, etc.
 - [ ] **your-first-ship.md** — Bulletize exercise (L85 prose; convert the inline numbered five-step process into bullets).
