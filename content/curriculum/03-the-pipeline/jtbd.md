@@ -67,7 +67,11 @@ Jobs to Be Done translate beautifully into AI prompts. Instead of "build a save 
 That prompt encodes the situation (found a recipe elsewhere), the motivation (capture it with one click), and the outcome (as instant as a screenshot). The AI now understands not just what to build, but why, and it will make better implementation decisions because of it.
 
 :::exercise{title="Write Five Job Statements"}
-Take the project you have been developing through this pipeline (or pick a product you use daily). Write five job statements in the format: "When [situation], I want to [motivation], so I can [expected outcome]." For each job, label it as primarily functional, emotional, or social. Now rank them: which job is the most frequent? Which is the most underserved? Which one, if solved perfectly, would make users love the product? That top-ranked job is your primary design target.
+- Take the project you have been developing through this pipeline (or pick a product you use daily).
+- Write five job statements in the format: "When [situation], I want to [motivation], so I can [expected outcome]."
+- For each job, label it as primarily functional, emotional, or social.
+- Rank them: which job is the most frequent? Which is the most underserved? Which one, if solved perfectly, would make users love the product?
+- That top-ranked job is your primary design target.
 :::
 
 :::resources{title="Go Deeper"}
