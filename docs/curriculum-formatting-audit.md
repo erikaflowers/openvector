@@ -69,7 +69,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [x] **investiture.md** — L95: `:::resources{title="Links"}` → `"Go Deeper"`. L72 file tree stays bare. Bulletize exercise (L91 prose); within bullets, backtick `mkdir investiture-test && cd ... && git init`, `npx investiture init`, `.claude/skills/`, `SKILL.md`, `vector/schemas/`, `/invest-backfill`, `VECTOR.md`.
 
 ### 04-orchestration
-- [ ] **claude-md.md** — L33: markdown sample needs ` ```markdown`. Bulletize exercise (L112 prose).
+- [x] **claude-md.md** — L33: markdown sample needs ` ```markdown`. Bulletize exercise (L112 prose).
 - [ ] **multi-agent.md** — L39 prose: backtick `src/components/`, `api/`. Bulletize exercise (L75 prose).
 - [ ] **staged-prompts.md** — Bulletize exercise (L96 prose). L55 prompt text stays bare.
 - [ ] **orchestration.md** — L48 prose: backtick `GET /api/recipes/search?q=pasta`, the response-shape JSON, and the `"items"` / `"results"` field-name examples. Bulletize exercise (L89 prose).

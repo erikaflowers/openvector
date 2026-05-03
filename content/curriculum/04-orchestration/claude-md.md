@@ -30,7 +30,7 @@ Architecture. How is the project structured? What are the key directories? Where
 
 Rules. What should the agent never do? "Never modify the database schema without asking." "Do not add dependencies without approval." "Never commit directly to main." These guardrails prevent expensive mistakes.
 
-```
+```markdown
 # Project: Recipe Organizer
 
 A web app for saving and organizing recipes from around the web.
@@ -110,7 +110,16 @@ Together, they form the full Zero Vector context stack. VECTOR.md is the project
 This pairing is what separates Zero Vector from ad hoc prompting. Without VECTOR.md, your agent knows the rules but not the reasons. Without CLAUDE.md, your agent knows the vision but not the method. Both documents live at the root of your project, both are read automatically, and both should exist before the first line of code is written.
 
 :::exercise{title="Write Your First CLAUDE.md"}
-Create a CLAUDE.md for a project you are working on (or the practice project from earlier levels). Include: a two-sentence project description, the tech stack, three conventions you follow, a brief architecture map, and at least two rules. Keep it under 50 lines. Then open the project with Claude Code and ask it to describe the project back to you. If it gets it right, your CLAUDE.md works.
+- Create a `CLAUDE.md` for a project you are working on (or the practice project from earlier levels).
+- Include:
+  - A two-sentence project description.
+  - The tech stack.
+  - Three conventions you follow.
+  - A brief architecture map.
+  - At least two rules.
+- Keep it under 50 lines.
+- Open the project with Claude Code and ask it to describe the project back to you.
+- If it gets it right, your `CLAUDE.md` works.
 :::
 
 :::resources{title="Go Deeper"}
