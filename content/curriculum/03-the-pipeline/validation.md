@@ -71,7 +71,13 @@ Pivot: The core concept does not work. Users could use it but did not want to. T
 The hardest decision is the pivot. You have invested time and emotion. But pivoting with a prototype is cheap. Pivoting with a launched product is expensive. This is exactly why you validate before you ship.
 
 :::exercise{title="Test with Three People"}
-Take your prototype from the previous lesson. Write three tasks that a user should be able to accomplish. Find three people (friends, family, colleagues, anyone who is not you). Give them the tasks one at a time and watch them work. Do not help unless they are truly stuck. After all tasks, ask: "What was the hardest part?" and "Would you use this again?" Write down every problem you observed, ranked by severity. You now have a validated, prioritized list of what to fix next.
+- Take your prototype from the previous lesson.
+- Write three tasks that a user should be able to accomplish.
+- Find three people (friends, family, colleagues — anyone who is not you).
+- Give them the tasks one at a time and watch them work. Do not help unless they are truly stuck.
+- After all tasks, ask: "What was the hardest part?" and "Would you use this again?"
+- Write down every problem you observed, ranked by severity.
+- You now have a validated, prioritized list of what to fix next.
 :::
 
 :::resources{title="Go Deeper"}
