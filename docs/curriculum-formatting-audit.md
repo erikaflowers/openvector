@@ -36,7 +36,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [x] **what-is-zero-vector.md** — L87: `:::resources{title="Links"}` → `"Go Deeper"`.
 - [x] **terminal.md** — L85: bash fence (commands with `#` comments) needs ` ```bash`. L38, L45, L51 stay bare (login banner / shell prompt examples).
 - [ ] **file-systems.md** — clean. (L43, L60 paths and L95 file tree all stay bare.)
-- [ ] **git-basics.md** — L70: bash fence (`git init` etc.) needs ` ```bash`. L47 stays bare (numbered explanation, not commands).
+- [x] **git-basics.md** — L70: bash fence (`git init` etc.) needs ` ```bash`. L47 stays bare (numbered explanation, not commands).
 - [ ] **repos.md** — L34, L86: bash fences (`git clone`, `git push`) need ` ```bash`.
 - [ ] **deployment.md** — L52: bash fence (`npm run build` + comments) needs ` ```bash`.
 - [ ] **dns.md** — L102: bash fence (`dig`) needs ` ```bash`. L52 stays bare (DNS record examples, not executable).
