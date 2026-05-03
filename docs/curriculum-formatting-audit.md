@@ -56,7 +56,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [x] **iteration.md** — Bulletize exercise (L75 prose; convert the inline `(1)…(5)` steps into bullets).
 - [x] **react-basics.md** — L27, L68, L100: JSX examples need ` ```jsx`. L126 prose: backtick `src/components/`, `src/pages/`, `src/styles/`, `src/content/`. Bulletize exercise (L146 prose).
 - [x] **deploy.md** — L29: bash fence needs ` ```bash`. Bulletize exercise (L96 prose); within bullets, backtick `npm create vite@latest...`, `npm run build`, `dist`, etc.
-- [ ] **your-first-ship.md** — Bulletize exercise (L85 prose; convert the inline numbered five-step process into bullets).
+- [x] **your-first-ship.md** — Bulletize exercise (L85 prose; convert the inline numbered five-step process into bullets).
 
 ### 03-the-pipeline
 - [ ] **research.md** — Bulletize exercise (L63 prose).
