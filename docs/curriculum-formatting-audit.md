@@ -1,6 +1,14 @@
 # Curriculum formatting audit (issue #14)
 
-Step 1 of the Open Vector improvement plan — a per-lesson punch list of formatting deviations from canon. Fixes ship lesson-by-lesson against this checklist on separate branches; tick each box as its branch merges.
+Step 1 of the Open Vector improvement plan — a per-lesson punch list of formatting deviations from canon. Tick each box as its file is fixed.
+
+## Workflow
+
+Fixes are packaged **by level** — one branch and one PR per level, one commit per file inside the branch. This bundles the related changes for issue #14 while preserving per-file commit history. (Default curriculum workflow remains one-file-per-branch; level-packaging is the exception for coordinated multi-file cleanups.)
+
+- Branch name pattern: `fix-curriculum-fmt-{level-slug}-02may` (e.g. `fix-curriculum-fmt-00-orientation-02may`).
+- Open the PR when every file in that level is committed and its checkbox below is ticked.
+- Five PRs total: levels **00, 01, 02, 03, 04**. Level **05** is fully clean — no PR needed.
 
 ## Canon
 
