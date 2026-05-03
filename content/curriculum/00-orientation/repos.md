@@ -31,7 +31,7 @@ This is how you get started with other people's code. Found an interesting open 
 
 After cloning, you have a fully independent copy. You can edit files, make commits, and experiment without affecting the original. If the repo is yours or you have been given access, you can push changes back to the remote. If it is someone else's public repo, you can create your own remote on GitHub and push there instead, making the project your own. You will do exactly this later in the curriculum.
 
-```
+```bash
 # Clone a repository from GitHub
 git clone https://github.com/username/project-name.git
 
@@ -83,7 +83,7 @@ If you created a repo locally (`git init`) instead of cloning, you need to conne
 
 In these commands, `origin` is the default name Git gives your remote connection, and `main` is the primary branch where your work lives.
 
-```
+```bash
 # Push your commits to the remote
 git push origin main
 
