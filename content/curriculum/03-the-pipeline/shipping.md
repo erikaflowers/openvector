@@ -79,7 +79,15 @@ This is not a waterfall process where each step must complete before the next be
 The pipeline is your superpower. Combined with AI tools, it lets one person do what used to require a team: understand a problem, design a solution, build it, test it, and ship it. That is the Zero Vector promise. And you just practiced it.
 
 :::exercise{title="Ship and Reflect"}
-Take the project you have built through this level (or any project you have been working on). Ship it. Deploy it, share the URL with at least three people, and ask them to use it. Collect feedback for one week. At the end of the week, write a one-page reflection: What did users do that surprised you? What was the most common complaint? What feature request came up more than once? What would you prioritize for version 2? This reflection is the beginning of your next cycle through the pipeline.
+- Take the project you have built through this level (or any project you have been working on).
+- Ship it: deploy it, share the URL with at least three people, and ask them to use it.
+- Collect feedback for one week.
+- At the end of the week, write a one-page reflection answering:
+  - What did users do that surprised you?
+  - What was the most common complaint?
+  - What feature request came up more than once?
+  - What would you prioritize for version 2?
+- This reflection is the beginning of your next cycle through the pipeline.
 :::
 
 :::resources{title="Go Deeper"}
