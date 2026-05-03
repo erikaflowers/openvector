@@ -62,7 +62,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [x] **research.md** — Bulletize exercise (L63 prose).
 - [x] **synthesis.md** — Bulletize exercise (L67 prose).
 - [x] **jtbd.md** — Bulletize exercise (L69 prose).
-- [ ] **ideation.md** — Bulletize exercise (L65 prose).
+- [x] **ideation.md** — Bulletize exercise (L65 prose).
 - [ ] **prototyping.md** — Bulletize exercise (L69 prose).
 - [ ] **validation.md** — Bulletize exercise (L73 prose).
 - [ ] **shipping.md** — Bulletize exercise (L81 prose).
