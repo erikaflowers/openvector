@@ -73,7 +73,16 @@ The danger is ossification, clinging to a methodology that no longer serves you 
 Schedule time to question your own methodology. What would I change if I started from scratch? What am I doing out of habit? What have I learned recently that should change how I work? The willingness to question your own process is what keeps a methodology alive.
 
 :::exercise{title="Write Your Methodology v1"}
-On one page (or one screen), write your current personal methodology. Include: how you start a project (three steps), how you decide between options (one framework), what "good enough" means (two criteria), what you do when stuck (one pattern), and how you finish (two steps). Keep each point to one sentence. This is version one. Pin it where you can see it. Revisit it after your next three projects and revise.
+- On one page (or one screen), write your current personal methodology.
+- Include:
+  - How you start a project (three steps).
+  - How you decide between options (one framework).
+  - What "good enough" means (two criteria).
+  - What you do when stuck (one pattern).
+  - How you finish (two steps).
+- Keep each point to one sentence.
+- This is version one. Pin it where you can see it.
+- Revisit it after your next three projects and revise.
 :::
 
 :::resources{title="Go Deeper"}

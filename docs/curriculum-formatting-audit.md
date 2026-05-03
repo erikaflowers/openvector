@@ -77,7 +77,7 @@ Fixes ship as a **single PR** covering all levels — one commit per file inside
 - [x] **the-crew-model.md** — L41: markdown sample needs ` ```markdown`. L27 prose: backtick `src/components/`, `src/styles/`. Bulletize exercise (L110 prose); within bullets, backtick `src/components/`, `src/hooks/`, `src/styles/`, `api/`, `scripts/`.
 
 ### 05-auteur
-- [ ] **personal-methodology.md** — Bulletize exercise (L75 prose).
+- [x] **personal-methodology.md** — Bulletize exercise (L75 prose).
 - [ ] **framework-design.md** — Bulletize exercise (L73 prose).
 - [ ] **teaching.md** — Bulletize exercise (L73 prose).
 - [ ] **contribution.md** — Bulletize exercise (L63 prose; convert the inline `(1)/(2)/(3)` options into bullets).
