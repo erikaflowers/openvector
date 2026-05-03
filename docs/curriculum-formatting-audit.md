@@ -4,11 +4,13 @@ Step 1 of the Open Vector improvement plan — a per-lesson punch list of format
 
 ## Workflow
 
-Fixes are packaged **by level** — one branch and one PR per level, one commit per file inside the branch. This bundles the related changes for issue #14 while preserving per-file commit history. (Default curriculum workflow remains one-file-per-branch; level-packaging is the exception for coordinated multi-file cleanups.)
+Fixes ship as a **single PR** covering all levels — one commit per file inside one branch. The change type is uniform across the curriculum (bulletize exercises, add code-fence hints, add inline code, fix `:::resources` title), so a single review pass against this audit doc is faster for the reviewer than six separate per-level reviews.
 
-- Branch name pattern: `fix-curriculum-fmt-{level-slug}-02may` (e.g. `fix-curriculum-fmt-00-orientation-02may`).
-- Open the PR when every file in that level is committed and its checkbox below is ticked.
-- **Six PRs total: levels 00, 01, 02, 03, 04, 05.**
+- Branch: `fix-curriculum-formatting-02may`.
+- One commit per file (33 commits total), each ticking off its checkbox below.
+- Open one PR when every box is ticked.
+
+(Default curriculum workflow remains one-file-per-branch. This single-PR-for-the-whole-sweep packaging is specific to issue #14 because the changes are uniform and audit-driven.)
 
 ## Canon
 
