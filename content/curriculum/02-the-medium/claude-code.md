@@ -30,7 +30,7 @@ Claude Code runs in your terminal. You need Node.js installed (which you will ne
 
 The recommended way to install is with the official installer. Run the command below in your terminal. It handles permissions correctly and does not require sudo or admin access.
 
-```
+```bash
 # Install Claude Code (recommended)
 curl -fsSL https://claude.ai/install.sh | bash
 
@@ -42,7 +42,7 @@ Once installed, navigate to any project folder in your terminal and type claude 
 
 You may see older guides suggest npm install -g @anthropic-ai/claude-code. That still works, but on macOS it often fails with a permissions error because the global npm directory requires admin access. If you hit that, do not use sudo. Use the installer above instead. It avoids the permissions issue entirely and will not cause problems later.
 
-```
+```bash
 # Navigate to your project
 cd ~/my-project
 
