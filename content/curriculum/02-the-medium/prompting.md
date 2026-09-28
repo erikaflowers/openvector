@@ -4,6 +4,7 @@ title: Prompting
 subtitle: How to talk to your agents.
 duration: 20 min
 status: available
+updatedAt: "2026-09-27"
 ---
 
 ## Prompting Is Direction, Not Magic
@@ -98,7 +99,7 @@ Do not copy-paste prompts from the internet. Your project has specific context, 
 :::
 
 :::resources{title="Go Deeper"}
-- [Anthropic Prompt Engineering Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview): The official guide from the people who built Claude. Comprehensive and practical.
-- [Claude Code Best Practices](https://docs.anthropic.com/en/docs/claude-code/best-practices): Specific tips for getting the best results from Claude Code.
+- [Anthropic Prompt Engineering Guide](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview): The official guide from the people who built Claude. Comprehensive and practical.
+- [Claude Code Best Practices](https://code.claude.com/docs/en/best-practices): Specific tips for getting the best results from Claude Code.
 - [Prompt Engineering for Developers (DeepLearning.AI)](https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/): Free short course on prompting fundamentals. Model-agnostic principles.
 :::

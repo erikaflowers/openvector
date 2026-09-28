@@ -5,7 +5,7 @@ subtitle: How to tell AI what to build. Prompt structure, context loading, and t
 duration: 25 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-09-27"
 category: working-with-agents
 prerequisites:
   - 02-the-medium/claude-code
@@ -164,5 +164,5 @@ Take a feature you want to build and write two versions of the instruction: firs
 - [Prompting (Curriculum)](/learn/curriculum/02-the-medium/prompting): The fundamentals of communicating with AI tools effectively.
 - [Claude Code (Curriculum)](/learn/curriculum/02-the-medium/claude-code): How Claude Code works and how to get the most out of it.
 - [CLAUDE.md (Curriculum)](/learn/curriculum/04-orchestration/claude-md): Writing project context files that make every instruction more effective.
-- [Anthropic Prompt Engineering Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview): Official guide to structuring prompts for Claude models.
+- [Anthropic Prompt Engineering Guide](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview): Official guide to structuring prompts for Claude models.
 :::

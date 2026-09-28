@@ -768,7 +768,7 @@ const resources = [
   {
     title: 'Claude Code Best Practices',
     author: 'Anthropic',
-    url: 'https://docs.anthropic.com/en/docs/claude-code/best-practices',
+    url: 'https://code.claude.com/docs/en/best-practices',
     description: 'Getting the most from Claude Code. Patterns that work.',
     type: 'reference',
     topics: ['ai'],
@@ -776,7 +776,7 @@ const resources = [
   {
     title: 'Anthropic Prompt Engineering Guide',
     author: 'Anthropic',
-    url: 'https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview',
+    url: 'https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview',
     description: 'Official prompt engineering documentation. Techniques and strategies.',
     type: 'reference',
     topics: ['ai'],
