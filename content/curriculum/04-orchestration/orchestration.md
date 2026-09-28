@@ -46,9 +46,9 @@ The key to parallel work is contracts. A contract is an agreement between two ag
 
 Before starting parallel work, define the contract explicitly. Write it down in a shared document or a type definition file. Both agents reference this contract. Neither agent deviates from it.
 
-A simple contract for a recipe search feature: "GET /api/recipes/search?q=pasta returns { results: [{ id: string, title: string, matchScore: number }], total: number }." The backend agent builds to this spec. The frontend agent builds against this spec. When both are done, they connect seamlessly.
+A simple contract for a recipe search feature: `GET /api/recipes/search?q=pasta` returns `{ results: [{ id: string, title: string, matchScore: number }], total: number }`. The backend agent builds to this spec. The frontend agent builds against this spec. When both are done, they connect seamlessly.
 
-Without a contract, two agents working in parallel will make different assumptions. The backend returns "items" while the frontend expects "results." The backend returns nested objects while the frontend expects flat ones. These mismatches are expensive to debug.
+Without a contract, two agents working in parallel will make different assumptions. The backend returns `"items"` while the frontend expects `"results"`. The backend returns nested objects while the frontend expects flat ones. These mismatches are expensive to debug.
 
 ## Session Management
 
@@ -87,7 +87,11 @@ Single-session marathons: Running one agent session for eight hours. Context deg
 No contracts: Running parallel agents without agreeing on interfaces first. The integration will be painful.
 
 :::exercise{title="Orchestrate a Two-Agent Build"}
-Pick a small feature with a frontend and backend component (a contact form with a submission endpoint, a search page with search API, etc.). Write the contract first: define the exact API endpoint, request format, and response format. Then give the backend task to one Claude Code session and the frontend task to another. Both sessions get the contract as part of their prompt. Build both sides, then integrate. Note where the contract saved you and where you wish you had specified more.
+- Pick a small feature with a frontend and backend component (a contact form with a submission endpoint, a search page with search API, etc.).
+- Write the contract first: define the exact API endpoint, request format, and response format.
+- Give the backend task to one Claude Code session and the frontend task to another. Both sessions get the contract as part of their prompt.
+- Build both sides, then integrate.
+- Note where the contract saved you and where you wish you had specified more.
 :::
 
 :::resources{title="Go Deeper"}

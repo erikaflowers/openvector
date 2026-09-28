@@ -83,7 +83,16 @@ If code quality is poor: refactor before continuing. Bad code that works is temp
 Git makes recovery safe. You committed after each stage, right? Then reverting is one command. This is why verification and version control work together.
 
 :::exercise{title="Build a Quality Checklist"}
-Create a quality gate checklist for your project. Write five to seven items you will check after every agent task. Include at least one from each category: build (does it compile), functional (does it work), integration (does it play nice), and code quality (can you maintain it). Print it out or pin it next to your screen. Use it for your next five agent sessions. After five sessions, revise it. Which checks caught real issues? Which were unnecessary? Refine the list.
+- Create a quality gate checklist for your project.
+- Write five to seven items you will check after every agent task.
+- Include at least one from each category:
+  - Build (does it compile).
+  - Functional (does it work).
+  - Integration (does it play nice).
+  - Code quality (can you maintain it).
+- Print it out or pin it next to your screen.
+- Use it for your next five agent sessions.
+- After five sessions, revise it. Which checks caught real issues? Which were unnecessary? Refine the list.
 :::
 
 :::resources{title="Go Deeper"}

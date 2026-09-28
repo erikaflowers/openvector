@@ -67,7 +67,7 @@ git commit -m "Add landing page layout and base styles"
 
 `git diff` shows what changed. Shows the exact lines that were added, removed, or modified since your last commit. Invaluable for reviewing your work before committing.
 
-```
+```bash
 git init                          # Start tracking this folder
 git status                        # What has changed?
 git add .                         # Stage all changes

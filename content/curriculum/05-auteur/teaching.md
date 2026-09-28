@@ -71,7 +71,11 @@ But the leverage goes beyond knowledge transfer. Teaching builds reputation. Peo
 The Zero Vector philosophy says: design is not a solitary pursuit. It is a craft practiced in community. Teaching is how you contribute to that community. You learned from others. Now others learn from you. The cycle continues.
 
 :::exercise{title="Teach One Thing"}
-Pick one concept from this curriculum that you now understand well. Write a 500-word explanation of it, aimed at someone who has never encountered it. Use one analogy, one concrete example, and zero jargon (or define every term you use). Publish it anywhere: on a blog, on social media, in a Slack channel, anywhere someone might read it. Teaching one thing, one time, to one audience is how you start.
+- Pick one concept from this curriculum that you now understand well.
+- Write a 500-word explanation of it, aimed at someone who has never encountered it.
+- Use one analogy, one concrete example, and zero jargon (or define every term you use).
+- Publish it anywhere: on a blog, on social media, in a Slack channel — anywhere someone might read it.
+- Teaching one thing, one time, to one audience is how you start.
 :::
 
 :::resources{title="Go Deeper"}

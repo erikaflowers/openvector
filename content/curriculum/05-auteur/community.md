@@ -59,7 +59,11 @@ The new value of community is: taste, perspective, accountability, and emotional
 These are irreplaceable by AI. An agent can review your code but cannot tell you whether the project is worth building. A human who understands your goals, your constraints, and your aspirations can.
 
 :::exercise{title="Connect with Three People"}
-Find three people whose work you admire. They can be people you know or people you follow online. Reach out to each one with something specific and genuine: a comment on their work, a question about their process, a compliment on something they built. Not "great work!" but something that shows you actually engaged with what they made. If you do not know anyone yet, find three blog posts or projects you admire and leave a thoughtful comment on each. This is the beginning of your community.
+- Find three people whose work you admire. They can be people you know or people you follow online.
+- Reach out to each one with something specific and genuine: a comment on their work, a question about their process, a compliment on something they built.
+- Not "great work!" but something that shows you actually engaged with what they made.
+- If you do not know anyone yet, find three blog posts or projects you admire and leave a thoughtful comment on each.
+- This is the beginning of your community.
 :::
 
 :::resources{title="Go Deeper"}

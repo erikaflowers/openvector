@@ -29,7 +29,7 @@ On the web, IA is your site structure, your navigation, your URLs, your headings
 
 If you are coming from design, you already think about IA: navigation menus, page hierarchy, content grouping. But when you start building, IA becomes structural. Your folder structure is IA. Your URL scheme is IA. Your component hierarchy is IA.
 
-Consider this URL: /learn/curriculum/01-foundation/information-architecture. That path tells you exactly where you are: you are in the Open Vector section, in the Learn area, in the Curriculum, in the Foundation level, reading the Information Architecture lesson. The URL is not just an address. It is a map.
+Consider this URL: `/learn/curriculum/01-foundation/information-architecture`. That path tells you exactly where you are: you are in the Open Vector section, in the Learn area, in the Curriculum, in the Foundation level, reading the Information Architecture lesson. The URL is not just an address. It is a map.
 
 When your IA is solid, everything downstream benefits. Navigation writes itself. Breadcrumbs work automatically. Search indexing is clean. Users build accurate mental models of your site. When IA is weak, you end up with a flat mess of pages, confusing navigation, and users who cannot find what they saw five minutes ago.
 
@@ -69,11 +69,11 @@ These three patterns together (global, local, breadcrumbs) give users full spati
 
 In web applications, URLs are a direct expression of your information architecture. A well-structured URL scheme is readable, predictable, and hierarchical.
 
-/products/shoes/running: you know exactly what you will find. You can edit the URL to /products/shoes and see all shoes. You can go to /products and see all product categories. The URL is navigable.
+`/products/shoes/running`: you know exactly what you will find. You can edit the URL to `/products/shoes` and see all shoes. You can go to `/products` and see all product categories. The URL is navigable.
 
-/app?view=3&tab=2&id=a7f3e: you know nothing. You cannot edit it meaningfully. You cannot share it with someone and have them understand what it points to.
+`/app?view=3&tab=2&id=a7f3e`: you know nothing. You cannot edit it meaningfully. You cannot share it with someone and have them understand what it points to.
 
-When you design your routes, think of them as an outline. Each segment adds specificity. /blog is all posts. /blog/2026 is posts from this year. /blog/2026/systems-thinking is a specific post. The URL tells a story.
+When you design your routes, think of them as an outline. Each segment adds specificity. `/blog` is all posts. `/blog/2026` is posts from this year. `/blog/2026/systems-thinking` is a specific post. The URL tells a story.
 
 ```
 # Good URL architecture — readable, hierarchical, predictable:
@@ -110,7 +110,14 @@ Information architecture in Zero Vector extends beyond the user interface. It ap
 An agent reading a project with clear information architecture (components grouped by domain, services separated from UI, utilities in a predictable location) can find what it needs and place new code where it belongs. An agent reading a project that grew organically with no IA will scatter new files randomly, duplicate existing utilities it could not find, and create the kind of structural debt that compounds with every session. Your project's IA is not just for human developers anymore. It is for your entire crew.
 
 :::exercise{title="Audit an IA You Use"}
-Pick a website you use regularly, not one you have built. Open it and write down the top-level navigation items. For each one, try to predict what you will find inside before clicking. Now click. Were you right? Were you surprised? Find one label that could be clearer. Find one piece of content that feels like it is in the wrong section. Sketch a URL scheme that would make the site structure obvious. You have just done an IA audit. This is how you build the instinct for good information architecture.
+- Pick a website you use regularly, not one you have built
+- Open it and write down the top-level navigation items
+- For each one, try to predict what you will find inside before clicking
+- Now click. Were you right? Were you surprised?
+- Find one label that could be clearer
+- Find one piece of content that feels like it is in the wrong section
+- Sketch a URL scheme that would make the site structure obvious
+- You have just done an IA audit. This is how you build the instinct for good information architecture.
 :::
 
 :::resources{title="Go Deeper"}

@@ -63,7 +63,12 @@ Use AI for volume, then apply your judgment for selection. The AI does not know 
 You can also use AI to stress-test ideas: "What are the three biggest problems with the browser extension approach?" or "How would a user with low technical skills experience this?"
 
 :::exercise{title="Ten Ideas in Ten Minutes"}
-Pick one of the job statements from the previous lesson. Set a timer for ten minutes. Write ten different solutions: no filtering, no judging, just generating. Include at least two that sound ridiculous. When the timer goes off, evaluate each idea on impact (1-5) and feasibility (1-5). Multiply the scores. The top two ideas are your candidates for prototyping.
+- Pick one of the job statements from the previous lesson.
+- Set a timer for ten minutes.
+- Write ten different solutions: no filtering, no judging, just generating.
+- Include at least two that sound ridiculous.
+- When the timer goes off, evaluate each idea on impact (1–5) and feasibility (1–5). Multiply the scores.
+- The top two ideas are your candidates for prototyping.
 :::
 
 :::resources{title="Go Deeper"}

@@ -94,7 +94,10 @@ This is not just safety; it is freedom. When you know you can always go back, yo
 The workflow: complete a stage → verify it works → commit with a descriptive message → move to the next stage. Your git log becomes a readable story of how the project was built.
 
 :::exercise{title="Stage a Complex Feature"}
-Think of a feature that feels too complex for a single prompt. A user profile page with avatar upload, editable fields, and password change. A dashboard with charts, filters, and data export. Write it out as three to five staged prompts, each with context, goal, and constraints. Do not build it yet. Just plan the stages. Notice how the complex, intimidating feature becomes a series of manageable steps.
+- Think of a feature that feels too complex for a single prompt — for example, a user profile page with avatar upload, editable fields, and password change; or a dashboard with charts, filters, and data export.
+- Write it out as three to five staged prompts, each with context, goal, and constraints.
+- Do not build it yet. Just plan the stages.
+- Notice how the complex, intimidating feature becomes a series of manageable steps.
 :::
 
 :::resources{title="Go Deeper"}

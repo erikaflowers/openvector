@@ -65,7 +65,12 @@ Your behavioral profiles inform your prioritization. If most users are "collecto
 Good synthesis makes every downstream decision clearer. If you find yourself stuck on a feature decision later, go back to your insights. The answer is usually there.
 
 :::exercise{title="Synthesize Your Research"}
-Take the research from the previous lesson (or use product reviews from an app you use). Write each distinct observation on a separate line in a document (or physical sticky notes). Group related observations together. Name each group with a theme. Write one insight statement per group, not a summary of what people said, but an interpretation of what it means. You should end up with 3-5 insight statements that tell a coherent story about what your users actually need.
+- Take the research from the previous lesson (or use product reviews from an app you use).
+- Write each distinct observation on a separate line in a document (or physical sticky notes).
+- Group related observations together.
+- Name each group with a theme.
+- Write one insight statement per group — not a summary of what people said, but an interpretation of what it means.
+- Aim for 3–5 insight statements that tell a coherent story about what your users actually need.
 :::
 
 :::resources{title="Go Deeper"}

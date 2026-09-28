@@ -90,7 +90,11 @@ Do not skip review. The most dangerous pattern is prompt-approve-prompt-approve 
 Do not copy-paste prompts from the internet. Your project has specific context, conventions, and constraints. Generic prompts produce generic code that does not fit your project.
 
 :::exercise{title="Write Three Prompts"}
-Pick a feature you want to build (or use: a reading list with add/remove/mark-as-read). Write three prompts, each building on the last: (1) the data structure and initial component, (2) a specific interaction (adding a book), (3) a visual refinement (styling the list). For each prompt, include context, intent, and at least one constraint. If you have Claude Code installed, run them and compare the output to what you expected. Where did the agent surprise you? Where did your prompt need more specificity?
+- Pick a feature you want to build (or use: a reading list with add/remove/mark-as-read).
+- Write three prompts, each building on the last: (1) the data structure and initial component, (2) a specific interaction (adding a book), (3) a visual refinement (styling the list).
+- For each prompt, include context, intent, and at least one constraint.
+- If you have Claude Code installed, run them and compare the output to what you expected.
+- Note where the agent surprised you, and where your prompt needed more specificity.
 :::
 
 :::resources{title="Go Deeper"}

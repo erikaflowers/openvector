@@ -49,7 +49,7 @@ This is the build step. You run a command, usually `npm run build`, and your bui
 
 The `dist/` folder is what gets deployed. Not your source code, not your `node_modules`, not your `.env` file. Just the clean, compiled output. This is why deployment and development are separate steps: what you work with is not what you ship.
 
-```
+```bash
 # Build your project for production
 npm run build
 

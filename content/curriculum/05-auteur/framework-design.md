@@ -71,7 +71,13 @@ The first user of your framework should not be you. You have too much implicit k
 The second test is time. Use your own framework for a month. The excitement of creation fades. Daily use reveals the friction: the naming that seemed clever is actually confusing, the default that seemed sensible is actually wrong, and the pattern that seemed elegant is actually cumbersome.
 
 :::exercise{title="Extract a Framework"}
-Look at your last three projects. Find one thing you did in all three: a project structure, a naming convention, a way of organizing components, a checklist you followed. Extract it into a reusable template or document. Give it a name. Write a one-paragraph description of what it does and when to use it. Then start your next project using it. Note where it helps and where it needs adjustment.
+- Look at your last three projects.
+- Find one thing you did in all three: a project structure, a naming convention, a way of organizing components, a checklist you followed.
+- Extract it into a reusable template or document.
+- Give it a name.
+- Write a one-paragraph description of what it does and when to use it.
+- Start your next project using it.
+- Note where it helps and where it needs adjustment.
 :::
 
 :::resources{title="Go Deeper"}

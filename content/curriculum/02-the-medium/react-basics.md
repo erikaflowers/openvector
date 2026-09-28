@@ -24,7 +24,7 @@ Components are functions that return what should appear on screen. They take inp
 
 The power of components is composition. You build small, focused components and combine them into larger ones. A Card component contains a Title, an Image, and a Description. A CardGrid component contains many Cards. A Page component contains a Header, a CardGrid, and a Footer. Simple pieces, assembled into complex interfaces.
 
-```
+```jsx
 // A simple React component:
 function Greeting({ name }) {
   return <h1>Hello, {name}!</h1>;
@@ -65,7 +65,7 @@ In React, you manage state with the useState hook. It gives you two things: the 
 
 The core insight: in React, the UI is a function of state. Change the state, and the UI updates automatically. You never manually change what is on screen. You change the data, and React handles the rest.
 
-```
+```jsx
 // State example: a counter
 import { useState } from 'react';
 
@@ -97,7 +97,7 @@ The differences from HTML are small but important: className instead of class (b
 
 JSX is the reason React feels intuitive for designers. If you can read HTML, you can read JSX. The structure is the same, just with JavaScript superpowers embedded in it.
 
-```
+```jsx
 // JSX looks like HTML with JavaScript embedded:
 function BookList({ books }) {
   return (
@@ -123,7 +123,7 @@ function BookList({ books }) {
 
 In a React project, each component typically lives in its own file. The file exports the component, and other files import it. This is separation of concerns at the file level.
 
-A typical structure: src/components/ for reusable components, src/pages/ for page-level components (one per route), src/styles/ for CSS, src/content/ for data. You have seen this structure in the Open Vector codebase.
+A typical structure: `src/components/` for reusable components, `src/pages/` for page-level components (one per route), `src/styles/` for CSS, `src/content/` for data. You have seen this structure in the Open Vector codebase.
 
 The App.jsx file is the root component, and everything else is nested inside it. The router (React Router) decides which page component to show based on the URL. Layout components (headers, sidebars) wrap the page content.
 
@@ -144,7 +144,12 @@ useState calls are state variables. const [isOpen, setIsOpen] = useState(false) 
 Import statements at the top tell you what other components and libraries are being used. import Sidebar from './Sidebar' means this file uses the Sidebar component.
 
 :::exercise{title="Read a Real Component"}
-Open the Open Vector codebase (or any React project) and pick a component file. Read it without running it. Identify: the component name, its props, any state variables, what it renders, and which child components it uses. Write a one-sentence description of what the component does. Now open the app in a browser and find that component on the page. Does what you see match what you read? This reading skill is what lets you direct an AI agent with precision.
+- Open the Open Vector codebase (or any React project) and pick a component file.
+- Read it without running it.
+- Identify: the component name, its props, any state variables, what it renders, and which child components it uses.
+- Write a one-sentence description of what the component does.
+- Now open the app in a browser and find that component on the page. Does what you see match what you read?
+- This reading skill is what lets you direct an AI agent with precision.
 :::
 
 :::resources{title="Go Deeper"}

@@ -82,7 +82,7 @@ You do not need to memorize a hundred commands. You need about ten. Here are the
 
 `clear` clears your screen. Does not delete anything. Just tidies up.
 
-```
+```bash
 pwd                     # Where am I?
 ls                      # What is here?
 cd my-project           # Go into my-project

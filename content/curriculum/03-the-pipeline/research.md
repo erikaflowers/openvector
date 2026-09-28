@@ -61,7 +61,12 @@ Write down: the problem in one sentence, who has it, how they currently deal wit
 This document becomes the foundation of everything that follows: your JTBD statements, your feature decisions, your prompts to AI agents, your eventual marketing copy. Good research compounds.
 
 :::exercise{title="Research a Problem"}
-Pick a problem you want to solve (or a product category you find interesting). Spend 30 minutes on desk research: look at three competing products, read their reviews (especially negative ones), and find one community forum where people discuss the problem. Write down the top five pain points you discovered. Now write three interview questions you would ask a real user. If you can, actually ask someone: a friend, a colleague, a family member who fits the audience. Compare what they say to what you found online.
+- Pick a problem you want to solve (or a product category you find interesting).
+- Spend 30 minutes on desk research: look at three competing products, read their reviews (especially negative ones), and find one community forum where people discuss the problem.
+- Write down the top five pain points you discovered.
+- Write three interview questions you would ask a real user.
+- If you can, actually ask someone: a friend, a colleague, a family member who fits the audience.
+- Compare what they say to what you found online.
 :::
 
 :::resources{title="Go Deeper"}

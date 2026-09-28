@@ -83,7 +83,16 @@ Now iterate. Look at it on your phone. Show it to a friend. Notice what you want
 Add it to your portfolio. Write a post about what you built. Share the URL. The project is not just a learning exercise. It is proof of capability. You can look at a problem, plan a solution, direct an AI to build it, and ship it. That is a skill employers and clients are desperate for.
 
 :::exercise{title="Ship It"}
-Right now. Pick a project from the ideas list (or use your own). Set a timer for three hours. Follow the five-step process: plan (15 min), set up and deploy the empty project (15 min), build with Claude Code (2 hours), polish (20 min), ship and send the URL to someone (10 min). At the end of three hours, whatever state it is in, it ships. Done is better than perfect. Live is better than local. Ship it.
+- Right now. Pick a project from the ideas list (or use your own).
+- Set a timer for three hours.
+- Follow the five-step process:
+  - Plan (15 min).
+  - Set up and deploy the empty project (15 min).
+  - Build with Claude Code (2 hours).
+  - Polish (20 min).
+  - Ship and send the URL to someone (10 min).
+- At the end of three hours, whatever state it is in, it ships.
+- Done is better than perfect. Live is better than local. Ship it.
 :::
 
 :::resources{title="Go Deeper"}

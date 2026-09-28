@@ -36,7 +36,7 @@ This separation is powerful because the same AI that writes code is not great at
 
 The hardest part of multi-agent work is defining boundaries. Which agent owns what? What happens when responsibilities overlap?
 
-Define ownership by files. "Agent A owns everything in src/components/. Agent B owns everything in api/." File-based boundaries are clean. There is no ambiguity about who should modify what.
+Define ownership by files. "Agent A owns everything in `src/components/`. Agent B owns everything in `api/`." File-based boundaries are clean. There is no ambiguity about who should modify what.
 
 Define ownership by capability. "Agent A writes code. Agent B writes tests. Agent C writes documentation." Capability-based boundaries work well when multiple agents need to read the same files but produce different outputs.
 
@@ -73,7 +73,10 @@ Add a second agent for the thing that is most different from your primary work. 
 The ceiling for most individual projects is three to five agents. Beyond that, the coordination overhead exceeds the specialization benefit. Save larger crews for larger projects with clear architectural boundaries.
 
 :::exercise{title="The Builder-Reviewer Split"}
-Open two terminal sessions with Claude Code in the same project. In the first, set the context: "You are the builder. Your job is to create a simple to-do list component with add, complete, and delete functionality." Let it build. Then in the second session, set the context: "You are the reviewer. Read the to-do list component that was just created. List every bug, edge case, accessibility issue, and code quality concern you can find. Do not fix anything, only report." Compare what the reviewer finds to what the builder thought was complete.
+- Open two terminal sessions with Claude Code in the same project.
+- In the first, set the context: "You are the builder. Your job is to create a simple to-do list component with add, complete, and delete functionality." Let it build.
+- In the second session, set the context: "You are the reviewer. Read the to-do list component that was just created. List every bug, edge case, accessibility issue, and code quality concern you can find. Do not fix anything, only report."
+- Compare what the reviewer finds to what the builder thought was complete.
 :::
 
 :::resources{title="Go Deeper"}

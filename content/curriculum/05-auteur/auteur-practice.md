@@ -79,7 +79,13 @@ This is not the end of your learning. It is the end of the curriculum and the be
 Go build something. Make it yours. Ship it. Then build the next thing. That is the auteur practice. That is Zero Vector.
 
 :::exercise{title="Your Auteur Statement"}
-Write a one-page auteur statement. It should answer three questions: What do I build and why does it matter? How do I work, and what is my methodology in three sentences? What is the standard I hold my work to, and what makes me say "this is good enough to ship"? This statement is your north star. Not a resume, not a bio, but a declaration of your practice. Revise it every six months. Watch how it evolves as you do.
+- Write a one-page auteur statement.
+- Answer three questions:
+  - What do I build, and why does it matter?
+  - How do I work, and what is my methodology in three sentences?
+  - What is the standard I hold my work to, and what makes me say "this is good enough to ship"?
+- This statement is your north star — not a resume, not a bio, but a declaration of your practice.
+- Revise it every six months. Watch how it evolves as you do.
 :::
 
 :::resources{title="Go Deeper"}
