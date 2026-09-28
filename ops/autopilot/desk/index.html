@@ -121,6 +121,7 @@ async function load(date) {
     if (b.fyi.length) h += `<h2>FYI</h2><div class="card"><ul class="fyi">${b.fyi.map((f) => `<li><a href="${esc(f.link)}" target="_blank" rel="noopener">${esc(f.title)}</a>: ${esc(f.note)}</li>`).join('')}</ul></div>`;
     h += `<h2>Site health</h2><div class="card"><p>${esc(b.healthNote)}</p>${healthTable(d.health)}</div>`;
   }
+  if (d.sweep) h += `<h2>Freshness</h2><div class="card">${freshnessBlock(d.sweep, d.freshness)}</div>`;
   if (d.learners) h += `<h2>Learners</h2><div class="card">${learnersBlock(d.learners)}</div>`;
   if (d.digest) h += `<h2>Email digest</h2><div class="card">${esc(d.digest.status)}${d.digest.url ? ` · <a href="${esc(d.digest.url)}" target="_blank" rel="noopener">open in Buttondown</a>` : ''}</div>`;
   const st = await api('/api/status');
@@ -137,6 +138,7 @@ function changeCard(c, p, dec, date) {
       ${p ? `<span class="chip status">${esc(STATUS[p.status] || p.status)}</span>` : '<span class="chip status">not drafted</span>'}
       ${p?.audit ? `<span class="chip ${p.audit}">audit ${p.audit}</span>` : ''}
       <span class="chip">${esc(c.confidence)} confidence</span>
+      ${c.origin === 'sweep' ? '<span class="chip">freshness sweep</span>' : ''}
       ${p?.url ? `<a class="chip" href="${esc(p.url)}" target="_blank" rel="noopener">PR #${p.pr}</a>` : ''}</div>
     <h3>${esc(c.title)}</h3>
     <div class="row files">${c.files.map((f) => `<code>${esc(f)}</code>`).join(' ')}</div>
@@ -175,6 +177,16 @@ function healthTable(h) {
   const stale = h.lessons.slice(0, 8).map((l) => `<tr><td>${l.ageDays ?? '?'}d</td><td colspan="2"><code>${esc(l.file)}</code></td></tr>`).join('');
   return `<details><summary>Links needing attention (${h.links.length})</summary><table>${rows}</table></details>
           <details><summary>Stalest lessons</summary><table>${stale}</table></details>`;
+}
+
+function freshnessBlock(sw, ledger) {
+  const pct = sw.coverage.total ? Math.round(100 * sw.coverage.covered / sw.coverage.total) : 0;
+  const today = sw.checked.map((c) => `<tr><td><code>${esc(c.file.replace(/^content\//, ''))}</code></td><td>${esc(c.status)}</td><td>${c.status === 'error' ? esc(c.error) : `${c.current} ✓ · ${c.outdated} ✗ · ${c.unverifiable} ?`}</td></tr>`).join('');
+  const all = Object.entries(ledger).sort((a, b) => a[1].verifiedAt.localeCompare(b[1].verifiedAt))
+    .map(([f, x]) => `<tr><td><code>${esc(f.replace(/^content\//, ''))}</code></td><td>${esc(x.verifiedAt)}</td><td>${esc(x.status)}</td></tr>`).join('');
+  return `<p><b>${sw.coverage.covered}/${sw.coverage.total}</b> lessons verified against their sources in the last ${sw.coverage.targetDays} days (${pct}%).</p>
+    <table><tr><th>Re-verified today</th><th>Result</th><th>Claims</th></tr>${today}</table>
+    <details><summary>Freshness ledger (${Object.keys(ledger).length} lessons)</summary><table>${all}</table></details>`;
 }
 
 function learnersBlock(l) {

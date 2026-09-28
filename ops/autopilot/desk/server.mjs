@@ -35,6 +35,8 @@ function day(date) {
     health: readJson(path.join(d, 'health.json'), null),
     learners: readJson(path.join(d, 'learners.json'), null),
     digest: readJson(path.join(d, 'digest.json'), null),
+    sweep: readJson(path.join(d, 'sweep.json'), null),
+    freshness: readJson(path.join(STATE, 'freshness.json'), {}),
     collected: readJson(path.join(d, 'collected.json'), { count: 0, errors: [] }).count,
     cost,
     decisions: decisions().filter((x) => x.date === date),

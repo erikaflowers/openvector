@@ -55,6 +55,12 @@ if (!brief) {
   }
   L.push('## Site health', '', brief.healthNote, '');
 }
+const sweep = readJson(path.join(dir, 'sweep.json'), null);
+if (sweep) {
+  L.push('## Freshness sweep', '', `Re-verified ${sweep.checked.length} lessons against their sources today. Coverage: **${sweep.coverage.covered}/${sweep.coverage.total}** lessons verified within ${sweep.coverage.targetDays} days.`, '');
+  sweep.checked.forEach((c) => L.push(`- \`${c.file}\`: **${c.status}**${c.status !== 'error' ? ` (${c.current} current, ${c.outdated} outdated, ${c.unverifiable} unverifiable)` : ''}. ${c.summary || c.error || ''}`));
+  L.push('');
+}
 L.push(`| Lessons | Stale (>90d) | No updatedAt | Links | Broken | Moved | Unverified |`, `|---|---|---|---|---|---|---|`,
   `| ${hs.lessons} | ${hs.stale} | ${hs.missingUpdatedAt} | ${hs.links} | ${hs.broken} | ${hs.moved} | ${hs.unverified} |`, '');
 L.push('---', `Crawl: ${collected.count} new items${collected.errors.length ? `, ${collected.errors.length} source errors (${collected.errors.map((e) => e.source).join(', ')})` : ''}. Cost: $${usd.toFixed(2)}.`);
@@ -69,7 +75,9 @@ const tg = brief
      prs.length
        ? `${st('merged')} shipped · ${st('awaiting') + st('audit-failed')} PRs await your call · ${st('deferred')} deferred · ${brief.proposals.length} proposals`
        : `${n('T1')} need your call · ${n('T0')} mechanical · ${brief.proposals.length} proposals · ${brief.fyi.length} FYI`,
-     `Health: ${hs.broken} broken, ${hs.moved} moved links; ${hs.stale}/${hs.lessons} lessons stale.`, '', `Desk: ${DESK}`].join('\n')
+     `Health: ${hs.broken} broken, ${hs.moved} moved links; ${hs.stale}/${hs.lessons} lessons stale.`,
+     ...(sweep ? [`Freshness: re-verified ${sweep.checked.length} lessons (${sweep.checked.filter((c) => c.status === 'needs-update').length} need updates). Coverage ${sweep.coverage.covered}/${sweep.coverage.total}.`] : []),
+     '', `Desk: ${DESK}`].join('\n')
   : `Open Vector Updates, ${date}: the brief stage failed. Check ${path.join(dir, 'run.log')}`;
 fs.writeFileSync(path.join(dir, 'telegram.txt'), tg + '\n');
 fs.writeFileSync(path.join(STATE, 'latest'), date + '\n');

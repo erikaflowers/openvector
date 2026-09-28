@@ -11,7 +11,7 @@ lookbackDays: 14
 maxItemsForTriage: 60
 
 limits:
-  maxPrsPerDay: 5
+  maxPrsPerDay: 8
   maxBudgetUsdPerStage: 3
 
 # Files the agent may touch at all. T0 auto-merge only ever touches these.
@@ -66,8 +66,20 @@ stages:
     denyWrites: false
     maxBudgetUsd: 3
     timeoutMin: 15
+  verify:
+    model: null
+    tools: [Read, Grep, Glob, WebFetch]
+    maxBudgetUsd: 2
+    timeoutMin: 15
   audit:
     model: null
     tools: [Read, Grep, Glob, WebFetch]
     maxBudgetUsd: 2
     timeoutMin: 15
+
+# Freshness sweep: every day, re-verify the lessons that were verified longest ago (never-verified first,
+# most volatile first), whether or not the news mentions them. Outdated claims become T1 changes for the Desk.
+# Coverage goal: every lesson re-verified at least every `targetDays`.
+sweep:
+  perDay: 6
+  targetDays: 30

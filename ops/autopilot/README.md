@@ -25,6 +25,9 @@ run.sh (LaunchAgent com.macmini.ov-autopilot, daily 05:00)
   publish.mjs            per change: worktree → draft agent (edits only the listed files)
                          → scope check → updatedAt + content/updates note → npm run build
                          → audit agent → PR. T0 + audit pass: squash-merge. T1: waits for the Desk.
+  sweep.mjs              freshness sweep: re-verify the 6 least-recently-verified lessons against official
+                         sources, whether or not the news mentions them; outdated claims become T1 changes;
+                         ledger in freshness.json (coverage goal: every lesson verified within 30 days)
   digest.mjs             Fridays: Buttondown DRAFT of the week's update notes (never sends)
   render-brief.mjs       brief.md + Telegram ping with the Desk link
 ```
