@@ -14,7 +14,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkDirective from 'remark-directive';
 import learnContentPlugin from '../vite-plugin-learn-content.js';
-import { fullTitle, SITE, BASE_URL, DEFAULT_DESC, DEFAULT_IMAGE } from '../src/hooks/seo-config.js';
+import { fullTitle, canonicalUrl, SITE, BASE_URL, DEFAULT_DESC, DEFAULT_IMAGE } from '../src/hooks/seo-config.js';
 
 const DIST = path.resolve('dist');
 const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
@@ -99,7 +99,7 @@ const setTag = (html, re, tag) => (re.test(html) ? html.replace(re, tag) : html.
 
 function renderPage(p) {
   const title = fullTitle(p.title, p.path);
-  const url = `${BASE_URL}${p.path}`;
+  const url = canonicalUrl(p.path);
   const desc = p.description || DEFAULT_DESC;
   let html = template;
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`);
@@ -118,7 +118,7 @@ function renderPage(p) {
       learningResourceType: p.group === 'Approach' ? 'Guide' : 'Lesson',
       ...(p.lesson.duration ? { timeRequired: `PT${parseInt(p.lesson.duration, 10) || 0}M` } : {}),
       ...(p.lesson.updatedAt ? { dateModified: String(p.lesson.updatedAt).slice(0, 10) } : {}),
-      isPartOf: { '@type': 'Course', name: SITE, url: `${BASE_URL}/learn/curriculum` },
+      isPartOf: { '@type': 'Course', name: SITE, url: canonicalUrl('/learn/curriculum') },
       publisher: { '@type': 'Organization', name: 'Zero Vector Design', url: 'https://zerovector.design' },
       image: DEFAULT_IMAGE,
     };
@@ -138,7 +138,7 @@ pages.forEach(renderPage);
 // ---- sitemap.xml --------------------------------------------------------------------------
 const today = new Date().toISOString().slice(0, 10);
 const lastmod = (p) => (p.lesson?.updatedAt ? String(p.lesson.updatedAt).slice(0, 10) : p.path === '/learn/changelog' ? (learn.updates?.[0]?.date || today) : null);
-const urls = [{ path: '/' }, ...pages].map((p) => `  <url><loc>${BASE_URL}${p.path}</loc>${lastmod(p) ? `<lastmod>${lastmod(p)}</lastmod>` : ''}</url>`);
+const urls = [{ path: '/' }, ...pages].map((p) => `  <url><loc>${canonicalUrl(p.path)}</loc>${lastmod(p) ? `<lastmod>${lastmod(p)}</lastmod>` : ''}</url>`);
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`);
 
 console.log(`prerender: ${pages.length} pages + sitemap.xml (${urls.length} urls)`);
