@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "required": ["status", "checked", "summary"],
+  "properties": {
+    "status": { "type": "string", "enum": ["current", "needs-update"], "description": "needs-update if any checked claim is outdated." },
+    "summary": { "type": "string", "description": "One sentence for Samantha: is this lesson still accurate?" },
+    "checked": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim", "verdict", "evidence"],
+        "properties": {
+          "claim": { "type": "string" },
+          "verdict": { "type": "string", "enum": ["current", "outdated", "unverifiable"] },
+          "evidence": { "type": "string", "description": "What the source says, quoted or closely paraphrased." },
+          "source": { "type": "string", "description": "URL you actually opened." }
+        }
+      }
+    },
+    "change": {
+      "type": "object",
+      "description": "Only when status is needs-update: one change that fixes every outdated claim in this lesson.",
+      "required": ["id", "title", "what", "why", "sources", "confidence"],
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "what": { "type": "string", "description": "Exactly what to change. Quote the current text being replaced." },
+        "why": { "type": "string" },
+        "sources": { "type": "array", "items": { "type": "string" } },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    }
+  }
+}

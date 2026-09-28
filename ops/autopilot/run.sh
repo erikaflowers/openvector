@@ -48,6 +48,7 @@ if (( TOPIC )) || [[ ! -f ops/autopilot/topic-map.yaml ]]; then node ops/autopil
 node ops/autopilot/publish.mjs pending || echo "pending: could not list open PRs"
 BRIEF_OK=1
 node ops/autopilot/stage.mjs brief || { BRIEF_OK=0; echo "brief stage failed; rendering what we have"; }
+(( BRIEF_OK )) && { node ops/autopilot/sweep.mjs || echo "sweep failed"; }
 PHASE=$(awk '/^phase:/{print $2}' ops/autopilot/config.yaml)
 if (( BRIEF_OK )) && (( PHASE >= 2 )); then
   if (( DRY )); then OV_DRY=1 node ops/autopilot/publish.mjs || echo "publish (dry) failed"
