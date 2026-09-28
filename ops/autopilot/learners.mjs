@@ -65,14 +65,21 @@ if (env.SUPABASE_URL && env.SUPABASE_SERVICE_ROLE_KEY) {
 }
 
 if (env.BUTTONDOWN_API_KEY) {
+  // Buttondown filters subscribers by tag UUID (a tag *name* is rejected or silently ignored),
+  // so resolve names to ids first. Counts only; subscriber records are never stored.
+  const bd = (q) => fetch(`https://api.buttondown.com/v1/${q}`, { headers: { authorization: `Token ${env.BUTTONDOWN_API_KEY}` } });
+  const count = async (q) => { const r = await bd(q); return r.ok ? (await r.json()).count ?? null : `HTTP ${r.status}`; };
+  out.subscribers = await count('subscribers?type=regular');
+  out.unconfirmed = await count('subscribers?type=unactivated');
+  const tags = await bd('tags');
   out.subscribersByTag = {};
-  for (const tag of ['zerovector', 'workflows']) {
-    const r = await fetch(`https://api.buttondown.com/v1/subscribers?tag=${tag}&type=regular`, { headers: { authorization: `Token ${env.BUTTONDOWN_API_KEY}` } });
-    out.subscribersByTag[tag] = r.ok ? (await r.json()).count ?? null : `HTTP ${r.status}`;
+  if (tags.ok) {
+    for (const t of (await tags.json()).results || []) {
+      if (!['zerovector', 'workflows', 'enterprise', 'founding-contributor', 'bootcamp'].includes(t.name)) continue;
+      out.subscribersByTag[t.name] = { active: await count(`subscribers?tag=${t.id}&type=regular`), unconfirmed: await count(`subscribers?tag=${t.id}&type=unactivated`) };
+    }
   }
-  const all = await fetch('https://api.buttondown.com/v1/subscribers?type=regular', { headers: { authorization: `Token ${env.BUTTONDOWN_API_KEY}` } });
-  out.subscribers = all.ok ? (await all.json()).count ?? null : `HTTP ${all.status}`;
 }
 
 writeJson(path.join(runDir(), 'learners.json'), out);
-console.log(`learners: ${out.users ?? '?'} users, ${out.activeLearners ?? '?'} with progress, ${out.completions ?? '?'} completions, ${out.subscribers ?? '?'} subscribers${out.usersError || out.progressError ? ` (errors: ${out.usersError || ''} ${out.progressError || ''})` : ''}`);
+console.log(`learners: ${out.users ?? '?'} users, ${out.activeLearners ?? '?'} with progress, ${out.completions ?? '?'} completions, ${out.subscribers ?? '?'} active subscribers (${out.unconfirmed ?? '?'} unconfirmed)${out.usersError || out.progressError ? ` (errors: ${out.usersError || ''} ${out.progressError || ''})` : ''}`);
