@@ -4,6 +4,7 @@ import KnowledgeCheck from '../../components/learn/KnowledgeCheck';
 import MarkCompleteButton from '../../components/learn/MarkCompleteButton';
 import LessonBadge from '../../components/learn/LessonBadge';
 import RightRail from '../../components/learn/RightRail';
+import LessonUpdates from '../../components/learn/LessonUpdates';
 import useSEO from '../../hooks/useSEO';
 
 function LessonPage() {
@@ -47,6 +48,7 @@ function LessonPage() {
           <h1 className="ovl-lesson-title">{lesson.title}</h1>
           <p className="ovl-lesson-subtitle">{lesson.subtitle}</p>
         </header>
+        <LessonUpdates lessonKey={`${levelSlug}/${lessonSlug}`} levelSlug={levelSlug} lessonSlug={lessonSlug} />
         <MarkdownRenderer content={lesson.markdownBody} />
         <KnowledgeCheck questions={lesson.knowledgeCheck} />
         <MarkCompleteButton levelSlug={levelSlug} lessonSlug={lessonSlug} />

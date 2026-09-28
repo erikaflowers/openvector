@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Vector Desk</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Ccircle cx=%228%22 cy=%228%22 r=%227%22 fill=%22%235b3fd6%22/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f6f5f1; --panel: #ffffff; --ink: #1b1b1f; --muted: #6b6b75; --line: #e3e1da;
+    --accent: #5b3fd6; --go: #1f7a4d; --nogo: #b3261e; --warn: #9a6200; --chip: #efedf9;
+    --add: #e6f4ea; --del: #fce8e6; --code: #f1efe9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121216; --panel: #1b1b21; --ink: #ecebf2; --muted: #9a99a6; --line: #2c2c35;
+      --accent: #a594ff; --go: #5fd39a; --nogo: #ff8a80; --warn: #f2c14e; --chip: #26233a;
+      --add: #173323; --del: #3a1c1c; --code: #23232b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif; }
+  a { color: var(--accent); }
+  header { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  header h1 { font-size: 16px; margin: 0; letter-spacing: .02em; }
+  header .sp { flex: 1; }
+  select, button, textarea { font: inherit; color: inherit; }
+  select { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; }
+  main { max-width: 860px; margin: 0 auto; padding: 16px; }
+  .headline { font-size: 18px; line-height: 1.45; margin: 4px 0 16px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; min-width: 96px; }
+  .stat b { display: block; font-size: 20px; }
+  .stat span { color: var(--muted); font-size: 12px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 28px 0 10px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .card.done { opacity: .62; }
+  .card h3 { margin: 6px 0 8px; font-size: 16px; line-height: 1.35; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .chip { background: var(--chip); border-radius: 999px; padding: 2px 9px; font-size: 12px; }
+  .chip.T0 { color: var(--muted); } .chip.T1 { color: var(--accent); font-weight: 600; }
+  .chip.pass { color: var(--go); } .chip.fail { color: var(--nogo); font-weight: 600; }
+  .chip.status { color: var(--warn); }
+  .row { margin: 6px 0; } .row .k { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; display: block; }
+  .files code, .row code { background: var(--code); padding: 1px 5px; border-radius: 5px; font-size: 12.5px; word-break: break-all; }
+  .note { border-left: 3px solid var(--accent); padding: 4px 10px; margin: 8px 0; color: var(--ink); }
+  .sources a { display: block; word-break: break-all; font-size: 13px; }
+  details { margin-top: 8px; } summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+  pre.diff { background: var(--code); border-radius: 8px; padding: 10px; overflow-x: auto; font-size: 12px; line-height: 1.45; margin: 8px 0 0; }
+  pre.diff .a { background: var(--add); display: block; } pre.diff .d { background: var(--del); display: block; } pre.diff .h { color: var(--muted); display: block; }
+  .actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center; }
+  .btn { border: 1px solid var(--line); background: var(--panel); border-radius: 9px; padding: 8px 14px; cursor: pointer; font-weight: 600; min-height: 40px; }
+  .btn.go { background: var(--go); border-color: var(--go); color: #fff; }
+  .btn.nogo { color: var(--nogo); border-color: var(--nogo); }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .decided { font-size: 13px; color: var(--muted); }
+  textarea { width: 100%; min-height: 60px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); padding: 8px; margin-top: 8px; display: none; }
+  .fyi li { margin-bottom: 6px; }
+  .muted { color: var(--muted); }
+  .toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .pill { border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 600; border: 1px solid var(--line); background: var(--panel); cursor: pointer; }
+  .pill.paused { color: var(--nogo); border-color: var(--nogo); }
+  .pill.live { color: var(--go); border-color: var(--go); }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  td, th { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  pre.log { background: var(--code); border-radius: 8px; padding: 10px; font-size: 11.5px; overflow-x: auto; white-space: pre-wrap; }
+  .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; display: none; max-width: 90vw; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Open Vector Desk</h1>
+  <select id="day" aria-label="Day"></select>
+  <span class="sp"></span>
+  <button id="pause" class="pill" title="Kill switch for the daily run">…</button>
+</header>
+<main id="main"><p class="muted">Loading…</p></main>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const link = (u) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\//, ''))}</a>`;
+const api = async (path, body) => {
+  const r = await fetch(path, body ? { method: 'POST', headers: { 'content-type': 'application/json', 'x-desk': '1' }, body: JSON.stringify(body) } : {});
+  const j = r.headers.get('content-type')?.includes('json') ? await r.json() : await r.text();
+  if (!r.ok) throw new Error(j.error || j);
+  return j;
+};
+const toast = (m) => { const t = $('#toast'); t.textContent = m; t.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => (t.style.display = 'none'), 3500); };
+
+const STATUS = {
+  merged: 'shipped', awaiting: 'PR open', 'audit-failed': 'audit failed (draft PR)', deferred: 'deferred',
+  failed: 'failed', skipped: 'skipped by editor', 'no-op': 'no change needed', rejected: 'closed', 'dry-run': 'dry run',
+};
+
+async function load(date) {
+  const d = await api(`/api/day/${date}`);
+  const b = d.brief;
+  const decided = Object.fromEntries(d.decisions.map((x) => [x.id, x]));
+  const pr = Object.fromEntries(d.prs.map((p) => [p.id, p]));
+  const hs = d.health?.summary || {};
+  let h = '';
+
+  if (!b) {
+    h += `<p class="headline">No brief for ${esc(date)}. The run may have failed. See the log below.</p>`;
+  } else {
+    h += `<p class="headline">${esc(b.headline)}</p>`;
+    const t1 = b.changes.filter((c) => c.tier === 'T1'), t0 = b.changes.filter((c) => c.tier === 'T0');
+    h += `<div class="stats">
+      <div class="stat"><b>${t1.filter((c) => !decided[c.id] && pr[c.id]?.status !== 'merged').length}</b><span>need your call</span></div>
+      <div class="stat"><b>${d.prs.filter((p) => p.status === 'merged').length}</b><span>shipped</span></div>
+      <div class="stat"><b>${b.proposals.length}</b><span>proposals</span></div>
+      <div class="stat"><b>${hs.broken ?? '–'} / ${hs.moved ?? '–'}</b><span>broken / moved links</span></div>
+      <div class="stat"><b>${hs.stale ?? '–'}/${hs.lessons ?? '–'}</b><span>lessons stale</span></div>
+      <div class="stat"><b>$${d.cost.toFixed(2)}</b><span>run cost</span></div>
+    </div>`;
+    if (t1.length) h += `<h2>Needs your call</h2>` + t1.map((c) => changeCard(c, pr[c.id], decided[c.id], date)).join('');
+    if (t0.length) h += `<h2>Mechanical fixes</h2>` + t0.map((c) => changeCard(c, pr[c.id], decided[c.id], date)).join('');
+    if (b.proposals.length) h += `<h2>Proposals</h2>` + b.proposals.map((p) => proposalCard(p, decided[p.id])).join('');
+    if (b.fyi.length) h += `<h2>FYI</h2><div class="card"><ul class="fyi">${b.fyi.map((f) => `<li><a href="${esc(f.link)}" target="_blank" rel="noopener">${esc(f.title)}</a>: ${esc(f.note)}</li>`).join('')}</ul></div>`;
+    h += `<h2>Site health</h2><div class="card"><p>${esc(b.healthNote)}</p>${healthTable(d.health)}</div>`;
+  }
+  if (d.learners) h += `<h2>Learners</h2><div class="card">${learnersBlock(d.learners)}</div>`;
+  if (d.digest) h += `<h2>Email digest</h2><div class="card">${esc(d.digest.status)}${d.digest.url ? ` · <a href="${esc(d.digest.url)}" target="_blank" rel="noopener">open in Buttondown</a>` : ''}</div>`;
+  const st = await api('/api/status');
+  h += `<h2>Last run log</h2><pre class="log">${esc(st.lastLog)}</pre><p class="muted">Crawl: ${d.collected} new items. Phase ${st.phase}.</p>`;
+  $('#main').innerHTML = h;
+  bind(date);
+}
+
+function changeCard(c, p, dec, date) {
+  const shipped = p?.status === 'merged' || p?.status === 'rejected';
+  const done = !!dec || shipped;
+  return `<div class="card ${done ? 'done' : ''}" data-id="${esc(c.id)}" data-kind="change">
+    <div class="chips"><span class="chip ${c.tier}">${c.tier}</span>
+      ${p ? `<span class="chip status">${esc(STATUS[p.status] || p.status)}</span>` : '<span class="chip status">not drafted</span>'}
+      ${p?.audit ? `<span class="chip ${p.audit}">audit ${p.audit}</span>` : ''}
+      <span class="chip">${esc(c.confidence)} confidence</span>
+      ${p?.url ? `<a class="chip" href="${esc(p.url)}" target="_blank" rel="noopener">PR #${p.pr}</a>` : ''}</div>
+    <h3>${esc(c.title)}</h3>
+    <div class="row files">${c.files.map((f) => `<code>${esc(f)}</code>`).join(' ')}</div>
+    ${p?.publicNote ? `<div class="note">${esc(p.publicNote)}</div>` : ''}
+    <div class="row"><span class="k">Change</span>${esc(c.what)}</div>
+    <div class="row"><span class="k">Why</span>${esc(c.why)}</div>
+    ${p?.auditSummary ? `<div class="row"><span class="k">Audit</span>${esc(p.auditSummary)}</div>` : ''}
+    ${p?.reason ? `<div class="row"><span class="k">Pipeline</span>${esc(p.reason)}</div>` : ''}
+    <div class="row sources"><span class="k">Sources</span>${c.sources.map(link).join('')}</div>
+    ${p && ['merged', 'awaiting', 'audit-failed', 'dry-run', 'rejected'].includes(p.status) ? `<details data-diff="${esc(c.id)}"><summary>Diff</summary><pre class="diff">Loading…</pre></details>` : ''}
+    ${actions(dec, shipped ? `Already ${STATUS[p.status]}` : null, p?.pr ? (p.status === 'audit-failed' ? 'Go anyway' : 'Go: merge') : 'Go: queue it', p?.pr ? 'No-go: close PR' : 'No-go')}
+  </div>`;
+}
+
+function proposalCard(p, dec) {
+  return `<div class="card ${dec ? 'done' : ''}" data-id="${esc(p.id)}" data-kind="proposal">
+    <div class="chips"><span class="chip T1">T2</span><span class="chip">${esc(p.type)}</span></div>
+    <h3>${esc(p.title)}</h3>
+    <div class="row">${esc(p.rationale)}</div>
+    <ol>${p.outline.map((o) => `<li>${esc(o)}</li>`).join('')}</ol>
+    <div class="row sources"><span class="k">Sources</span>${p.sources.map(link).join('')}</div>
+    ${actions(dec, null, 'Write it', 'Not now')}
+  </div>`;
+}
+
+function actions(dec, lockedMsg, goLabel, nogoLabel) {
+  if (dec) return `<div class="actions decided">Decided: <b>${esc(dec.decision === 'go' ? 'Go' : dec.decision === 'nogo' ? 'No-go' : 'Note')}</b> · ${esc(dec.result || '')}${dec.note ? ` · “${esc(dec.note)}”` : ''}</div>`;
+  if (lockedMsg) return `<div class="actions decided">${esc(lockedMsg)}. <button class="btn" data-act="note">Add note</button></div><textarea placeholder="Why? The next brief reads this."></textarea>`;
+  return `<div class="actions"><button class="btn go" data-act="go">${esc(goLabel)}</button><button class="btn nogo" data-act="nogo">${esc(nogoLabel)}</button><button class="btn" data-act="note">Note</button></div>
+    <textarea placeholder="Optional: why? The next brief reads this."></textarea>`;
+}
+
+function healthTable(h) {
+  if (!h) return '';
+  const rows = h.links.slice(0, 20).map((l) => `<tr><td>${esc(l.verdict)}</td><td>${esc(l.status)}</td><td>${link(l.url)}${l.finalUrl ? `<br>→ ${link(l.finalUrl)}` : ''}</td></tr>`).join('');
+  const stale = h.lessons.slice(0, 8).map((l) => `<tr><td>${l.ageDays ?? '?'}d</td><td colspan="2"><code>${esc(l.file)}</code></td></tr>`).join('');
+  return `<details><summary>Links needing attention (${h.links.length})</summary><table>${rows}</table></details>
+          <details><summary>Stalest lessons</summary><table>${stale}</table></details>`;
+}
+
+function learnersBlock(l) {
+  const drop = (l.dropoff || []).slice(0, 8).map((x) => `<tr><td><code>${esc(x.lesson)}</code></td><td>${x.completions}</td><td>${x.dropPct != null ? x.dropPct + '%' : ''}</td></tr>`).join('');
+  return `<p>${l.users ?? '?'} signed-in learners · ${l.activeLearners ?? '?'} with progress · ${l.completions ?? '?'} completions${l.subscribers != null ? ` · ${l.subscribers} email subscribers` : ''}</p>
+    ${drop ? `<details open><summary>Biggest drop-offs</summary><table><tr><th>Lesson</th><th>Completions</th><th>Drop from previous</th></tr>${drop}</table></details>` : ''}`;
+}
+
+function bind(date) {
+  document.querySelectorAll('details[data-diff]').forEach((d) => d.addEventListener('toggle', async () => {
+    const pre = $('pre', d);
+    if (!d.open || pre.dataset.loaded) return;
+    const txt = await api(`/api/diff/${date}/${d.dataset.diff}`).catch(() => 'No diff saved.');
+    pre.innerHTML = String(txt).split('\n').map((l) => `<span class="${l.startsWith('+') && !l.startsWith('+++') ? 'a' : l.startsWith('-') && !l.startsWith('---') ? 'd' : l.startsWith('@@') || l.startsWith('diff ') ? 'h' : ''}">${esc(l) || ' '}</span>`).join('');
+    pre.dataset.loaded = 1;
+  }));
+  document.querySelectorAll('.card [data-act]').forEach((b) => b.addEventListener('click', async () => {
+    const card = b.closest('.card'), ta = $('textarea', card), act = b.dataset.act;
+    if (act === 'note' && ta.style.display !== 'block') { ta.style.display = 'block'; ta.focus(); b.textContent = 'Save note'; return; }
+    if (act === 'go' && b.textContent.includes('anyway') && !confirm('The audit failed on this one. Merge anyway?')) return;
+    card.querySelectorAll('button').forEach((x) => (x.disabled = true));
+    try {
+      const r = await api('/api/decision', { date, id: card.dataset.id, kind: card.dataset.kind, decision: act, note: ta?.value || '' });
+      toast(r.result);
+      load(date);
+    } catch (e) { toast(`Failed: ${e.message}`); card.querySelectorAll('button').forEach((x) => (x.disabled = false)); }
+  }));
+}
+
+async function pauseState(s) {
+  const b = $('#pause');
+  b.textContent = s.paused ? 'Paused' : 'Live';
+  b.className = `pill ${s.paused ? 'paused' : 'live'}`;
+  b.onclick = async () => {
+    if (!confirm(s.paused ? 'Resume the daily run?' : 'Pause the daily run? Nothing runs until you resume.')) return;
+    const r = await api('/api/pause', { paused: !s.paused });
+    pauseState({ ...s, paused: r.paused });
+  };
+}
+
+(async () => {
+  const days = await api('/api/days');
+  const sel = $('#day');
+  sel.innerHTML = days.map((d) => `<option value="${d.date}">${d.date}${d.open ? ` · ${d.open} open` : ''}</option>`).join('') || '<option>no runs yet</option>';
+  sel.onchange = () => load(sel.value);
+  pauseState(await api('/api/status'));
+  if (days.length) load(days[0].date);
+  else $('#main').innerHTML = '<p class="muted">No runs yet. The first brief lands at 05:00.</p>';
+})();
+</script>
+</body>
+</html>

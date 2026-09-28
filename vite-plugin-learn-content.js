@@ -8,7 +8,7 @@
  * In dev mode, watches content/ for changes and triggers reload.
  */
 
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, resolve } from 'path';
 import yaml from 'js-yaml';
 import matter from 'gray-matter';
@@ -113,11 +113,44 @@ export default function learnContentPlugin() {
       guides,
     };
 
+    // Lessons edited in the last 30 days get an "Updated" badge automatically (unless they carry one).
+    const RECENT_DAYS = 30;
+    const recent = (d) => d && (Date.now() - Date.parse(d)) / 864e5 <= RECENT_DAYS;
+    const allLessons = [...levels.flatMap(l => l.lessons), ...guides];
+    allLessons.forEach(l => {
+      if (!l.badge && recent(l.updatedAt)) { l.badge = 'updated'; l.badgeDerived = true; }
+    });
+
+    // Update notes written by the Open Vector Autopilot (content/updates/*.md), newest first.
+    // Each lesson key ("<level>/<slug>" or "approach/<slug>") is resolved to a title and route.
+    const lessonIndex = {};
+    levels.forEach(level => level.lessons.forEach(l => {
+      lessonIndex[`${level.slug}/${l.slug}`] = { title: l.title, path: `/learn/curriculum/${level.slug}/${l.slug}` };
+    }));
+    guides.forEach(g => {
+      lessonIndex[`approach/${g.slug}`] = { title: g.title, path: `/learn/approach/${g.category}/${g.slug}` };
+    });
+    const updatesDir = join(contentDir, 'updates');
+    const updates = (existsSync(updatesDir) ? readdirSync(updatesDir) : [])
+      .filter(f => f.endsWith('.md'))
+      .map(f => {
+        const { data, content } = matter(readFileSync(join(updatesDir, f), 'utf-8'));
+        return {
+          date: String(data.date).slice(0, 10),
+          kind: data.kind === 'fix' ? 'fix' : 'update',
+          note: content.trim(),
+          lessons: (data.lessons || []).map(k => lessonIndex[k] && { key: k, ...lessonIndex[k] }).filter(Boolean),
+        };
+      })
+      .filter(u => u.note)
+      .sort((a, b) => b.date.localeCompare(a.date));
+
     return {
       nav: manifest.nav,
       index: manifest.index,
       levels,
       approach,
+      updates,
     };
   }
 

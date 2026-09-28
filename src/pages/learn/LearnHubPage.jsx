@@ -4,6 +4,7 @@ import { useProgress } from '../../contexts/ProgressContext';
 import LessonBadge from '../../components/learn/LessonBadge';
 import NotifyForm from '../../components/NotifyForm';
 import useSEO from '../../hooks/useSEO';
+import useLastVisit from '../../hooks/useLastVisit';
 // approachCategories now comes from learn.approach.categories
 import recommendedReading from '../../content/recommended-reading';
 
@@ -49,6 +50,13 @@ function LearnHubPage() {
         path: `/learn/curriculum/${level.slug}/${l.slug}`,
       }))
   ).slice(0, 5);
+
+  // What's new: autopilot update notes since the visitor's last visit, else the most recent ones
+  const lastVisit = useLastVisit();
+  const allUpdates = learn.updates || [];
+  const sinceVisit = lastVisit ? allUpdates.filter(u => u.date > lastVisit) : [];
+  const whatsNew = (sinceVisit.length ? sinceVisit : allUpdates).slice(0, 5);
+  const whatsNewTitle = sinceVisit.length ? 'Since your last visit' : 'Recently updated';
 
   // Find next uncompleted lesson for "continue" link
   let continueItem = null;
@@ -239,8 +247,27 @@ function LearnHubPage() {
         </div>
       </div>
 
-      {/* What's New */}
-      {recentLessons.length > 0 && (
+      {/* What's New: live update notes */}
+      {whatsNew.length > 0 && (
+        <div className="ovl-hub-recent">
+          <div className="ovl-hub-recent-header">{whatsNewTitle}</div>
+          <div className="ovl-hub-recent-list">
+            {whatsNew.map((u, i) => (
+              <Link key={i} to={u.lessons[0]?.path || '/learn/changelog'} className="ovl-hub-recent-item">
+                <LessonBadge badge="updated" />
+                <span className="ovl-hub-recent-title">{u.note}</span>
+                <span className="ovl-hub-recent-level">{u.lessons[0]?.title || u.date}</span>
+              </Link>
+            ))}
+            <Link to="/learn/changelog" className="ovl-hub-recent-item">
+              <span className="ovl-hub-recent-title">Everything that changed →</span>
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Recently added lessons (only when there are no update notes yet) */}
+      {whatsNew.length === 0 && recentLessons.length > 0 && (
         <div className="ovl-hub-recent">
           <div className="ovl-hub-recent-header">Recently Added</div>
           <div className="ovl-hub-recent-list">

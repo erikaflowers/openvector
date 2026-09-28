@@ -15,9 +15,17 @@ You are in the repo root. Lessons live in `content/curriculum/**` and `content/a
 - Health-report items (moved/broken links, pinned model IDs, lint) belong in `changes` too, usually T0. Group links by file.
 - Respect Samantha's past decisions in the feedback log: do not re-propose what she rejected unless something new happened.
 - `fyi` is for genuinely relevant news that needs no edit yet. Skip the rest silently.
+- **Open PRs:** never propose a change that an open PR already covers. If a human contributor's PR touches a file, you may still propose a change there, but say in `why` that it will wait for that PR.
+- **Learners:** where learner data shows people stalling or dropping off at a lesson, weigh changes to that lesson higher, and use `proposals` for lessons that clearly lose people. Never mention individual learners.
 
 ## Samantha's feedback log (most recent last)
 {{feedback}}
+
+## Open pull requests (autopilot and human)
+{{pending}}
+
+## Learner signal (aggregate, anonymous)
+{{learners}}
 
 ## Topic map (lesson → tools, topics, time-sensitive facts)
 {{topicMap}}

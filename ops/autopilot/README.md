@@ -9,23 +9,44 @@ Runs on the Mac Mini. Not part of the site build (nothing in `src/` imports it).
 | Phase | What it does | Status |
 |---|---|---|
 | 0 | Baseline: topic map, link check, staleness | done |
-| 1 | Daily brief only. Reads `origin/main`, writes nothing to git | **current** (`config.yaml: phase: 1`) |
-| 2 | Tiered edits: T0 auto-merge, T1 PRs approved on the private Desk | next |
-| 3 | T2 new-lesson drafts, auto public changelog, generated chat prompt | later |
+| 1 | Daily brief only. Reads `origin/main`, writes nothing to git | done |
+| 2 | Tiered edits: T0 auto-merge, T1 PRs approved on the private Desk, learner signal, weekly digest draft | **current** (`config.yaml: phase: 2`) |
+| 3 | T2 new-lesson drafts (from Desk "Write it"), generated chat prompt | later |
 
 ## Pipeline
 
 ```
-run.sh
-  collect.mjs      feeds, pages, HN → new items since last run            (no LLM)
-  health.mjs       links, manifest/frontmatter lint, staleness, model IDs  (no LLM)
-  stage.mjs topic-map   lesson → tools/topics/facts (only if missing or --topic-map)
-  stage.mjs brief       triage + tiers + sources → brief.json          (claude -p, read-only tools)
-  render-brief.mjs brief.md + telegram.txt
-  Telegram via ~/claude projects/matildacomm/notify.py
+run.sh (LaunchAgent com.macmini.ov-autopilot, daily 05:00)
+  collect.mjs            feeds, pages, HN → new items since last run            (no LLM)
+  health.mjs             links, manifest/frontmatter lint, staleness, model IDs  (no LLM)
+  learners.mjs           aggregate progress + signups + list size (needs .env)   (no LLM)
+  publish.mjs pending    open PRs, so the brief never re-proposes pending work
+  stage.mjs brief        triage + tiers + sources → brief.json                   (claude -p, read-only)
+  publish.mjs            per change: worktree → draft agent (edits only the listed files)
+                         → scope check → updatedAt + content/updates note → npm run build
+                         → audit agent → PR. T0 + audit pass: squash-merge. T1: waits for the Desk.
+  digest.mjs             Fridays: Buttondown DRAFT of the week's update notes (never sends)
+  render-brief.mjs       brief.md + Telegram ping with the Desk link
 ```
 
-Each LLM stage runs headless `claude -p` with a JSON schema (`schemas/`), a tool allowlist (`config.yaml → stages`), Bash/Edit/Write denied, and a dollar cap.
+Guardrails enforced in code, not prompts: T0 may only touch `config.yaml → allowlist` (otherwise promoted to T1);
+the draft agent gets `Edit(/<file>)` only for the change's files and any other touched file aborts the change;
+lessons with an open human PR are deferred; `limits.maxPrsPerDay`; a dollar cap per stage.
+
+## The Desk
+
+`https://julians-mac-mini.taila3dc77.ts.net:7810`, tailnet only (LaunchAgent `com.macmini.ov-desk`, node on
+127.0.0.1:7811, `tailscale serve --bg --https=7810 7811`, never Funnel). One card per change: files, diff,
+sources, audit, the learner-facing note. **Go** merges the PR (or queues a change that had no PR), **No-go**
+closes it, **Note** records feedback. Every decision lands in `feedback.jsonl`, which the next brief reads.
+Proposals: **Write it** queues them for Phase 3. The header pill is the kill switch.
+
+## On the site
+
+Each change ships a `content/updates/<date>-<id>.md` note. The content plugin turns these into `learn.updates`:
+the changelog page lists them, the hub shows "Since your last visit" (per browser), lessons show a
+"Recently updated / Updated since you completed this" box, and lessons edited in the last 30 days get an
+automatic "Updated" badge.
 
 ## Files
 
@@ -42,7 +63,9 @@ Each LLM stage runs headless `claude -p` with a JSON schema (`schemas/`), a tool
 
 - `runs/YYYY-MM-DD/`: `collected.json`, `health.json`, `brief.json`, `brief.md`, `telegram.txt`, `cost.jsonl`, `run.log`
 - `seen.json`: crawl items already reported. `pages/`: snapshots of watched pages.
-- `feedback.jsonl`: Samantha's Go/No-go decisions and notes, read by the next brief.
+- `feedback.jsonl`: Samantha's Go/No-go decisions and notes, read by the next brief. `queue.jsonl`: Go'd items waiting for a run.
+- `.env`: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `BUTTONDOWN_API_KEY`. Samantha writes it off camera; never printed.
+- `work/`: temporary worktrees for drafts (removed after each change).
 - `site/`: detached worktree of `origin/main`. The run inspects this, never your working checkout.
 - `PAUSED`: kill switch. `touch` it to stop runs; delete it to resume.
 
@@ -54,4 +77,6 @@ ops/autopilot/run.sh                # what the LaunchAgent runs at 05:00
 ops/autopilot/run.sh --topic-map    # also regenerate topic-map.yaml
 ```
 
-Needs: Node (repo `node_modules`), `claude` logged in on the Mini, `gh` for Phase 2.
+Needs: Node (repo `node_modules`), `claude` logged in on the Mini, `gh` with write access.
+
+Test one change without pushing: `OV_DRY=1 OV_ONLY=<change-id> node ops/autopilot/publish.mjs`.

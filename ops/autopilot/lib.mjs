@@ -71,3 +71,36 @@ export const globToRe = (g) => new RegExp('^' + g
   .replace(/\*\*\//g, '(?:.*/)?')
   .replace(/\*\*/g, '.*')
   .replace(/\*/g, '[^/]*') + '$');
+
+// Guardrail in code, not in the prompt: T0 may only touch allowlisted files. Anything else becomes T1.
+export function enforceTiers(brief, config) {
+  const allow = config.allowlist.map(globToRe);
+  for (const c of brief?.changes || []) {
+    const outside = c.files.filter((f) => !allow.some((re) => re.test(f)));
+    if (c.tier === 'T0' && outside.length) {
+      c.tier = 'T1';
+      c.why += ` [Promoted from T0: ${outside.join(', ')} ${outside.length > 1 ? 'are' : 'is'} outside the auto-merge allowlist.]`;
+    }
+  }
+  return brief;
+}
+
+// content/curriculum/<level>/<slug>.md → "<level>/<slug>" (the progress table's lesson_key); approach → "approach/<slug>".
+export function lessonKey(file) {
+  let m = file.match(/^content\/curriculum\/([^/]+)\/([^/]+)\.md$/);
+  if (m) return `${m[1]}/${m[2]}`;
+  m = file.match(/^content\/approach\/([^/]+)\.md$/);
+  return m ? `approach/${m[1]}` : null;
+}
+
+// Secrets live in $OV_STATE/.env (written by Samantha off camera). Values are never logged.
+export function loadEnv() {
+  const p = path.join(STATE, '.env');
+  const env = {};
+  if (!fs.existsSync(p)) return env;
+  for (const line of fs.readFileSync(p, 'utf8').split('\n')) {
+    const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/);
+    if (m) env[m[1]] = m[2].replace(/^["']|["']$/g, '');
+  }
+  return env;
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Open Vector Desk: private go/no-go page. Listens on 127.0.0.1:7811 only.
+     Tailnet-only HTTPS (never Funnel): tailscale serve --bg --https=7810 7811
+     URL: https://julians-mac-mini.taila3dc77.ts.net:7810 -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.macmini.ov-desk</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/juliansiddig/.local/share/fnm/aliases/default/bin/node</string>
+    <string>/Users/juliansiddig/claude projects/openvector/ops/autopilot/desk/server.mjs</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/juliansiddig/.local/share/fnm/aliases/default/bin:/Users/juliansiddig/.local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Users/juliansiddig/Library/Logs/ov-desk.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/juliansiddig/Library/Logs/ov-desk.log</string>
+</dict>
+</plist>

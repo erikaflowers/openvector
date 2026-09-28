@@ -2,6 +2,7 @@ import { Link, useParams, useOutletContext } from 'react-router-dom';
 import MarkdownRenderer from '../../components/learn/MarkdownRenderer';
 import MarkCompleteButton from '../../components/learn/MarkCompleteButton';
 import LessonBadge from '../../components/learn/LessonBadge';
+import LessonUpdates from '../../components/learn/LessonUpdates';
 import RightRail from '../../components/learn/RightRail';
 import useSEO from '../../hooks/useSEO';
 // Categories now come from the virtual module via learn.approach.categories
@@ -75,6 +76,7 @@ function GuidePage() {
             ))}
           </div>
         )}
+        <LessonUpdates lessonKey={`approach/${guideSlug}`} levelSlug="approach" lessonSlug={guideSlug} />
         <MarkdownRenderer content={guide.markdownBody} />
         <MarkCompleteButton levelSlug="approach" lessonSlug={guideSlug} />
       </article>

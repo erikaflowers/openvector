@@ -17,7 +17,7 @@ function LearnChangelogPage() {
     // Collect lessons with badges
     learn.levels.forEach(level => {
       level.lessons.forEach(lesson => {
-        if (lesson.badge && lesson.updatedAt) {
+        if (lesson.badge && lesson.updatedAt && !lesson.badgeDerived) {
           all.push({
             type: 'lesson',
             badge: lesson.badge,
@@ -33,7 +33,7 @@ function LearnChangelogPage() {
 
     // Collect approach guides with badges
     (learn.approach?.guides || []).forEach(guide => {
-      if (guide.badge && guide.updatedAt) {
+      if (guide.badge && guide.updatedAt && !guide.badgeDerived) {
         all.push({
           type: 'guide',
           badge: guide.badge,
@@ -44,6 +44,11 @@ function LearnChangelogPage() {
           path: `/learn/approach/${guide.category}/${guide.slug}`,
         });
       }
+    });
+
+    // Update notes from the Open Vector Autopilot
+    (learn.updates || []).forEach(u => {
+      all.push({ type: 'update', badge: u.kind === 'fix' ? 'fixed' : 'updated', title: u.note, date: u.date, lessons: u.lessons });
     });
 
     // Sort newest first
@@ -78,7 +83,19 @@ function LearnChangelogPage() {
             <div key={date} className="ovl-changelog-entry">
               <div className="ovl-changelog-date">{date}</div>
               <div className="ovl-changelog-items-list">
-                {entries.map((entry, j) => (
+                {entries.map((entry, j) => entry.type === 'update' ? (
+                  <div key={j} className="ovl-changelog-item ovl-changelog-item--static">
+                    <span className="ovl-changelog-badge ovl-changelog-badge--updated">
+                      {entry.badge === 'fixed' ? 'Fixed' : 'Updated'}
+                    </span>
+                    <span className="ovl-changelog-item-title">{entry.title}</span>
+                    {entry.lessons.length > 0 && (
+                      <span className="ovl-changelog-item-context ovl-changelog-links">
+                        {entry.lessons.map(l => <Link key={l.key} to={l.path}>{l.title}</Link>)}
+                      </span>
+                    )}
+                  </div>
+                ) : (
                   <Link key={j} to={entry.path} className="ovl-changelog-item">
                     <span className={`ovl-changelog-badge ovl-changelog-badge--${entry.badge}`}>
                       {entry.badge === 'new' ? 'New' : 'Updated'}

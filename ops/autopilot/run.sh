@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Open Vector Autopilot: daily run. Phase 1 = brief only (reads the live site, writes nothing to git).
+# Open Vector Autopilot: daily run. Phase is set in config.yaml (1 = brief only, 2 = tiered PRs).
 #   ops/autopilot/run.sh            normal daily run (LaunchAgent)
 #   ops/autopilot/run.sh --dry-run  no Telegram, does not mark crawl items as seen
 #   ops/autopilot/run.sh --topic-map   also regenerate topic-map.yaml
@@ -24,7 +24,7 @@ export OV_RUN_DATE="$(date +%F)"
 RUN="$OV_STATE/runs/$OV_RUN_DATE"
 mkdir -p "$RUN"
 exec > >(tee -a "$RUN/run.log") 2>&1
-echo "=== ov-autopilot $(date '+%F %T') phase=1 dry=$DRY ==="
+echo "=== ov-autopilot $(date '+%F %T') dry=$DRY ==="
 
 # Inspect the live site: a detached worktree of origin/main, separate from any working checkout.
 SITE="$OV_STATE/site"
@@ -44,7 +44,16 @@ cd "$CODE_REPO"
 node ops/autopilot/collect.mjs
 node ops/autopilot/health.mjs
 if (( TOPIC )) || [[ ! -f ops/autopilot/topic-map.yaml ]]; then node ops/autopilot/stage.mjs topic-map; fi
-node ops/autopilot/stage.mjs brief || echo "brief stage failed; rendering what we have"
+[[ -f "$OV_STATE/.env" ]] && node ops/autopilot/learners.mjs || echo "learners: skipped (no $OV_STATE/.env)"
+node ops/autopilot/publish.mjs pending || echo "pending: could not list open PRs"
+BRIEF_OK=1
+node ops/autopilot/stage.mjs brief || { BRIEF_OK=0; echo "brief stage failed; rendering what we have"; }
+PHASE=$(awk '/^phase:/{print $2}' ops/autopilot/config.yaml)
+if (( BRIEF_OK )) && (( PHASE >= 2 )); then
+  if (( DRY )); then OV_DRY=1 node ops/autopilot/publish.mjs || echo "publish (dry) failed"
+  else node ops/autopilot/publish.mjs || echo "publish failed"; fi
+fi
+[[ -f "$OV_STATE/.env" ]] && [[ "$(date +%u)" == "${DIGEST_WEEKDAY:-5}" ]] && { node ops/autopilot/digest.mjs || echo "digest failed"; }
 node ops/autopilot/render-brief.mjs
 
 if (( ! DRY )) && [[ -d "$MATILDA/venv" ]]; then
@@ -52,7 +61,6 @@ if (( ! DRY )) && [[ -d "$MATILDA/venv" ]]; then
 import sys, notify
 run = sys.argv[1]
 notify.send_text(open(f"{run}/telegram.txt").read())
-notify.notify_file(f"{run}/brief.md", caption="Open Vector Updates")
 PY
   ) && echo "telegram: sent" || echo "telegram: FAILED"
 fi

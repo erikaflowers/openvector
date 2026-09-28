@@ -1,7 +1,9 @@
 # Open Vector Autopilot: behaviour and guardrails.
 
-# phase 1 = brief only (no branches, no PRs). phase 2 = tiered edits.
-phase: 1
+github: erikaflowers/openvector
+
+# phase 1 = brief only (no branches, no PRs). phase 2 = tiered edits (PRs; T0 auto-merges).
+phase: 2
 
 # Items dated older than this are never treated as news (also keeps the first brief sane).
 lookbackDays: 14
@@ -19,6 +21,7 @@ allowlist:
   - src/content/learn/changelog.js
   - src/content/learn/glossary.js
   - src/content/learn/resources.js
+  - content/updates/*.md
 
 linkCheck:
   # Example / placeholder URLs used in lessons on purpose.
@@ -57,3 +60,14 @@ stages:
     tools: [Read, Grep, Glob, WebFetch]
     maxBudgetUsd: 5
     timeoutMin: 25
+  draft:
+    model: null
+    tools: [Read, Grep, Glob, WebFetch]   # plus Edit(<file>) for each file in the change, added per call
+    denyWrites: false
+    maxBudgetUsd: 3
+    timeoutMin: 15
+  audit:
+    model: null
+    tools: [Read, Grep, Glob, WebFetch]
+    maxBudgetUsd: 2
+    timeoutMin: 15

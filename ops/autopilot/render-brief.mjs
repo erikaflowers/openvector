@@ -2,7 +2,7 @@
 // runs/<date>/brief.md (the private go/no-go changelog) and runs/<date>/telegram.txt (the ping).
 import fs from 'node:fs';
 import path from 'node:path';
-import { STATE, readJson, writeJson, runDir, loadYaml, globToRe } from './lib.mjs';
+import { STATE, readJson, writeJson, runDir, loadYaml, enforceTiers } from './lib.mjs';
 
 const dir = runDir();
 const date = path.basename(dir);
@@ -15,18 +15,7 @@ const cost = fs.existsSync(path.join(dir, 'cost.jsonl'))
 const usd = cost.reduce((s, c) => s + (c.usd || 0), 0);
 const hs = health.summary;
 
-// Guardrail in code, not in the prompt: T0 may only touch allowlisted files. Anything else becomes T1.
-const allow = loadYaml('config.yaml').allowlist.map(globToRe);
-if (brief) {
-  for (const c of brief.changes) {
-    const outside = c.files.filter((f) => !allow.some((re) => re.test(f)));
-    if (c.tier === 'T0' && outside.length) {
-      c.tier = 'T1';
-      c.why += ` [Promoted from T0: ${outside.join(', ')} ${outside.length > 1 ? 'are' : 'is'} outside the auto-merge allowlist.]`;
-    }
-  }
-  writeJson(path.join(dir, 'brief.json'), brief);
-}
+if (brief) writeJson(path.join(dir, 'brief.json'), enforceTiers(brief, loadYaml('config.yaml')));
 
 const L = [];
 L.push(`# Open Vector Updates: ${date}`, '');
@@ -71,11 +60,16 @@ L.push(`| Lessons | Stale (>90d) | No updatedAt | Links | Broken | Moved | Unver
 L.push('---', `Crawl: ${collected.count} new items${collected.errors.length ? `, ${collected.errors.length} source errors (${collected.errors.map((e) => e.source).join(', ')})` : ''}. Cost: $${usd.toFixed(2)}.`);
 fs.writeFileSync(path.join(dir, 'brief.md'), L.join('\n') + '\n');
 
+const prs = readJson(path.join(dir, 'prs.json'), []);
+const st = (s) => prs.filter((p) => p.status === s).length;
 const n = (tier) => brief ? brief.changes.filter((c) => c.tier === tier).length : 0;
+const DESK = 'https://julians-mac-mini.taila3dc77.ts.net:7810';
 const tg = brief
   ? [`Open Vector Updates, ${date}`, '', brief.headline, '',
-     `${n('T1')} need your call · ${n('T0')} mechanical · ${brief.proposals.length} proposals · ${brief.fyi.length} FYI`,
-     `Health: ${hs.broken} broken, ${hs.moved} moved links; ${hs.stale}/${hs.lessons} lessons stale.`].join('\n')
+     prs.length
+       ? `${st('merged')} shipped · ${st('awaiting') + st('audit-failed')} PRs await your call · ${st('deferred')} deferred · ${brief.proposals.length} proposals`
+       : `${n('T1')} need your call · ${n('T0')} mechanical · ${brief.proposals.length} proposals · ${brief.fyi.length} FYI`,
+     `Health: ${hs.broken} broken, ${hs.moved} moved links; ${hs.stale}/${hs.lessons} lessons stale.`, '', `Desk: ${DESK}`].join('\n')
   : `Open Vector Updates, ${date}: the brief stage failed. Check ${path.join(dir, 'run.log')}`;
 fs.writeFileSync(path.join(dir, 'telegram.txt'), tg + '\n');
 fs.writeFileSync(path.join(STATE, 'latest'), date + '\n');
