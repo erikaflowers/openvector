@@ -152,7 +152,7 @@ const resources = [
   {
     title: 'Sprint',
     author: 'Jake Knapp',
-    url: 'https://www.thesprintbook.com/',
+    url: 'https://www.character.vc/sprint',
     description: 'The five-day design sprint process from Google Ventures.',
     type: 'book',
     topics: ['process', 'research'],
@@ -524,14 +524,6 @@ const resources = [
     topics: ['process'],
   },
   {
-    title: 'The Pomodoro Technique',
-    author: 'Francesco Cirillo',
-    url: 'https://francescocirillo.com/products/the-pomodoro-technique',
-    description: 'Time-boxed focus sessions. Simple, effective, and battle-tested.',
-    type: 'article',
-    topics: ['process'],
-  },
-  {
     title: 'Patterns.dev',
     author: 'Lydia Hallie & Addy Osmani',
     url: 'https://www.patterns.dev/',
@@ -592,14 +584,6 @@ const resources = [
     author: 'Nielsen Norman Group',
     url: 'https://www.nngroup.com/articles/usability-testing-101/',
     description: 'Introduction to usability testing. When, why, and how.',
-    type: 'article',
-    topics: ['research'],
-  },
-  {
-    title: 'Rapid Prototyping',
-    author: 'Nielsen Norman Group',
-    url: 'https://www.nngroup.com/articles/rapid-prototyping/',
-    description: 'Prototyping techniques and best practices for fast validation.',
     type: 'article',
     topics: ['research'],
   },
