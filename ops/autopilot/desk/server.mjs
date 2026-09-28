@@ -43,6 +43,67 @@ function day(date) {
   };
 }
 
+// Every open autopilot PR, whatever day opened it, joined with the pipeline's record of it.
+// Days' briefs can be overwritten or the PR can predate the day being viewed; the Inbox never loses one.
+let inboxCache = { at: 0, data: null };
+function prRecords() {
+  const byNumber = {};
+  for (const date of days()) {
+    for (const p of readJson(path.join(RUNS, date, 'prs.json'), [])) if (p.pr && !byNumber[p.pr]) byNumber[p.pr] = { ...p, date };
+  }
+  return byNumber;
+}
+function inbox() {
+  if (inboxCache.data && Date.now() - inboxCache.at < 30e3) return inboxCache.data;
+  const open = JSON.parse(gh('pr', 'list', '--state', 'open', '--label', 'ov-autopilot', '--limit', '50',
+    '--json', 'number,title,url,isDraft,createdAt,files,body'));
+  const recs = prRecords();
+  const data = open.map((p) => {
+    const r = recs[p.number] || {};
+    const section = (h) => (p.body.split(`### ${h}\n`)[1] || '').split('\n### ')[0].trim();
+    return {
+      pr: p.number, url: p.url, title: p.title, draft: p.isDraft, opened: p.createdAt.slice(0, 10),
+      files: p.files.map((f) => f.path).filter((f) => !f.startsWith('content/updates/')),
+      date: r.date || null, id: r.id || null, tier: r.tier || (p.body.match(/\*\*Tier:\*\* (T\d)/) || [])[1] || 'T1',
+      audit: r.audit || (p.isDraft ? 'fail' : 'pass'), auditSummary: r.auditSummary || section('Audit'),
+      publicNote: r.publicNote || section('Learner-facing note').replace(/^> /, ''),
+      what: section('What'), why: section('Why'),
+    };
+  }).sort((a, b) => a.pr - b.pr);
+  inboxCache = { at: Date.now(), data };
+  return data;
+}
+
+function decidePr({ pr, decision, note = '' }) {
+  pr = Number(pr);
+  if (!Number.isInteger(pr) || !['go', 'nogo', 'note'].includes(decision)) throw new Error('bad request');
+  const item = inbox().find((x) => x.pr === pr);
+  if (!item) throw new Error(`#${pr} is not an open autopilot PR`);
+  let result = 'recorded';
+  if (decision === 'go') {
+    if (item.draft) gh('pr', 'ready', String(pr));
+    try { gh('pr', 'merge', String(pr), '--squash', '--delete-branch'); }
+    catch (e) {
+      const msg = String(e.stderr || e.message);
+      if (/conflict|not mergeable/i.test(msg)) {
+        fs.appendFileSync(path.join(STATE, 'refresh.jsonl'), JSON.stringify({ ts: new Date().toISOString(), pr }) + '\n');
+        result = `#${pr} conflicts with a change merged since; queued to be redrafted on the current site`;
+      } else throw e;
+    }
+    if (result === 'recorded') result = `merged #${pr}`;
+    if (item.date && item.id && result.startsWith('merged')) setPrStatus(item.date, item.id, { status: 'merged', decidedBy: 'desk' });
+  } else if (decision === 'nogo') {
+    gh('pr', 'close', String(pr), '--delete-branch', '--comment', `No-go from the Desk.${note ? ` ${note}` : ''}`);
+    if (item.date && item.id) setPrStatus(item.date, item.id, { status: 'rejected' });
+    result = `closed #${pr}`;
+  }
+  inboxCache.data = null;
+  fs.appendFileSync(FEEDBACK, JSON.stringify({
+    ts: new Date().toISOString(), date: item.date, id: item.id || `pr-${pr}`, kind: 'change', tier: item.tier, title: item.title, pr, decision, note, result,
+  }) + '\n');
+  return { ok: true, result };
+}
+
 function summary(date) {
   const x = day(date);
   const t1 = x.brief?.changes.filter((c) => c.tier === 'T1').length || 0;
@@ -81,6 +142,7 @@ function decide({ date, id, kind, decision, note = '' }) {
     result = kind === 'proposal' ? 'queued for drafting' : 'queued for retry';
   }
 
+  inboxCache.data = null;
   fs.appendFileSync(FEEDBACK, JSON.stringify({
     ts: new Date().toISOString(), date, id, kind, tier: item.tier || 'T2', title: item.title, decision, note, result,
   }) + '\n');
@@ -101,6 +163,7 @@ http.createServer(async (req, res) => {
   const parts = url.pathname.split('/').filter(Boolean);
   try {
     if (req.method === 'GET' && url.pathname === '/') return send(res, 200, fs.readFileSync(path.join(HERE, 'index.html'), 'utf8'), 'text/html; charset=utf-8');
+    if (req.method === 'GET' && url.pathname === '/api/inbox') return send(res, 200, inbox());
     if (req.method === 'GET' && url.pathname === '/api/days') return send(res, 200, days().slice(0, 60).map(summary));
     if (req.method === 'GET' && parts[1] === 'day' && validDate(parts[2])) return send(res, 200, day(parts[2]));
     if (req.method === 'GET' && parts[1] === 'diff' && validDate(parts[2]) && validId(parts[3])) {
@@ -115,7 +178,7 @@ http.createServer(async (req, res) => {
       // Same-origin guard: the page sends this header; a cross-site form cannot.
       if (req.headers['x-desk'] !== '1') return send(res, 403, { error: 'forbidden' });
       const body = await readBody(req);
-      if (url.pathname === '/api/decision') return send(res, 200, decide(body));
+      if (url.pathname === '/api/decision') return send(res, 200, body.pr ? decidePr(body) : decide(body));
       if (url.pathname === '/api/pause') {
         body.paused ? fs.writeFileSync(PAUSED, `paused from the Desk ${new Date().toISOString()}\n`) : fs.rmSync(PAUSED, { force: true });
         return send(res, 200, { paused: fs.existsSync(PAUSED) });
