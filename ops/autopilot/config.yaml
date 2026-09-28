@@ -1,0 +1,59 @@
+# Open Vector Autopilot: behaviour and guardrails.
+
+# phase 1 = brief only (no branches, no PRs). phase 2 = tiered edits.
+phase: 1
+
+# Items dated older than this are never treated as news (also keeps the first brief sane).
+lookbackDays: 14
+# Hard cap on items handed to triage per run, highest weight first.
+maxItemsForTriage: 60
+
+limits:
+  maxPrsPerDay: 5
+  maxBudgetUsdPerStage: 3
+
+# Files the agent may touch at all. T0 auto-merge only ever touches these.
+allowlist:
+  - content/curriculum/**/*.md
+  - content/approach/**/*.md
+  - src/content/learn/changelog.js
+  - src/content/learn/glossary.js
+  - src/content/learn/resources.js
+
+linkCheck:
+  # Example / placeholder URLs used in lessons on purpose.
+  ignore:
+    - ^https?://localhost
+    - ^https?://127\.0\.0\.1
+    - github\.com/(username|yourusername|your-username)/
+    - YOUR_[A-Z_]+
+    - example\.(com|org)
+  # Hosts that block bots with 403/429 but are fine for humans: reported as "unverified", not "broken".
+  botBlocked:
+    - oreilly.com
+    - hbs.edu
+    - dnschecker.org
+    - medium.com
+    - linkedin.com
+
+# A lesson is "stale" when its updatedAt (or, if missing, its last git commit) is older than this.
+staleAfterDays: 90
+
+# Expected redirects that are not "moved" pages (install scripts, short links).
+allowRedirects:
+  - https://claude.ai/install.sh
+
+# LLM stages, run headlessly by stage.mjs. model: null = the Mini's default Claude model.
+# tools: what the agent may use. Bash/Edit/Write are always denied in Phase 1.
+stages:
+  topic-map:
+    model: null
+    tools: [Read, Grep, Glob]
+    maxBudgetUsd: 8
+    timeoutMin: 30
+    writeYaml: topic-map.yaml
+  brief:
+    model: null
+    tools: [Read, Grep, Glob, WebFetch]
+    maxBudgetUsd: 5
+    timeoutMin: 25
