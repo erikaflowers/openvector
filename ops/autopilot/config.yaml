@@ -66,6 +66,12 @@ stages:
     denyWrites: false
     maxBudgetUsd: 3
     timeoutMin: 15
+  propose:
+    model: null
+    tools: [Read, Grep, Glob, WebFetch]   # plus Edit on content/curriculum, content/approach, manifest.yaml
+    denyWrites: false
+    maxBudgetUsd: 6
+    timeoutMin: 25
   verify:
     model: null
     tools: [Read, Grep, Glob, WebFetch]
