@@ -4,6 +4,7 @@ title: Ideation
 subtitle: Diverge before you converge.
 duration: 18 min
 status: available
+updatedAt: "2026-09-27"
 ---
 
 ## What Is Ideation?
@@ -72,7 +73,7 @@ You can also use AI to stress-test ideas: "What are the three biggest problems w
 :::
 
 :::resources{title="Go Deeper"}
-- [Sprint by Jake Knapp](https://www.thesprintbook.com/). Google Ventures' design sprint process. The chapter on ideation (Sketch) is excellent.
+- [Sprint by Jake Knapp](https://www.character.vc/sprint). Google Ventures' design sprint process. The chapter on ideation (Sketch) is excellent.
 - [Creative Confidence by Tom & David Kelley](https://www.creativeconfidence.com/). IDEO founders on building creative capacity. The ideation mindset, explained for non-designers.
 - [Gamestorming](https://gamestorming.com/). A library of ideation and brainstorming techniques. Searchable by goal.
 :::

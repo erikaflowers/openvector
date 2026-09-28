@@ -4,6 +4,7 @@ title: Prototyping
 subtitle: The prototype is the product.
 duration: 20 min
 status: available
+updatedAt: "2026-09-27"
 ---
 
 ## Prototypes Are Arguments
@@ -77,7 +78,5 @@ One day of prototyping and testing teaches you more than two weeks of planning.
 :::
 
 :::resources{title="Go Deeper"}
-- [Sprint by Jake Knapp](https://www.thesprintbook.com/). The complete design sprint process, including a detailed prototyping day.
-- [The Lean Startup by Eric Ries](http://theleanstartup.com/). The MVP concept and build-measure-learn loop. The theoretical foundation for rapid prototyping.
-- [Rapid Prototyping (Nielsen Norman Group)](https://www.nngroup.com/articles/rapid-prototyping/). Research-backed guidance on prototyping speed and fidelity decisions.
-:::
+- [Sprint by Jake Knapp](https://www.character.vc/sprint). The complete design sprint process, including a detailed prototyping day.
+- [The Lean Startup by Eric Ries](http://theleanstartup.com/). The MVP concept and build-measure-learn loop. The theoretical foundation for rapid prototyping.:::
