@@ -2,6 +2,7 @@ import { Link, useParams, useOutletContext } from 'react-router-dom';
 import MarkdownRenderer from '../../components/learn/MarkdownRenderer';
 import KnowledgeCheck from '../../components/learn/KnowledgeCheck';
 import MarkCompleteButton from '../../components/learn/MarkCompleteButton';
+import LessonSignup from '../../components/learn/LessonSignup';
 import LessonBadge from '../../components/learn/LessonBadge';
 import RightRail from '../../components/learn/RightRail';
 import LessonUpdates from '../../components/learn/LessonUpdates';
@@ -15,7 +16,7 @@ function LessonPage() {
   const lesson = level?.lessons.find(l => l.slug === lessonSlug);
 
   useSEO({
-    title: lesson ? `${lesson.title} — Open Vector` : 'Lesson Not Found',
+    title: lesson ? lesson.title : 'Lesson Not Found',
     description: lesson?.subtitle,
     path: `/learn/curriculum/${levelSlug}/${lessonSlug}`,
   });
@@ -52,6 +53,7 @@ function LessonPage() {
         <MarkdownRenderer content={lesson.markdownBody} />
         <KnowledgeCheck questions={lesson.knowledgeCheck} />
         <MarkCompleteButton levelSlug={levelSlug} lessonSlug={lessonSlug} />
+        <LessonSignup />
       </article>
       <RightRail>
         {toc.length > 2 && (

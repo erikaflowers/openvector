@@ -11,10 +11,7 @@ import { useEffect } from 'react';
  * @param {string} [options.ogImage] - OG image URL (defaults to site-wide card)
  */
 
-const SITE = 'The Open Vector';
-const BASE_URL = 'https://open.zerovector.design';
-const DEFAULT_DESC = 'A free, open learning platform for design-led engineering with AI. Six levels. Sixty lessons. From terminal basics to Systems Auteur.';
-const DEFAULT_IMAGE = `${BASE_URL}/og/open-vector.png`;
+import { SITE, BASE_URL, DEFAULT_DESC, DEFAULT_IMAGE, fullTitle as buildTitle } from './seo-config';
 
 function setMeta(name, content, attr = 'name') {
   let el = document.querySelector(`meta[${attr}="${name}"]`);
@@ -38,7 +35,7 @@ function setCanonical(url) {
 
 export default function useSEO({ title, description, path = '/', ogImage } = {}) {
   useEffect(() => {
-    const fullTitle = path === '/' ? SITE : `${title} — ${SITE}`;
+    const fullTitle = buildTitle(title, path);
     const desc = description || DEFAULT_DESC;
     const url = `${BASE_URL}${path}`;
     const image = ogImage || DEFAULT_IMAGE;
