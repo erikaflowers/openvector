@@ -179,7 +179,7 @@ function healthTable(h) {
 
 function learnersBlock(l) {
   const drop = (l.dropoff || []).slice(0, 8).map((x) => `<tr><td><code>${esc(x.lesson)}</code></td><td>${x.completions}</td><td>${x.dropPct != null ? x.dropPct + '%' : ''}</td></tr>`).join('');
-  return `<p>${l.users ?? '?'} signed-in learners · ${l.activeLearners ?? '?'} with progress · ${l.completions ?? '?'} completions${l.subscribers != null ? ` · ${l.subscribers} email subscribers` : ''}</p>
+  return `<p>${l.users ?? '?'} signed-in learners · ${l.activeLearners ?? '?'} with progress · ${l.completions ?? '?'} completions${l.subscribers != null ? ` · ${l.subscribers} active email subscribers (${l.unconfirmed ?? '?'} unconfirmed)` : ''}</p>
     ${drop ? `<details open><summary>Biggest drop-offs</summary><table><tr><th>Lesson</th><th>Completions</th><th>Drop from previous</th></tr>${drop}</table></details>` : ''}`;
 }
 
