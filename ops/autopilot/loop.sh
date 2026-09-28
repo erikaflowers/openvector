@@ -18,11 +18,11 @@ if [[ "${1:-}" == "--inner" ]]; then
   ALLOW=(
     Read Grep Glob
     "Edit(/$STATE/loop-notes.md)"
-    "Bash(curl:*)" "Bash(date:*)" "Bash(tail:*)" "Bash(ls:*)" "Bash(grep:*)" "Bash(wc:*)"
-    "Bash(gh pr list:*)" "Bash(gh pr view:*)"
-    "Bash(launchctl print:*)" "Bash(launchctl kickstart:*)"
-    "Bash(node ops/autopilot/health.mjs)"
+    "Bash(ops/autopilot/status.sh)"
+    "Bash(ops/autopilot/kick.sh engine)" "Bash(ops/autopilot/kick.sh desk)"
     "Bash(ops/autopilot/notify.sh:*)"
+    "Bash(node ops/autopilot/health.mjs)"
+    "Bash(curl:*)"
   )
   exec claude --permission-mode dontAsk --add-dir "$STATE" --allowedTools "${ALLOW[@]}" --name ov-loop
 fi
