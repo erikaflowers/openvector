@@ -24,13 +24,15 @@ const gh = (...args) => sh('gh', [...args, '-R', config.github]);
 const git = (cwd, ...args) => sh('git', ['-C', cwd, ...args]);
 
 function refreshPending() {
-  const open = JSON.parse(gh('pr', 'list', '--state', 'open', '--limit', '100', '--json', 'number,title,url,author,labels,files,headRefName,isDraft'));
+  const open = JSON.parse(gh('pr', 'list', '--state', 'open', '--limit', '100', '--json', 'number,title,url,author,labels,files,headRefName,isDraft,mergeable,body'));
   const pending = open.map((p) => ({
     number: p.number, title: p.title, url: p.url, author: p.author?.login, draft: p.isDraft,
     autopilot: p.labels.some((l) => l.name === LABEL),
-    files: (p.files || []).map((f) => f.path),
+    mergeable: p.mergeable,
+    files: (p.files || []).map((f) => f.path).filter((f) => !f.startsWith('content/updates/')),
+    ...(p.labels.some((l) => l.name === LABEL) ? { body: p.body } : {}),
   }));
-  writeJson(path.join(dir, 'pending.json'), pending);
+  writeJson(path.join(dir, 'pending.json'), pending.map(({ body, ...p }) => p));
   return pending;
 }
 
@@ -102,7 +104,38 @@ const queued = (fs.existsSync(QUEUE) ? fs.readFileSync(QUEUE, 'utf8').trim().spl
   .filter(Boolean);
 if (!DRY) writeJson(DONE, [...doneQueue]);
 
-for (const change of [...queued, ...brief.changes]) {
+// Refresh: autopilot PRs that no longer merge (GitHub says CONFLICTING, or a Desk Go hit a conflict) are
+// closed and their change is redrafted on the current site. The spec comes from the pipeline's record,
+// or failing that from the PR's own What / Why / Sources sections.
+const REFRESH = path.join(STATE, 'refresh.jsonl');
+const askedRefresh = new Set(fs.existsSync(REFRESH) ? fs.readFileSync(REFRESH, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l).pr) : []);
+const allRecords = () => fs.readdirSync(path.join(STATE, 'runs')).flatMap((d) => readJson(path.join(STATE, 'runs', d, 'prs.json'), []));
+const refreshed = [];
+for (const p of openAutopilot.filter((p) => p.mergeable === 'CONFLICTING' || askedRefresh.has(p.number))) {
+  if (DRY) { console.log(`refresh: would redraft #${p.number} (dry run)`); continue; }
+  const rec = allRecords().find((r) => r.pr === p.number);
+  const sec = (h) => ((p.body || '').split(`### ${h}\n`)[1] || '').split('\n### ')[0].trim();
+  const change = rec?.change || {
+    id: rec?.id || `pr-${p.number}`, title: p.title, what: sec('What'), why: sec('Why'),
+    sources: sec('Sources').split('\n').map((l) => l.replace(/^- /, '').trim()).filter((l) => /^https?:/.test(l)),
+    files: p.files, confidence: 'medium',
+    tier: ((p.body || '').match(/\*\*Tier:\*\* (T\d)/) || [])[1] || 'T1',
+  };
+  try {
+    gh('pr', 'close', String(p.number), '--delete-branch', '--comment', 'Redrafting on the current site: a change merged since then touches the same lesson. The Open Vector Autopilot opens a fresh PR for this change today.');
+    refreshed.push({ ...change, id: `${change.id}`.slice(0, 44) + '-r', refreshOf: p.number });
+    console.log(`refresh: closed #${p.number}, redrafting`);
+  } catch (e) { console.log(`refresh: could not close #${p.number}: ${String(e.message).slice(0, 200)}`); }
+}
+if (!DRY && fs.existsSync(REFRESH)) fs.rmSync(REFRESH);
+const stillOpen = openAutopilot.filter((p) => !refreshed.some((r) => r.refreshOf === p.number));
+
+// One open PR per lesson: skip a change if an open autopilot PR, or a PR opened earlier in this run,
+// already touches one of its files. Keeps changes from conflicting with each other.
+const claimed = new Map();
+for (const p of stillOpen) for (const f of p.files) claimed.set(f, `#${p.number}`);
+
+for (const change of [...refreshed, ...queued, ...brief.changes]) {
   const id = change.id.replace(/[^a-z0-9-]/g, '-').slice(0, 50);
   if (process.env.OV_ONLY && process.env.OV_ONLY !== id) continue;
   const done = prs.find((p) => p.id === id);
@@ -112,8 +145,8 @@ for (const change of [...queued, ...brief.changes]) {
   if (budget <= 0) { record({ ...base, status: 'deferred', reason: `daily PR limit (${config.limits.maxPrsPerDay}) reached` }); continue; }
   const clash = change.files.filter((f) => humanFiles.has(f));
   if (clash.length) { record({ ...base, status: 'deferred', reason: `open human PR touches ${clash.join(', ')}` }); continue; }
-  const dupe = openAutopilot.find((p) => p.files.some((f) => change.files.includes(f)) && p.title.includes(change.title.slice(0, 30)));
-  if (dupe) { record({ ...base, status: 'deferred', reason: `already pending as #${dupe.number}` }); continue; }
+  const taken = change.files.filter((f) => claimed.has(f));
+  if (taken.length) { record({ ...base, status: 'deferred', reason: `${taken.join(', ')} already has an open change (${[...new Set(taken.map((f) => claimed.get(f)))].join(', ')})` }); continue; }
 
   const branch = `feature/ov-auto-${date}-${id}`.slice(0, 90);
   const wt = path.join(STATE, 'work', `${date}-${id}`);
@@ -185,7 +218,7 @@ for (const change of [...queued, ...brief.changes]) {
     const lessons = lessonsOf(changed);
     const passed = audit.verdict === 'pass';
 
-    if (DRY) { record({ ...base, status: 'dry-run', audit: audit.verdict, auditSummary: audit.summary, publicNote: draft.publicNote, worktree: wt }); continue; }
+    if (DRY) { change.files.forEach((f) => claimed.set(f, 'this run')); record({ ...base, status: 'dry-run', audit: audit.verdict, auditSummary: audit.summary, publicNote: draft.publicNote, worktree: wt }); continue; }
 
     // 6. Commit, push, PR.
     git(wt, 'commit', '--quiet', '-m', `${change.title}\n\n${change.why}\n\nSources:\n${change.sources.map((s) => `- ${s}`).join('\n')}\n\nOpened by the Open Vector Autopilot (${change.tier}, audit: ${audit.verdict}).\n\nCo-Authored-By: Siddig (Claude) <noreply@anthropic.com>`);
@@ -209,7 +242,8 @@ for (const change of [...queued, ...brief.changes]) {
       gh('pr', 'merge', String(number), '--squash', '--delete-branch');
       status = 'merged';
     }
-    record({ ...base, status, pr: number, url: prUrl, branch, audit: audit.verdict, auditSummary: audit.summary, publicNote: draft.publicNote });
+    record({ ...base, status, pr: number, url: prUrl, branch, audit: audit.verdict, auditSummary: audit.summary, publicNote: draft.publicNote, change, ...(change.refreshOf ? { refreshOf: change.refreshOf } : {}) });
+    if (status !== 'merged') change.files.forEach((f) => claimed.set(f, `#${number}`));
     console.log(`  → #${number} ${status}`);
   } catch (e) {
     record({ ...base, status: 'failed', reason: String(e.message).slice(0, 800) });

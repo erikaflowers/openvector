@@ -21,7 +21,12 @@ const briefPath = path.join(dir, 'brief.json');
 const brief = readJson(briefPath, null);
 
 // Skip lessons that an open PR or today's brief already touches: no overlapping edits.
+const queuePath = path.join(STATE, 'queue.jsonl');
+const queuedFiles = (fs.existsSync(queuePath) ? fs.readFileSync(queuePath, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [])
+  .filter((q) => q.kind === 'change' && !readJson(path.join(STATE, 'queue-done.json'), []).includes(`${q.date}:${q.id}`))
+  .flatMap((q) => readJson(path.join(STATE, 'runs', q.date, 'brief.json'), { changes: [] }).changes.find((c) => c.id === q.id)?.files || []);
 const busy = new Set([
+  ...queuedFiles,
   ...readJson(path.join(dir, 'pending.json'), []).flatMap((p) => p.files),
   ...(brief?.changes || []).flatMap((c) => c.files),
 ]);
