@@ -5,7 +5,7 @@ subtitle: From your computer to the internet.
 duration: 18 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-09-28"
 knowledgeCheck:
   - question: What does deployment actually accomplish? Why is "it works on my machine" not the same as "it is live"?
     hint: Think about what localhost means, who can access it, and who cannot.
@@ -25,7 +25,7 @@ You will need two things set up before starting this lesson:
 
 ## What Does "Deployed" Mean?
 
-Your project works on your computer at `localhost:3000`. You can see it, click around, and it feels real. But nobody else can see it. Your computer is not a web server; it is not listening for requests from the outside world.
+Your project works on your computer at an address like `localhost:5173` (the default for Vite, which this lesson uses). You can see it, click around, and it feels real. But nobody else can see it. Your computer is not a web server; it is not listening for requests from the outside world.
 
 Deployment means putting your project on a server that is connected to the internet, so anyone with the URL can access it. That is the gap between "it works on my machine" and "it is live." Closing that gap is one of the most satisfying moments in building.
 
