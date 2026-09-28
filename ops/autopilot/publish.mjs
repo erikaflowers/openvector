@@ -95,9 +95,20 @@ const QUEUE = path.join(STATE, 'queue.jsonl');
 const DONE = path.join(STATE, 'queue-done.json');
 const doneQueue = new Set(readJson(DONE, []));
 const queued = (fs.existsSync(QUEUE) ? fs.readFileSync(QUEUE, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [])
-  .filter((q) => q.kind === 'change' && q.date !== date && !doneQueue.has(`${q.date}:${q.id}`))
+  .filter((q) => ['change', 'proposal'].includes(q.kind) && q.date !== date && !doneQueue.has(`${q.date}:${q.id}`))
   .map((q) => {
-    const c = readJson(path.join(STATE, 'runs', q.date, 'brief.json'), { changes: [] }).changes.find((x) => x.id === q.id);
+    const b = readJson(path.join(STATE, 'runs', q.date, 'brief.json'), { changes: [], proposals: [] });
+    if (q.kind === 'proposal') {
+      // T2: a structural change Samantha said "Write it" to. Files are not known until the editor works;
+      // it leaves the queue only once its PR exists or the editor declines it.
+      const p = (b.proposals || []).find((x) => x.id === q.id);
+      return p && {
+        id: p.id, tier: 'T2', proposal: true, queueKey: `${q.date}:${q.id}`, fromDate: q.date,
+        title: p.title, what: `${p.type}: ${p.title}\n\nOutline:\n${p.outline.map((o) => `- ${o}`).join('\n')}${q.note ? `\n\nSamantha's note: ${q.note}` : ''}`,
+        why: p.rationale, sources: p.sources, files: [], confidence: 'medium',
+      };
+    }
+    const c = b.changes.find((x) => x.id === q.id);
     if (c) doneQueue.add(`${q.date}:${q.id}`);
     return c && { ...c, fromDate: q.date };
   })
@@ -157,7 +168,9 @@ for (const change of [...refreshed, ...queued, ...brief.changes]) {
     git(CODE_REPO, 'worktree', 'add', '--quiet', '-b', branch, wt, 'origin/main');
     fs.symlinkSync(path.join(CODE_REPO, 'node_modules'), path.join(wt, 'node_modules'));
 
-    const draftTools = [...config.stages.draft.tools, ...change.files.map((f) => `Edit(/${f})`)];
+    const draftTools = change.proposal
+      ? [...config.stages.draft.tools, 'Edit(/content/curriculum/**)', 'Edit(/content/approach/**)', 'Edit(/content/manifest.yaml)']
+      : [...config.stages.draft.tools, ...change.files.map((f) => `Edit(/${f})`)];
     const changeJson = JSON.stringify(change, null, 2);
     const lessonsOf = (files) => files.map(lessonKey).filter(Boolean);
     let draft, audit, diff, changed = [], failure = null;
@@ -172,16 +185,23 @@ for (const change of [...refreshed, ...queued, ...brief.changes]) {
       // 1. Draft: the agent may edit only the files this change names.
       git(wt, 'reset', '--quiet');  // unstage any previous round; the working tree keeps its edits
       if (round > 1) fs.rmSync(path.join(wt, 'content/updates', `${date}-${id}.md`), { force: true });
-      draft = runStage('draft', { cwd: wt, vars: { change: changeJson, fixes }, tools: draftTools, outPath: path.join(dir, 'drafts', `${id}${round > 1 ? '.r2' : ''}.json`) });
+      draft = runStage(change.proposal ? 'propose' : 'draft', { cwd: wt, vars: { change: changeJson, fixes }, tools: draftTools, outPath: path.join(dir, 'drafts', `${id}${round > 1 ? '.r2' : ''}.json`) });
       if (draft.status === 'skipped') break;
 
       // 2. Scope check in code. Anything the agent touched outside the list aborts the change.
       const touched = [...git(wt, 'diff', '--name-only', 'HEAD').split('\n'), ...git(wt, 'ls-files', '--others', '--exclude-standard').split('\n')]
         .filter(Boolean);
-      const outside = touched.filter((f) => !change.files.includes(f) && f !== 'node_modules' && f !== `content/updates/${date}-${id}.md`);
+      const inScope = (f) => (change.proposal ? /^content\/(curriculum|approach)\/|^content\/manifest\.yaml$/.test(f) : change.files.includes(f));
+      const outside = touched.filter((f) => !inScope(f) && f !== 'node_modules' && f !== `content/updates/${date}-${id}.md`);
       if (outside.length) { failure = `edited files outside the change: ${outside.join(', ')}`; break; }
       changed = touched.filter((f) => f !== 'node_modules' && !f.startsWith('content/updates/'));
       if (!changed.length) break;
+      if (change.proposal) {
+        // A restructure waits for any open change on the lessons it touches, to avoid conflicts.
+        const taken = changed.filter((f) => claimed.has(f));
+        if (taken.length) { failure = `waits for ${[...new Set(taken.map((f) => claimed.get(f)))].join(', ')} (open change on ${taken.join(', ')})`; break; }
+        change.files = changed;
+      }
 
       // 3. Pipeline-owned edits: updatedAt on lessons, and a public update note.
       changed.filter(lessonKey).forEach((f) => setUpdatedAt(path.join(wt, f)));
@@ -211,8 +231,11 @@ for (const change of [...refreshed, ...queued, ...brief.changes]) {
       console.log(`  audit found ${audit.issues.filter((i) => i.severity === 'blocker').length} blocker(s); one repair round`);
     }
 
-    if (draft.status === 'skipped') { record({ ...base, status: 'skipped', reason: draft.skipReason || draft.summary }); continue; }
-    if (typeof failure === 'string') { record({ ...base, status: 'failed', reason: failure }); continue; }
+    if (draft.status === 'skipped') {
+      if (change.queueKey && !DRY) { doneQueue.add(change.queueKey); writeJson(DONE, [...doneQueue]); }
+      record({ ...base, status: 'skipped', reason: draft.skipReason || draft.summary }); continue;
+    }
+    if (typeof failure === 'string') { record({ ...base, status: change.proposal && failure.startsWith('waits for') ? 'deferred' : 'failed', reason: failure }); continue; }
     if (!changed.length) { record({ ...base, status: 'no-op', reason: 'the draft made no edits' }); continue; }
     if (failure) { record({ ...base, status: 'failed', reason: failure.map((f) => f.problem).join(' ') }); continue; }
     const lessons = lessonsOf(changed);
@@ -225,7 +248,7 @@ for (const change of [...refreshed, ...queued, ...brief.changes]) {
     git(wt, 'push', '--quiet', '-u', 'origin', branch);
     const body = [
       `<!-- ov-autopilot id=${id} date=${date} tier=${change.tier} -->`,
-      `**Tier:** ${change.tier}${change.tier === 'T0' ? ' (mechanical)' : ' (needs Samantha: Go / No-go on the Desk)'} · **Audit:** ${passed ? 'pass' : '**FAIL**'} · **Confidence:** ${change.confidence}`,
+      `**Tier:** ${change.tier}${change.tier === 'T0' ? ' (mechanical)' : change.tier === 'T2' ? ' (curriculum restructure Samantha asked for; needs her Go on the Desk)' : ' (needs Samantha: Go / No-go on the Desk)'} · **Audit:** ${passed ? 'pass' : '**FAIL**'} · **Confidence:** ${change.confidence}`,
       '', '### What', change.what, '', '### Why', change.why, '',
       '### Sources', ...change.sources.map((s) => `- ${s}`), '',
       '### Editor', draft.summary, '',
@@ -242,8 +265,9 @@ for (const change of [...refreshed, ...queued, ...brief.changes]) {
       gh('pr', 'merge', String(number), '--squash', '--delete-branch');
       status = 'merged';
     }
-    record({ ...base, status, pr: number, url: prUrl, branch, audit: audit.verdict, auditSummary: audit.summary, publicNote: draft.publicNote, change, ...(change.refreshOf ? { refreshOf: change.refreshOf } : {}) });
+    record({ ...base, files: change.files, status, pr: number, url: prUrl, branch, audit: audit.verdict, auditSummary: audit.summary, publicNote: draft.publicNote, change, ...(change.refreshOf ? { refreshOf: change.refreshOf } : {}) });
     if (status !== 'merged') change.files.forEach((f) => claimed.set(f, `#${number}`));
+    if (change.queueKey) { doneQueue.add(change.queueKey); writeJson(DONE, [...doneQueue]); }
     console.log(`  → #${number} ${status}`);
   } catch (e) {
     record({ ...base, status: 'failed', reason: String(e.message).slice(0, 800) });

@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "required": ["status", "summary", "publicNote"],
+  "properties": {
+    "status": { "type": "string", "enum": ["done", "skipped"], "description": "skipped = the change turned out to be wrong or unnecessary once you read the file/sources." },
+    "summary": { "type": "string", "description": "What you changed, file by file, for Samantha's review." },
+    "publicNote": { "type": "string", "description": "One or two sentences for learners, shown on the public changelog and in the digest email. Plain, friendly, no internal jargon, no tier names." },
+    "skipReason": { "type": "string" }
+  }
+}
