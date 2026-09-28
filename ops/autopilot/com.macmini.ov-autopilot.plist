@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!-- Open Vector Autopilot: daily brief at 05:00, after the 04:00 repo sync.
+<!-- Open Vector Autopilot: checks every 30 min; run.sh runs once a day after 05:00 (after the 04:00 repo sync).
      Install: cp to ~/Library/LaunchAgents, then launchctl bootstrap gui/$(id -u) <plist>.
      Run now: launchctl kickstart gui/$(id -u)/com.macmini.ov-autopilot
      Pause without uninstalling: touch "~/Library/Application Support/ov-autopilot/PAUSED" -->
@@ -13,13 +13,9 @@
     <string>/bin/zsh</string>
     <string>/Users/juliansiddig/claude projects/openvector/ops/autopilot/run.sh</string>
   </array>
-  <key>StartCalendarInterval</key>
-  <dict>
-    <key>Hour</key>
-    <integer>5</integer>
-    <key>Minute</key>
-    <integer>0</integer>
-  </dict>
+  <!-- Every 30 minutes; run.sh does the day's work once, after 05:00. -->
+  <key>StartInterval</key>
+  <integer>1800</integer>
   <key>RunAtLoad</key>
   <false/>
   <key>StandardOutPath</key>
