@@ -5,7 +5,7 @@ subtitle: The scaffold that turns your Pipeline work into a structured, AI-ready
 duration: 20 min
 status: available
 badge: updated
-updatedAt: '2026-03-14'
+updatedAt: "2026-09-28"
 knowledgeCheck:
   - question: What does the Investiture scaffold give you that a blank project does not?
     hint: Think about structure, documentation, and what an AI agent needs to be effective from the first commit.
@@ -23,7 +23,7 @@ No. That is what Investiture solves.
 
 Investiture is a project scaffold with a skill chain that enforces your doctrine. Run npx investiture init in any existing project and it injects structured research schemas, architecture skills, and the VECTOR.md convention without touching your code. Or clone the full scaffold for a greenfield project with React, Vite, and the doctrine system built in.
 
-As of v1.3, Investiture includes three executable skills (/invest-backfill, /invest-doctrine, /invest-architecture) that read your doctrine files at runtime and audit your project against them. Backfill surveys your codebase and generates starter doctrine. Doctrine validates it. Architecture enforces it.
+As of v1.5, Investiture includes eight executable skills in two chains. The doctrine chain (/invest-backfill, /invest-doctrine, /invest-architecture) reads your doctrine files at runtime and audits your project against them. Backfill surveys your codebase and generates starter doctrine. Doctrine validates it. Architecture enforces it. The audit chain (/invest-preflight, /invest-manifest, /invest-repo-audit, /invest-remediate, /invest-verify-remediation) scans an existing codebase, inventories it, audits its quality, plans the fixes, and verifies them.
 
 The name comes from Brandon Sanderson's Cosmere novels, where Investiture is the fundamental energy that powers all magic systems. In Zero Vector, Investiture is the fundamental structure that powers all projects. Different projects, different features, but the same underlying architecture making it all work.
 
@@ -41,7 +41,7 @@ Investiture eliminates that entire class of problem. The structure is explicit. 
 
 Run npx investiture init in any project and you get the skill chain and research system injected without touching your existing code. Clone the full scaffold for a greenfield project. Either way, here is what you get:
 
-Three executable skills that read your doctrine at runtime. /invest-backfill surveys your codebase and generates VECTOR.md, CLAUDE.md, and ARCHITECTURE.md. /invest-doctrine validates those files for completeness and consistency. /invest-architecture checks every source file against your declared layers, naming, and import rules.
+Eight executable skills in two chains. The doctrine chain reads your doctrine at runtime: /invest-backfill surveys your codebase and generates VECTOR.md, CLAUDE.md, and ARCHITECTURE.md. /invest-doctrine validates those files for completeness and consistency. /invest-architecture checks every source file against your declared layers, naming, and import rules. The audit chain (/invest-preflight, /invest-manifest, /invest-repo-audit, /invest-remediate, /invest-verify-remediation) takes you from a quick reconnaissance of a codebase to a verified remediation plan.
 
 VECTOR.md captures your project intent, users, architecture, and constraints. CLAUDE.md frames contributor onboarding for both humans and AI agents. ARCHITECTURE.md declares your layers, stack, and conventions. These are not templates you fill in once and forget. The skill chain audits them continuously.
 
@@ -74,10 +74,12 @@ your-project/
 ├── VECTOR.md                 # Project doctrine (read first)
 ├── CLAUDE.md                 # Contributor onboarding (read second)
 ├── ARCHITECTURE.md           # Technical guide (read third)
-├── .claude/skills/           # Skill chain
+├── .claude/skills/           # Skill chains (8 skills)
 │   ├── invest-backfill/      # Survey codebase, generate doctrine
 │   ├── invest-doctrine/      # Validate doctrine files
-│   └── invest-architecture/  # Enforce architecture rules
+│   ├── invest-architecture/  # Enforce architecture rules
+│   └── invest-preflight/ ... # Audit chain: preflight, manifest,
+│                             #   repo-audit, remediate, verify-remediation
 │
 ├── vector/
 │   ├── schemas/              # 6 research schemas (JSON)
