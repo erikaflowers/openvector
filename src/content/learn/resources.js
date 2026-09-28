@@ -736,7 +736,7 @@ const resources = [
   {
     title: 'Claude Code Documentation',
     author: 'Anthropic',
-    url: 'https://docs.anthropic.com/en/docs/claude-code/overview',
+    url: 'https://code.claude.com/docs/en/overview',
     description: 'Claude Code overview and reference. The starting point for AI-assisted building.',
     type: 'reference',
     topics: ['ai'],
@@ -744,7 +744,7 @@ const resources = [
   {
     title: 'Claude Code Tutorials',
     author: 'Anthropic',
-    url: 'https://docs.anthropic.com/en/docs/claude-code/tutorials',
+    url: 'https://code.claude.com/docs/en/tutorials',
     description: 'Step-by-step guides for Claude Code. Practical walkthroughs.',
     type: 'reference',
     topics: ['ai'],
