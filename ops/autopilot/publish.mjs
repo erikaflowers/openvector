@@ -66,6 +66,25 @@ const setUpdatedAt = (file) => {
 
 const yamlStr = (s) => JSON.stringify(String(s));
 
+// Remark directives must stay balanced: every `:::name` opener has a lone `:::` closer, and no
+// `:::` may be glued onto a line of text. Markdown still builds when this breaks, so check it here.
+function directiveProblems(wt, files) {
+  const problems = [];
+  for (const f of files.filter((f) => f.endsWith('.md'))) {
+    const p = path.join(wt, f);
+    if (!fs.existsSync(p)) continue;
+    let depth = 0;
+    fs.readFileSync(p, 'utf8').split('\n').forEach((line, i) => {
+      if (/^:::\s*[a-z]/i.test(line)) depth++;
+      else if (/^:::\s*$/.test(line)) depth--;
+      else if (/\S\s*:::\s*$/.test(line)) problems.push({ severity: 'blocker', file: f, problem: `Line ${i + 1}: a closing \`:::\` is glued onto text; it must be on its own line.` });
+      if (depth < 0) { problems.push({ severity: 'blocker', file: f, problem: `Line ${i + 1}: \`:::\` closes a block that was never opened.` }); depth = 0; }
+    });
+    if (depth > 0) problems.push({ severity: 'blocker', file: f, problem: `${depth} remark directive block(s) are never closed with \`:::\`.` });
+  }
+  return problems;
+}
+
 // Changes Samantha sent back with "Go: queue it" on the Desk (no PR existed that day) run again today.
 const QUEUE = path.join(STATE, 'queue.jsonl');
 const DONE = path.join(STATE, 'queue-done.json');
@@ -102,45 +121,65 @@ for (const change of [...queued, ...brief.changes]) {
     git(CODE_REPO, 'worktree', 'add', '--quiet', '-b', branch, wt, 'origin/main');
     fs.symlinkSync(path.join(CODE_REPO, 'node_modules'), path.join(wt, 'node_modules'));
 
-    // 1. Draft: the agent may edit only the files this change names.
-    const draft = runStage('draft', {
-      cwd: wt,
-      vars: { change: JSON.stringify(change, null, 2) },
-      tools: [...config.stages.draft.tools, ...change.files.map((f) => `Edit(/${f})`)],
-      outPath: path.join(dir, 'drafts', `${id}.json`),
-    });
-    if (draft.status === 'skipped') { record({ ...base, status: 'skipped', reason: draft.skipReason || draft.summary }); continue; }
+    const draftTools = [...config.stages.draft.tools, ...change.files.map((f) => `Edit(/${f})`)];
+    const changeJson = JSON.stringify(change, null, 2);
+    const lessonsOf = (files) => files.map(lessonKey).filter(Boolean);
+    let draft, audit, diff, changed = [], failure = null;
 
-    // 2. Scope check in code. Anything the agent touched outside the list aborts the change.
-    const touched = [...git(wt, 'diff', '--name-only', 'HEAD').split('\n'), ...git(wt, 'ls-files', '--others', '--exclude-standard').split('\n')]
-      .filter(Boolean);
-    const outside = touched.filter((f) => !change.files.includes(f) && f !== 'node_modules');
-    if (outside.length) { record({ ...base, status: 'failed', reason: `edited files outside the change: ${outside.join(', ')}` }); continue; }
-    const changed = touched.filter((f) => f !== 'node_modules');
-    if (!changed.length) { record({ ...base, status: 'no-op', reason: 'the draft made no edits' }); continue; }
+    // Up to two rounds: draft → scope check → pipeline edits → build → structure check → audit.
+    // If round one has blockers (from the checks or the audit), the editor gets them back once.
+    for (let round = 1; round <= 2; round++) {
+      const fixes = round === 1 ? '(none: this is the first attempt)'
+        : JSON.stringify(audit ? audit.issues.filter((i) => i.severity === 'blocker') : failure, null, 2);
+      failure = null;
 
-    // 3. Pipeline-owned edits: updatedAt on lessons, and a public update note.
-    const lessons = changed.map(lessonKey).filter(Boolean);
-    changed.filter(lessonKey).forEach((f) => setUpdatedAt(path.join(wt, f)));
-    const note = path.join(wt, 'content/updates', `${date}-${id}.md`);
-    fs.mkdirSync(path.dirname(note), { recursive: true });
-    fs.writeFileSync(note, [
-      '---', `date: "${date}"`, `title: ${yamlStr(change.title)}`, `kind: ${change.tier === 'T0' ? 'fix' : 'update'}`,
-      `lessons: [${lessons.map((l) => yamlStr(l)).join(', ')}]`, `sources: [${change.sources.map(yamlStr).join(', ')}]`, '---', '',
-      draft.publicNote, '',
-    ].join('\n'));
+      // 1. Draft: the agent may edit only the files this change names.
+      git(wt, 'reset', '--quiet');  // unstage any previous round; the working tree keeps its edits
+      if (round > 1) fs.rmSync(path.join(wt, 'content/updates', `${date}-${id}.md`), { force: true });
+      draft = runStage('draft', { cwd: wt, vars: { change: changeJson, fixes }, tools: draftTools, outPath: path.join(dir, 'drafts', `${id}${round > 1 ? '.r2' : ''}.json`) });
+      if (draft.status === 'skipped') break;
 
-    // 4. Build must pass.
-    try { sh('npm', ['run', 'build', '--silent'], { cwd: wt, stdio: 'pipe' }); } catch (e) {
-      record({ ...base, status: 'failed', reason: `build failed: ${String(e.stdout || e.message).slice(-600)}` }); continue;
+      // 2. Scope check in code. Anything the agent touched outside the list aborts the change.
+      const touched = [...git(wt, 'diff', '--name-only', 'HEAD').split('\n'), ...git(wt, 'ls-files', '--others', '--exclude-standard').split('\n')]
+        .filter(Boolean);
+      const outside = touched.filter((f) => !change.files.includes(f) && f !== 'node_modules' && f !== `content/updates/${date}-${id}.md`);
+      if (outside.length) { failure = `edited files outside the change: ${outside.join(', ')}`; break; }
+      changed = touched.filter((f) => f !== 'node_modules' && !f.startsWith('content/updates/'));
+      if (!changed.length) break;
+
+      // 3. Pipeline-owned edits: updatedAt on lessons, and a public update note.
+      changed.filter(lessonKey).forEach((f) => setUpdatedAt(path.join(wt, f)));
+      const note = path.join(wt, 'content/updates', `${date}-${id}.md`);
+      fs.mkdirSync(path.dirname(note), { recursive: true });
+      fs.writeFileSync(note, [
+        '---', `date: "${date}"`, `title: ${yamlStr(change.title)}`, `kind: ${change.tier === 'T0' ? 'fix' : 'update'}`,
+        `lessons: [${lessonsOf(changed).map((l) => yamlStr(l)).join(', ')}]`, `sources: [${change.sources.map(yamlStr).join(', ')}]`, '---', '',
+        draft.publicNote, '',
+      ].join('\n'));
+
+      // 4. Build must pass; directive structure must be intact.
+      try { sh('npm', ['run', 'build', '--silent'], { cwd: wt }); } catch (e) {
+        failure = [{ severity: 'blocker', problem: `npm run build failed: ${String(e.stdout || e.stderr || e.message).slice(-800)}` }];
+        audit = null; if (round === 1) continue; break;
+      }
+      const structural = directiveProblems(wt, changed);
+      if (structural.length) { failure = structural; audit = null; if (round === 1) continue; break; }
+
+      // 5. Audit the full diff (including the note, excluding node_modules).
+      git(wt, 'add', '-A', '--', '.', ':!node_modules');
+      diff = git(wt, 'diff', '--cached');
+      fs.mkdirSync(path.join(dir, 'diffs'), { recursive: true });
+      fs.writeFileSync(path.join(dir, 'diffs', `${id}.diff`), diff + '\n');
+      audit = runStage('audit', { cwd: wt, vars: { change: changeJson, diff }, outPath: path.join(dir, 'audits', `${id}.json`) });
+      if (audit.verdict === 'pass' || round === 2) break;
+      console.log(`  audit found ${audit.issues.filter((i) => i.severity === 'blocker').length} blocker(s); one repair round`);
     }
 
-    // 5. Audit the full diff (including the note, excluding node_modules).
-    git(wt, 'add', '-A', '--', '.', ':!node_modules');
-    const diff = git(wt, 'diff', '--cached');
-    fs.mkdirSync(path.join(dir, 'diffs'), { recursive: true });
-    fs.writeFileSync(path.join(dir, 'diffs', `${id}.diff`), diff + '\n');
-    const audit = runStage('audit', { cwd: wt, vars: { change: JSON.stringify(change, null, 2), diff }, outPath: path.join(dir, 'audits', `${id}.json`) });
+    if (draft.status === 'skipped') { record({ ...base, status: 'skipped', reason: draft.skipReason || draft.summary }); continue; }
+    if (typeof failure === 'string') { record({ ...base, status: 'failed', reason: failure }); continue; }
+    if (!changed.length) { record({ ...base, status: 'no-op', reason: 'the draft made no edits' }); continue; }
+    if (failure) { record({ ...base, status: 'failed', reason: failure.map((f) => f.problem).join(' ') }); continue; }
+    const lessons = lessonsOf(changed);
     const passed = audit.verdict === 'pass';
 
     if (DRY) { record({ ...base, status: 'dry-run', audit: audit.verdict, auditSummary: audit.summary, publicNote: draft.publicNote, worktree: wt }); continue; }
