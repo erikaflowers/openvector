@@ -4,6 +4,7 @@ title: The Crew Model
 subtitle: They are not assistants. They are crew.
 duration: 22 min
 status: available
+updatedAt: "2026-09-28"
 ---
 
 ## From Assistants to Crew
@@ -75,7 +76,7 @@ Some people resist this shift. They want to write the code themselves, and the a
 
 ## Crew Communication
 
-Crew members do not talk to each other directly. You are the routing layer. Agent A produces output. You review it. You give the relevant parts to Agent B as input. This keeps you in the loop and prevents miscommunication between agents.
+Tools like subagents and agent teams can hand work between agents automatically. In the crew model, you choose to be the routing layer anyway. Agent A produces output. You review it. You give the relevant parts to Agent B as input. This keeps you in the loop and prevents miscommunication between agents.
 
 The communication artifacts are: commit messages (what was done and why), status documents (what is in progress, what is blocked), decision records (what was decided and the rationale), and contracts (agreed interfaces between systems).
 

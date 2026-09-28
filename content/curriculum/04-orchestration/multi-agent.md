@@ -4,6 +4,7 @@ title: Multi-Agent Systems
 subtitle: More than one mind on the problem.
 duration: 22 min
 status: available
+updatedAt: "2026-09-28"
 ---
 
 ## Why More Than One Agent?
@@ -32,6 +33,21 @@ Window one: the builder. Its CLAUDE.md says to create features, write code, and 
 
 This separation is powerful because the same AI that writes code is not great at critiquing it. The builder is optimistic; it just created something and believes it works. The reviewer is skeptical; it looks for what could go wrong. These two perspectives, when separated into distinct agents, produce better results than one agent trying to do both.
 
+Claude Code can also run this split inside a single session, using built-in subagents. A subagent is a markdown file in `.claude/agents/` (for one project) or `~/.claude/agents/` (for all your projects). Each file gives the subagent a name, a description, a list of tools and, optionally, a model. The main session hands tasks to a subagent, and the subagent works in its own context window and returns its result. A read-only reviewer is the one-session version of the builder/reviewer split:
+
+```markdown
+---
+name: code-reviewer
+description: Reviews code for bugs, edge cases, and quality issues. Use after writing or changing code.
+tools: Read, Glob, Grep
+---
+
+You are the reviewer. Find bugs, edge cases, and accessibility issues.
+Never write code. Report what you find, ranked by severity.
+```
+
+Claude Code also has agent teams, an experimental feature that is off by default, where one session spawns a group of sessions, supervises them, and lets them message each other.
+
 ## Agent Boundaries
 
 The hardest part of multi-agent work is defining boundaries. Which agent owns what? What happens when responsibilities overlap?
@@ -46,7 +62,7 @@ The key rule: no two agents should be modifying the same file at the same time. 
 
 ## Communication Between Agents
 
-Agents in a multi-agent system do not talk to each other directly. They communicate through artifacts: files, documents, and commit messages that one agent creates and another reads.
+In the setup this lesson teaches, separate terminal sessions, agents do not share context or memory. Recent versions of Claude Code can pass short text messages between your sessions on the same machine, a feature called [cross-session messaging](https://code.claude.com/docs/en/cross-session-messaging). This lesson uses artifacts as the durable channel on purpose: files, documents, and commit messages that one agent creates and another reads.
 
 The simplest communication channel is the filesystem. Agent A writes a file. Agent B reads it. A CLAUDE.md can specify: "Check the docs/decisions/ folder for architectural decisions before building features." Agent A (the architect) writes decision documents. Agent B (the builder) reads them before coding.
 
