@@ -90,7 +90,7 @@ Ship the smallest thing that works. Then improve it. This is not laziness. It is
 
 ## Planning for AI Collaboration
 
-When you work with an AI coding agent, your plan becomes your prompt strategy. Each decomposed task becomes a clear instruction. "Build the header component with a logo on the left and navigation links on the right, using the existing .nav-header CSS class" is a plan-derived prompt that gets excellent results.
+When you work with an AI coding agent, your plan becomes your prompt strategy. Each decomposed task becomes a clear instruction. "Build the header component with a logo on the left and navigation links on the right, using the existing `.nav-header` CSS class" is a plan-derived prompt that gets excellent results.
 
 Without a plan, AI collaboration drifts. You ask for a feature, the AI builds it one way, you realize you wanted something different, you ask again, the AI refactors, and three iterations later you have code that works but that nobody fully understands. A plan prevents this by front-loading the decisions.
 
@@ -98,17 +98,23 @@ The best AI collaborators are not the best prompt engineers. They are the best p
 
 ## Planning in Zero Vector
 
-Your planning artifact in Zero Vector becomes your VECTOR.md. This is the document that gives your AI agents the context they need to build what you actually envisioned, not what they hallucinated from a vague prompt.
+Your planning artifact in Zero Vector becomes your `VECTOR.md`. This is the document that gives your AI agents the context they need to build what you actually envisioned, not what they hallucinated from a vague prompt.
 
-Everything you plan in this lesson feeds directly into that artifact: the sequence of work, the dependencies between components, the milestones you are targeting. When you update your VECTOR.md's Current State section after each sprint, you are keeping your AI agents oriented. They read it at the start of every session and know exactly where the project stands, what has been built, and what is next. Planning without a written artifact is just daydreaming with a deadline.
+Everything you plan in this lesson feeds directly into that artifact: the sequence of work, the dependencies between components, the milestones you are targeting. When you update your `VECTOR.md`'s Current State section after each sprint, you are keeping your AI agents oriented. They read it at the start of every session and know exactly where the project stands, what has been built, and what is next. Planning without a written artifact is just daydreaming with a deadline.
 
 :::exercise{title="Plan a Real Project"}
-Pick a project you actually want to build (or use the reading tracker from this lesson). Write the problem in one sentence. Write what "done" looks like in three sentences. Decompose it into phases, with 3-5 tasks per phase. For each task, make sure it is small enough to complete in one sitting. Write a "Later" list with at least three ideas you deliberately exclude from version 1. You now have a plan. Tape it to your wall. Start at the top.
+- Pick a project you actually want to build (or use the reading tracker from this lesson)
+- Write the problem in one sentence
+- Write what "done" looks like in three sentences
+- Decompose it into phases, with 3-5 tasks per phase
+- For each task, make sure it is small enough to complete in one sitting
+- Write a "Later" list with at least three ideas you deliberately exclude from version 1
+- You now have a plan. Tape it to your wall. Start at the top.
 :::
 
 :::resources{title="Go Deeper"}
 - [Shape Up by Basecamp](https://basecamp.com/shapeup): A free book on how to scope and plan projects. "Shaping" is professional decomposition. Brilliant and practical.
 - [The Mythical Man-Month (essays)](https://en.wikipedia.org/wiki/The_Mythical_Man-Month): Classic software engineering wisdom. The chapter on conceptual integrity is about planning.
 - [Getting Real by Basecamp](https://basecamp.com/gettingreal): A manifesto on building less and shipping faster. The chapter on scope is gold.
-- [CLAUDE.md: Writing Instructions for AI](https://docs.anthropic.com/en/docs/claude-code/tutorials#create-a-claude-md-file): How to write a CLAUDE.md file, your plan for AI collaboration.
+- [CLAUDE.md: Writing Instructions for AI](https://code.claude.com/docs/en/best-practices#write-an-effective-claude-md): How to write a CLAUDE.md file, your plan for AI collaboration.
 :::
