@@ -12,6 +12,7 @@ knowledgeCheck:
   - question: The lesson says Claude Code replaces typing, not thinking. What is the risk of accepting AI-generated code you do not understand, and how does that relate to the concept of "vibe coding"?
   - question: Context windows have a limited size. How does this constraint affect the way you should structure your prompts and your project when working with an AI agent?
     hint: Consider what happens when the conversation gets very long. What might the agent start to forget or miss?
+updatedAt: "2026-09-28"
 ---
 
 ## What Is Claude Code?
@@ -26,13 +27,17 @@ This is not about replacing your skills. It is about amplifying them. A designer
 
 ## Installing Claude Code
 
-Claude Code runs in your terminal. You need Node.js installed (which you will need for web development anyway) and an Anthropic account.
+Claude Code runs in your terminal. You need a paid Claude plan (Pro, Max, Team or Enterprise) or an Anthropic Console account. The free claude.ai plan does not include Claude Code. The installer does not need Node.js, though you will install Node later for web development anyway.
 
 The recommended way to install is with the official installer. Run the command below in your terminal. It handles permissions correctly and does not require sudo or admin access.
 
 ```bash
 # Install Claude Code (recommended)
+# macOS, Linux, WSL:
 curl -fsSL https://claude.ai/install.sh | bash
+
+# Windows PowerShell:
+irm https://claude.ai/install.ps1 | iex
 
 # Open a new terminal window, then verify it worked
 claude --version
@@ -40,7 +45,7 @@ claude --version
 
 Once installed, navigate to any project folder in your terminal and type claude to start a session. That is it. No IDE plugins. No complex setup. Just your terminal, your project folder, and a conversation.
 
-You may see older guides suggest npm install -g @anthropic-ai/claude-code. That still works, but on macOS it often fails with a permissions error because the global npm directory requires admin access. If you hit that, do not use sudo. Use the installer above instead. It avoids the permissions issue entirely and will not cause problems later.
+You may see older guides suggest npm install -g @anthropic-ai/claude-code. That still works, but the npm package now requires Node.js 22 or later, and on macOS it often fails with a permissions error because the global npm directory requires admin access. If you hit that, do not use sudo. Use the installer above instead. It avoids the permissions issue entirely and will not cause problems later.
 
 ```bash
 # Navigate to your project
