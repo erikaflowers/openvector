@@ -73,11 +73,14 @@ function directiveProblems(wt, files) {
   for (const f of files.filter((f) => f.endsWith('.md'))) {
     const p = path.join(wt, f);
     if (!fs.existsSync(p)) continue;
-    let depth = 0;
+    // Fences are 3+ colons (longer fences nest, e.g. `::::`). Lines inside ``` code blocks are ignored.
+    let depth = 0, inCode = false;
     fs.readFileSync(p, 'utf8').split('\n').forEach((line, i) => {
-      if (/^:::\s*[a-z]/i.test(line)) depth++;
-      else if (/^:::\s*$/.test(line)) depth--;
-      else if (/\S\s*:::\s*$/.test(line)) problems.push({ severity: 'blocker', file: f, problem: `Line ${i + 1}: a closing \`:::\` is glued onto text; it must be on its own line.` });
+      if (/^\s*```/.test(line)) { inCode = !inCode; return; }
+      if (inCode) return;
+      if (/^:{3,}\s*[a-z]/i.test(line)) depth++;
+      else if (/^:{3,}\s*$/.test(line)) depth--;
+      else if (/[^:\s]\s*:{3,}\s*$/.test(line)) problems.push({ severity: 'blocker', file: f, problem: `Line ${i + 1}: a closing \`:::\` is glued onto text; it must be on its own line.` });
       if (depth < 0) { problems.push({ severity: 'blocker', file: f, problem: `Line ${i + 1}: \`:::\` closes a block that was never opened.` }); depth = 0; }
     });
     if (depth > 0) problems.push({ severity: 'blocker', file: f, problem: `${depth} remark directive block(s) are never closed with \`:::\`.` });
@@ -217,4 +220,4 @@ for (const change of [...queued, ...brief.changes]) {
 }
 
 const by = (s) => prs.filter((p) => p.status === s).length;
-console.log(`publish: ${by('merged')} merged, ${by('awaiting')} awaiting, ${by('audit-failed')} audit-failed, ${by('skipped') + by('no-op')} skipped, ${by('deferred')} deferred, ${by('failed')} failed${DRY ? ' (dry run)' : ''}`);
+console.log(`publish: ${by('merged')} merged, ${by('awaiting')} awaiting, ${by('audit-failed')} audit-failed, ${by('skipped') + by('no-op')} skipped, ${by('deferred')} deferred, ${by('failed')} failed${DRY ? `, ${by('dry-run')} dry-run ready (not pushed)` : ''}`);
