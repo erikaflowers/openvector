@@ -74,6 +74,7 @@
   <span class="sp"></span>
   <button id="pause" class="pill" title="Kill switch for the daily run">…</button>
 </header>
+<section id="inbox" style="max-width:860px;margin:0 auto;padding:16px 16px 0"></section>
 <main id="main"><p class="muted">Loading…</p></main>
 <div class="toast" id="toast"></div>
 
@@ -94,7 +95,36 @@ const STATUS = {
   failed: 'failed', skipped: 'skipped by editor', 'no-op': 'no change needed', rejected: 'closed', 'dry-run': 'dry run',
 };
 
+function inboxCard(x) {
+  return `<div class="card" data-pr="${x.pr}">
+    <div class="chips"><span class="chip ${esc(x.tier)}">${esc(x.tier)}</span>
+      <span class="chip ${x.audit === 'pass' ? 'pass' : 'fail'}">audit ${esc(x.audit)}</span>
+      <span class="chip">opened ${esc(x.opened)}</span>
+      <a class="chip" href="${esc(x.url)}" target="_blank" rel="noopener">PR #${x.pr}</a></div>
+    <h3>${esc(x.title)}</h3>
+    <div class="row files">${x.files.map((f) => `<code>${esc(f)}</code>`).join(' ')}</div>
+    ${x.publicNote ? `<div class="note">${esc(x.publicNote)}</div>` : ''}
+    ${x.what ? `<div class="row"><span class="k">Change</span>${esc(x.what)}</div>` : ''}
+    ${x.why ? `<div class="row"><span class="k">Why</span>${esc(x.why)}</div>` : ''}
+    ${x.auditSummary ? `<div class="row"><span class="k">Audit</span>${esc(x.auditSummary)}</div>` : ''}
+    ${x.date && x.id ? `<details data-diff="${esc(x.id)}" data-date="${esc(x.date)}"><summary>Diff</summary><pre class="diff">Loading…</pre></details>` : `<div class="row"><a href="${esc(x.url)}/files" target="_blank" rel="noopener">View diff on GitHub</a></div>`}
+    <div class="actions"><button class="btn go" data-act="go">${x.audit === 'pass' ? 'Go: merge' : 'Go anyway'}</button><button class="btn nogo" data-act="nogo">No-go: close PR</button><button class="btn" data-act="note">Note</button></div>
+    <textarea placeholder="Optional: why? The next brief reads this."></textarea>
+  </div>`;
+}
+
+async function loadInbox() {
+  const items = await api('/api/inbox').catch(() => null);
+  const el = $('#inbox');
+  if (!items) { el.innerHTML = '<p class="muted">Could not load open PRs.</p>'; return; }
+  el.innerHTML = items.length
+    ? `<h2>Inbox: ${items.length} change${items.length > 1 ? 's' : ''} waiting for you</h2>` + items.map(inboxCard).join('')
+    : '<h2>Inbox</h2><div class="card muted">Nothing waiting for you. Every open change has been decided.</div>';
+  bindCards(el, null);
+}
+
 async function load(date) {
+  loadInbox();
   const d = await api(`/api/day/${date}`);
   const b = d.brief;
   const decided = Object.fromEntries(d.decisions.map((x) => [x.id, x]));
@@ -108,7 +138,6 @@ async function load(date) {
     h += `<p class="headline">${esc(b.headline)}</p>`;
     const t1 = b.changes.filter((c) => c.tier === 'T1'), t0 = b.changes.filter((c) => c.tier === 'T0');
     h += `<div class="stats">
-      <div class="stat"><b>${t1.filter((c) => !decided[c.id] && pr[c.id]?.status !== 'merged').length}</b><span>need your call</span></div>
       <div class="stat"><b>${d.prs.filter((p) => p.status === 'merged').length}</b><span>shipped</span></div>
       <div class="stat"><b>${b.proposals.length}</b><span>proposals</span></div>
       <div class="stat"><b>${hs.broken ?? '–'} / ${hs.moved ?? '–'}</b><span>broken / moved links</span></div>
@@ -149,7 +178,9 @@ function changeCard(c, p, dec, date) {
     ${p?.reason ? `<div class="row"><span class="k">Pipeline</span>${esc(p.reason)}</div>` : ''}
     <div class="row sources"><span class="k">Sources</span>${c.sources.map(link).join('')}</div>
     ${p && ['merged', 'awaiting', 'audit-failed', 'dry-run', 'rejected'].includes(p.status) ? `<details data-diff="${esc(c.id)}"><summary>Diff</summary><pre class="diff">Loading…</pre></details>` : ''}
-    ${actions(dec, shipped ? `Already ${STATUS[p.status]}` : null, p?.pr ? (p.status === 'audit-failed' ? 'Go anyway' : 'Go: merge') : 'Go: queue it', p?.pr ? 'No-go: close PR' : 'No-go')}
+    ${p?.pr && ['awaiting', 'audit-failed'].includes(p.status) && !dec
+      ? '<div class="actions decided">Open PR: decide it in the Inbox above.</div>'
+      : actions(dec, shipped ? `Already ${STATUS[p.status]}` : null, p?.pr ? (p.status === 'audit-failed' ? 'Go anyway' : 'Go: merge') : 'Go: queue it', p?.pr ? 'No-go: close PR' : 'No-go')}
   </div>`;
 }
 
@@ -195,23 +226,28 @@ function learnersBlock(l) {
     ${drop ? `<details open><summary>Biggest drop-offs</summary><table><tr><th>Lesson</th><th>Completions</th><th>Drop from previous</th></tr>${drop}</table></details>` : ''}`;
 }
 
-function bind(date) {
-  document.querySelectorAll('details[data-diff]').forEach((d) => d.addEventListener('toggle', async () => {
+function bind(date) { bindCards($('#main'), date); }
+
+function bindCards(root, date) {
+  root.querySelectorAll('details[data-diff]').forEach((d) => d.addEventListener('toggle', async () => {
     const pre = $('pre', d);
     if (!d.open || pre.dataset.loaded) return;
-    const txt = await api(`/api/diff/${date}/${d.dataset.diff}`).catch(() => 'No diff saved.');
+    const txt = await api(`/api/diff/${d.dataset.date || date}/${d.dataset.diff}`).catch(() => 'No diff saved.');
     pre.innerHTML = String(txt).split('\n').map((l) => `<span class="${l.startsWith('+') && !l.startsWith('+++') ? 'a' : l.startsWith('-') && !l.startsWith('---') ? 'd' : l.startsWith('@@') || l.startsWith('diff ') ? 'h' : ''}">${esc(l) || ' '}</span>`).join('');
     pre.dataset.loaded = 1;
   }));
-  document.querySelectorAll('.card [data-act]').forEach((b) => b.addEventListener('click', async () => {
+  root.querySelectorAll('.card [data-act]').forEach((b) => b.addEventListener('click', async () => {
     const card = b.closest('.card'), ta = $('textarea', card), act = b.dataset.act;
     if (act === 'note' && ta.style.display !== 'block') { ta.style.display = 'block'; ta.focus(); b.textContent = 'Save note'; return; }
     if (act === 'go' && b.textContent.includes('anyway') && !confirm('The audit failed on this one. Merge anyway?')) return;
     card.querySelectorAll('button').forEach((x) => (x.disabled = true));
     try {
-      const r = await api('/api/decision', { date, id: card.dataset.id, kind: card.dataset.kind, decision: act, note: ta?.value || '' });
+      const body = card.dataset.pr
+        ? { pr: Number(card.dataset.pr), decision: act, note: ta?.value || '' }
+        : { date, id: card.dataset.id, kind: card.dataset.kind, decision: act, note: ta?.value || '' };
+      const r = await api('/api/decision', body);
       toast(r.result);
-      load(date);
+      load($('#day').value);
     } catch (e) { toast(`Failed: ${e.message}`); card.querySelectorAll('button').forEach((x) => (x.disabled = false)); }
   }));
 }
