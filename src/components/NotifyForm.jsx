@@ -6,10 +6,9 @@ import { useState } from 'react';
  *
  * @param {string} variant - 'dark' (white text on dark/blue bg) or 'light' (dark text on light bg)
  * @param {string} tag - Buttondown tag to apply (default: 'zerovector')
- * @param {string} [source] - where the form sits (e.g. 'lesson-end'), sent to Plausible for attribution
  * @param {string} [buttonLabel] / [successText] - copy overrides
  */
-function NotifyForm({ variant = 'dark', tag = 'zerovector', source = 'page', buttonLabel = 'Get Notified', successText = "You're in. We'll let you know when it's live." }) {
+function NotifyForm({ variant = 'dark', tag = 'zerovector', buttonLabel = 'Get Notified', successText = "You're in. We'll let you know when it's live." }) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -38,8 +37,6 @@ function NotifyForm({ variant = 'dark', tag = 'zerovector', source = 'page', but
       if (response.ok && data.success) {
         setStatus('success');
         setEmail('');
-        // Plausible goal "Signup": which form, which page.
-        try { window.plausible?.('Signup', { props: { tag, source, page: window.location.pathname } }); } catch { /* analytics is optional */ }
       } else {
         throw new Error(data.error || 'Subscription failed');
       }

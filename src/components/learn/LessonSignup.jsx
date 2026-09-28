@@ -13,7 +13,6 @@ function LessonSignup() {
       <NotifyForm
         variant="learn"
         tag="zerovector"
-        source="lesson-end"
         buttonLabel="Send me updates"
         successText="You're in. Watch for the next Open Vector update."
       />
