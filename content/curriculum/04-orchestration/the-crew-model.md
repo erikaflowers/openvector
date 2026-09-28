@@ -4,6 +4,7 @@ title: The Crew Model
 subtitle: They are not assistants. They are crew.
 duration: 22 min
 status: available
+updatedAt: "2026-09-28"
 ---
 
 ## From Assistants to Crew
@@ -118,5 +119,5 @@ Total wall clock time: maybe 45 minutes. The quality is higher than if one agent
 :::resources{title="Go Deeper"}
 - [Team Topologies by Skelton & Pais](https://teamtopologies.com/). The best book on team structure and interaction patterns. Directly applicable to designing agent crews.
 - [The Manager's Path by Camille Fournier](https://www.oreilly.com/library/view/the-managers-path/9781491973882/). On transitioning from individual contributor to technical leader. The same shift happens when you move from solo coding to directing a crew.
-- [Anthropic Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code). Official documentation on project files, context management, and multi-session workflows.
+- [Anthropic Claude Code Documentation](https://code.claude.com/docs). Official documentation on project files, context management, and multi-session workflows.
 :::

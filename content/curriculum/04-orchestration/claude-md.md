@@ -4,6 +4,7 @@ title: CLAUDE.md
 subtitle: Teaching your agents who they are.
 duration: 20 min
 status: available
+updatedAt: "2026-09-28"
 ---
 
 ## The Instruction File
@@ -123,7 +124,7 @@ This pairing is what separates Zero Vector from ad hoc prompting. Without VECTOR
 :::
 
 :::resources{title="Go Deeper"}
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code). Official docs on CLAUDE.md files and how Claude Code reads project instructions.
+- [Claude Code Documentation](https://code.claude.com/docs). Official docs on CLAUDE.md files and how Claude Code reads project instructions.
 - [Anthropic Cookbook: CLAUDE.md Examples](https://github.com/anthropics/anthropic-cookbook). Real-world examples of instruction files for various project types.
 - [The Twelve-Factor App](https://12factor.net/). Not about AI, but the same principle: encode configuration so every environment gets the right setup automatically.
 :::

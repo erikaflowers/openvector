@@ -108,7 +108,7 @@ Blockquotes render as **callout boxes** with a blue accent border and subtle bac
 ### Links
 
 ```markdown
-[Claude Code Docs](https://docs.anthropic.com/en/docs/claude-code/overview)
+[Claude Code Docs](https://code.claude.com/docs/en/overview)
 ```
 
 External links (starting with `http`) automatically open in a new tab. Internal links (starting with `/`) use client-side navigation.

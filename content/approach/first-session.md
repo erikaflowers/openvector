@@ -5,7 +5,7 @@ subtitle: From zero to a working project in one sitting. No prior coding experie
 duration: 30 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-09-28"
 category: getting-started
 prerequisites:
   - 00-orientation/terminal
@@ -20,7 +20,7 @@ This is not a demo. You are going to do this yourself, on your own machine, righ
 
 ## What You Need
 
-A computer running macOS, Windows, or Linux. An internet connection. A Claude account with Claude Code access. That is it. If you do not have Claude Code installed yet, visit docs.anthropic.com and follow the installation instructions. It takes about five minutes.
+A computer running macOS, Windows, or Linux. An internet connection. A Claude account with Claude Code access. That is it. If you do not have Claude Code installed yet, visit [code.claude.com/docs/en/setup](https://code.claude.com/docs/en/setup) and follow the installation instructions. It takes about five minutes.
 
 :::step{number="01" title="Open Your Terminal"}
 On macOS, press Command + Space, type "Terminal", and hit Enter. On Windows, search for "Terminal" or "PowerShell" in the Start menu. On Linux, you already know.
@@ -92,7 +92,7 @@ This is the entire Zero Vector workflow in miniature. Every project you build, n
 Next: set up a proper project with version control, a package manager, and a CLAUDE.md file that tells Claude Code about your project conventions.
 
 :::resources{title="Go Deeper"}
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code/overview): Official docs for Claude Code setup and usage.
+- [Claude Code Documentation](https://code.claude.com/docs/en/overview): Official docs for Claude Code setup and usage.
 - [The Terminal (Curriculum)](/learn/curriculum/00-orientation/terminal): Understand what a terminal actually is and how it works.
 - [File Systems (Curriculum)](/learn/curriculum/00-orientation/file-systems): How files and folders work on your computer.
 :::
