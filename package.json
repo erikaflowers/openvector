@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "dev:netlify": "netlify dev",
-    "build": "vite build",
+    "build": "vite build && node scripts/sync-catalog.mjs",
+    "sync-catalog": "node scripts/sync-catalog.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
