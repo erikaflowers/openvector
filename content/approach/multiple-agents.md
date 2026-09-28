@@ -5,7 +5,7 @@ subtitle: Crew roles, CLAUDE.md per agent, switching contexts, and coordinating 
 duration: 30 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-09-28"
 category: working-with-agents
 prerequisites:
   - 04-orchestration/multi-agent
@@ -96,9 +96,11 @@ Navigate each terminal to the appropriate directory and start Claude Code. Each 
 cd ~/projects/my-app
 claude
 
-# Terminal 2: Backend agent (same repo, different CLAUDE.md via worktree or flags)
+# Terminal 2: Backend agent (same repo, its own worktree and CLAUDE.md)
 cd ~/projects/my-app
-claude --profile backend
+git worktree add ../my-app-backend
+cd ../my-app-backend
+claude
 
 # Or if using separate directories:
 cd ~/projects/my-app-backend
