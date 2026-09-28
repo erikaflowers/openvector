@@ -120,7 +120,7 @@ export default async (req) => {
     const systemPrompt = socratic ? SYSTEM_PROMPT + SOCRATIC_ADDENDUM : SYSTEM_PROMPT;
 
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-5-20250929',
+      model: 'claude-sonnet-5',
       max_tokens: 1024,
       system: systemPrompt,
       messages: trimmed,
