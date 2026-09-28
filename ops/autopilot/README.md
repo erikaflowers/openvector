@@ -41,6 +41,16 @@ sources, audit, the learner-facing note. **Go** merges the PR (or queues a chang
 closes it, **Note** records feedback. Every decision lands in `feedback.jsonl`, which the next brief reads.
 Proposals: **Write it** queues them for Phase 3. The header pill is the kill switch.
 
+## The supervisor loop
+
+The LaunchAgent is the **engine**: it runs at 05:00 whether or not any Claude session is alive.
+The **supervisor** is a Claude Code session in tmux `ov-loop` running `/loop 2h Follow ops/autopilot/LOOP.md`:
+it checks that the engine ran (and re-runs it once on a transient failure), keeps the Desk up, confirms merged
+changes went live, probes the signup function, and messages Samantha only when something changed.
+Start it with `ops/autopilot/loop.sh` (optional interval: `loop.sh 4h`). It runs in `dontAsk` permission mode
+with a narrow allowlist (read files, curl, `gh pr list/view`, `launchctl print/kickstart`, `health.mjs`,
+`notify.sh`); anything else is refused, never left waiting. If it dies, the site still updates.
+
 ## On the site
 
 Each change ships a `content/updates/<date>-<id>.md` note. The content plugin turns these into `learn.updates`:
