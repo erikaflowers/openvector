@@ -11,3 +11,9 @@ export function fullTitle(title, path = '/') {
   if (path === '/' || !title) return SITE;
   return `${String(title).replace(/\s+—\s+(The\s+)?Open Vector$/, '')} — ${SITE}`;
 }
+
+// Netlify serves pre-rendered pages from <path>/index.html and 301-redirects "/path" to "/path/".
+// Canonical URLs, og:url and the sitemap therefore use the trailing slash: the address that answers 200.
+export function canonicalUrl(path = '/') {
+  return path === '/' ? `${BASE_URL}/` : `${BASE_URL}${String(path).replace(/\/?$/, '/')}`;
+}

@@ -11,7 +11,7 @@ import { useEffect } from 'react';
  * @param {string} [options.ogImage] - OG image URL (defaults to site-wide card)
  */
 
-import { SITE, BASE_URL, DEFAULT_DESC, DEFAULT_IMAGE, fullTitle as buildTitle } from './seo-config';
+import { SITE, BASE_URL, DEFAULT_DESC, DEFAULT_IMAGE, fullTitle as buildTitle, canonicalUrl } from './seo-config';
 
 function setMeta(name, content, attr = 'name') {
   let el = document.querySelector(`meta[${attr}="${name}"]`);
@@ -37,7 +37,7 @@ export default function useSEO({ title, description, path = '/', ogImage } = {})
   useEffect(() => {
     const fullTitle = buildTitle(title, path);
     const desc = description || DEFAULT_DESC;
-    const url = `${BASE_URL}${path}`;
+    const url = canonicalUrl(path);
     const image = ogImage || DEFAULT_IMAGE;
 
     document.title = fullTitle;
