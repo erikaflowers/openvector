@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "required": ["lessons"],
+  "properties": {
+    "lessons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "summary", "tools", "topics", "facts"],
+        "properties": {
+          "file": { "type": "string", "description": "Repo-relative path, e.g. content/curriculum/02-the-medium/claude-code.md" },
+          "summary": { "type": "string", "description": "One sentence: what the lesson teaches." },
+          "tools": { "type": "array", "items": { "type": "string" }, "description": "Named products, CLIs, libraries and services the lesson depends on (lowercase, e.g. claude-code, vite, supabase, netlify, git)." },
+          "topics": { "type": "array", "items": { "type": "string" }, "description": "Concepts an outside news item could affect (e.g. claude.md, context windows, mcp, subagents, deployment)." },
+          "facts": {
+            "type": "array",
+            "description": "Time-sensitive claims in the lesson that the world could make wrong.",
+            "items": {
+              "type": "object",
+              "required": ["claim", "kind", "volatility"],
+              "properties": {
+                "claim": { "type": "string", "description": "The claim, quoted or closely paraphrased." },
+                "kind": { "type": "string", "enum": ["install", "command", "version", "model", "pricing", "feature", "url", "ui", "other"] },
+                "volatility": { "type": "string", "enum": ["high", "medium", "low"] },
+                "verifyAt": { "type": "string", "description": "Best official URL to re-verify this claim, if known." }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

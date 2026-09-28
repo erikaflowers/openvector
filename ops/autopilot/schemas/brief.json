@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "required": ["headline", "changes", "fyi", "proposals", "healthNote"],
+  "properties": {
+    "headline": { "type": "string", "description": "Two sentences max: the most important thing for Open Vector today." },
+    "changes": {
+      "type": "array",
+      "description": "Concrete edits the site should make, most important first.",
+      "items": {
+        "type": "object",
+        "required": ["id", "tier", "files", "title", "what", "why", "sources", "confidence"],
+        "properties": {
+          "id": { "type": "string", "description": "kebab-case slug, unique within the brief" },
+          "tier": { "type": "string", "enum": ["T0", "T1"] },
+          "files": { "type": "array", "items": { "type": "string" } },
+          "title": { "type": "string", "description": "Changelog-style line, e.g. 'Point Claude Code doc links at code.claude.com'" },
+          "what": { "type": "string", "description": "Exactly what would change in the lesson(s). Quote the current text when replacing it." },
+          "why": { "type": "string" },
+          "sources": { "type": "array", "items": { "type": "string" }, "description": "URLs that prove the change is correct. Required." },
+          "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+        }
+      }
+    },
+    "fyi": {
+      "type": "array",
+      "description": "News worth Samantha knowing that needs no site change yet.",
+      "items": {
+        "type": "object",
+        "required": ["title", "link", "note"],
+        "properties": { "title": { "type": "string" }, "link": { "type": "string" }, "note": { "type": "string" } }
+      }
+    },
+    "proposals": {
+      "type": "array",
+      "description": "T2: new lessons/guides, retirements or restructures. Outline only.",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "title", "rationale", "outline", "sources"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string", "enum": ["new-lesson", "new-guide", "retire", "restructure"] },
+          "title": { "type": "string" },
+          "rationale": { "type": "string" },
+          "outline": { "type": "array", "items": { "type": "string" } },
+          "sources": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "healthNote": { "type": "string", "description": "One or two sentences on link rot, staleness and anything odd in the health report." }
+  }
+}

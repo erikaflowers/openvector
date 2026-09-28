@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "required": ["verdict", "issues", "summary"],
+  "properties": {
+    "verdict": { "type": "string", "enum": ["pass", "fail"] },
+    "summary": { "type": "string", "description": "One or two sentences: is this edit correct, sourced and in voice?" },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["severity", "problem"],
+        "properties": {
+          "severity": { "type": "string", "enum": ["blocker", "minor"] },
+          "file": { "type": "string" },
+          "problem": { "type": "string" }
+        }
+      }
+    }
+  }
+}

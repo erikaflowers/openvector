@@ -1,0 +1,92 @@
+# Open Vector Autopilot: crawl list.
+# type: feed  → RSS/Atom; each new entry is an item.
+# type: page  → watched page; an item is raised when its text changes.
+# type: hn    → Hacker News (Algolia) stories matching `query` above `minPoints`.
+# weight: 1-3, how much triage should trust and prioritise the source.
+
+sources:
+  # --- Anthropic / Claude ---
+  - id: claude-code-releases
+    type: feed
+    url: https://github.com/anthropics/claude-code/releases.atom
+    weight: 3
+  - id: anthropic-news
+    type: page
+    url: https://www.anthropic.com/news
+    weight: 3
+  - id: claude-release-notes
+    type: page
+    url: https://docs.claude.com/en/release-notes/overview
+    weight: 3
+  - id: claude-api-release-notes
+    type: page
+    url: https://docs.anthropic.com/en/release-notes/api
+    weight: 3
+
+  # --- Other labs and agentic tools ---
+  - id: openai-news
+    type: feed
+    url: https://openai.com/news/rss.xml
+    weight: 2
+  - id: openai-codex-releases
+    type: feed
+    url: https://github.com/openai/codex/releases.atom
+    weight: 2
+  - id: google-ai-blog
+    type: feed
+    url: https://blog.google/technology/ai/rss/
+    weight: 2
+  - id: github-changelog
+    type: feed
+    url: https://github.blog/changelog/feed/
+    weight: 2
+  - id: cursor-changelog
+    type: feed
+    url: https://cursor.com/changelog/rss.xml
+    weight: 1
+
+  # --- The stack the lessons teach ---
+  - id: react-releases
+    type: feed
+    url: https://github.com/facebook/react/releases.atom
+    weight: 2
+  - id: vite-releases
+    type: feed
+    url: https://github.com/vitejs/vite/releases.atom
+    weight: 2
+  - id: react-router-releases
+    type: feed
+    url: https://github.com/remix-run/react-router/releases.atom
+    weight: 1
+  - id: supabase-js-releases
+    type: feed
+    url: https://github.com/supabase/supabase-js/releases.atom
+    weight: 1
+  - id: netlify-cli-releases
+    type: feed
+    url: https://github.com/netlify/cli/releases.atom
+    weight: 1
+  - id: node-releases
+    type: feed
+    url: https://nodejs.org/en/feed/releases.xml
+    weight: 2
+  - id: gh-cli-releases
+    type: feed
+    url: https://github.com/cli/cli/releases.atom
+    weight: 1
+
+  # --- Community signal ---
+  - id: simon-willison
+    type: feed
+    url: https://simonwillison.net/atom/everything/
+    weight: 2
+  - id: hn-claude-code
+    type: hn
+    query: claude code
+    minPoints: 100
+    weight: 1
+  - id: hn-agentic-coding
+    type: hn
+    query: agentic coding
+    minPoints: 100
+    weight: 1
