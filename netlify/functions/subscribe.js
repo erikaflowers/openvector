@@ -2,6 +2,10 @@ import { checkRateLimit } from './lib/rate-limit.js'
 
 const BUTTONDOWN_ENDPOINT = 'https://api.buttondown.com/v1/subscribers'
 
+// Only tags the site's forms actually use. Anything else is dropped, so the public endpoint
+// cannot be used to write arbitrary tags onto the list.
+const ALLOWED_TAGS = ['zerovector', 'workflows', 'enterprise', 'founding-contributor']
+
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), {
     status,
@@ -41,7 +45,8 @@ export default async (req) => {
     return json({ error: 'Please enter a valid email address.' }, 400)
   }
 
-  const tags = typeof tag === 'string' && tag.trim() ? [tag.trim()] : []
+  const cleanTag = typeof tag === 'string' ? tag.trim().toLowerCase() : ''
+  const tags = ALLOWED_TAGS.includes(cleanTag) ? [cleanTag] : []
 
   try {
     const upstream = await fetch(BUTTONDOWN_ENDPOINT, {
@@ -66,6 +71,8 @@ export default async (req) => {
 
     const code = detail?.code || detail?.detail?.code
     if (upstream.status === 400 && code === 'email_already_exists') {
+      // Existing subscriber: add the new tag to theirs (tags accumulate, never replace).
+      if (tags.length) await addTag(apiKey, email, tags[0])
       return json({ success: true })
     }
 
@@ -74,5 +81,24 @@ export default async (req) => {
   } catch (err) {
     console.error('subscribe: fetch error', err)
     return json({ error: 'Subscription failed.' }, 500)
+  }
+}
+
+async function addTag(apiKey, email, tag) {
+  const headers = { Authorization: `Token ${apiKey}`, 'Content-Type': 'application/json' }
+  try {
+    const lookup = await fetch(`${BUTTONDOWN_ENDPOINT}/${encodeURIComponent(email)}`, { headers })
+    if (!lookup.ok) return
+    const subscriber = await lookup.json()
+    const existing = (subscriber.tags || []).map((t) => (typeof t === 'string' ? t : t.name || t.id || String(t)))
+    if (existing.includes(tag)) return
+    const patch = await fetch(`${BUTTONDOWN_ENDPOINT}/${subscriber.id}`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({ tags: [...existing, tag] }),
+    })
+    if (!patch.ok) console.error('subscribe: tag merge failed', patch.status)
+  } catch (err) {
+    console.error('subscribe: tag merge error', err)
   }
 }

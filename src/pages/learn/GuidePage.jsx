@@ -1,6 +1,7 @@
 import { Link, useParams, useOutletContext } from 'react-router-dom';
 import MarkdownRenderer from '../../components/learn/MarkdownRenderer';
 import MarkCompleteButton from '../../components/learn/MarkCompleteButton';
+import LessonSignup from '../../components/learn/LessonSignup';
 import LessonBadge from '../../components/learn/LessonBadge';
 import LessonUpdates from '../../components/learn/LessonUpdates';
 import RightRail from '../../components/learn/RightRail';
@@ -16,7 +17,7 @@ function GuidePage() {
   const category = (approach.categories || []).find(c => c.key === (categorySlug || guide?.category));
 
   useSEO({
-    title: guide ? `${guide.title} — Open Vector` : 'Guide Not Found',
+    title: guide ? guide.title : 'Guide Not Found',
     description: guide?.subtitle,
     path: `/learn/approach/${categorySlug}/${guideSlug}`,
   });
@@ -79,6 +80,7 @@ function GuidePage() {
         <LessonUpdates lessonKey={`approach/${guideSlug}`} levelSlug="approach" lessonSlug={guideSlug} />
         <MarkdownRenderer content={guide.markdownBody} />
         <MarkCompleteButton levelSlug="approach" lessonSlug={guideSlug} />
+        <LessonSignup />
       </article>
       <RightRail>
         {toc.length > 2 && (
