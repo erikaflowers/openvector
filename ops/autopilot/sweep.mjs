@@ -30,7 +30,9 @@ const score = (l) => l.facts.filter((f) => f.volatility === 'high').length * 3 +
 const candidates = topic.lessons
   .filter((l) => l.facts.length && fs.existsSync(path.join(REPO, l.file)) && !busy.has(l.file))
   .sort((a, b) => {
-    const va = ledger[a.file]?.verifiedAt || '', vb = ledger[b.file]?.verifiedAt || '';
+    // A lesson found outdated whose fix never became a PR (it is not "busy") goes back to the front.
+    const key = (l) => (ledger[l.file]?.status === 'needs-update' ? '' : ledger[l.file]?.verifiedAt || '');
+    const va = key(a), vb = key(b);
     return va.localeCompare(vb) || score(b) - score(a);
   })
   .filter((l) => ledger[l.file]?.verifiedAt !== date)
