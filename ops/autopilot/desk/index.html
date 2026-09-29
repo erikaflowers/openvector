@@ -111,9 +111,11 @@ const STATUS = {
 // One plain line on what changes, a recommendation, two big buttons. Everything else is one tap away.
 const recommend = (x) => !x.conflict && x.audit === 'pass' && x.confidence !== 'low';
 function inboxCard(x) {
-  if (x.conflict) return `<div class="card slim done"><div class="slim-top"><span class="rec">Being redrafted</span><span class="muted small">#${x.pr}</span></div>
+  if (x.conflict) return `<div class="card slim" data-pr="${x.pr}"><div class="slim-top"><span class="rec">Being redrafted</span><span class="muted small">#${x.pr}</span></div>
     <div class="slim-line">${esc(x.publicNote || x.title)}</div>
-    <div class="small muted">A newer change touched the same lesson. The next run rewrites this on the current site and it comes back here. Nothing to do.</div></div>`;
+    <div class="small muted">A newer change touched the same lesson. The next run rewrites this on the current site and it comes back here. Nothing to do, unless you want to drop it.</div>
+    <div class="actions"><button class="btn nogo" data-act="nogo">No-go: drop it</button></div>
+    <textarea placeholder="Why? The next brief reads this."></textarea></div>`;
   const rec = recommend(x);
   return `<div class="card slim" data-pr="${x.pr}">
     <div class="slim-top"><span class="rec ${rec ? 'ok' : 'look'}">${rec ? 'Recommend: Go' : 'Look closer'}</span><span class="muted small">${esc(x.tier)} · #${x.pr}</span></div>
