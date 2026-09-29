@@ -64,6 +64,19 @@
   table { border-collapse: collapse; width: 100%; font-size: 13px; }
   td, th { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
   pre.log { background: var(--code); border-radius: 8px; padding: 10px; font-size: 11.5px; overflow-x: auto; white-space: pre-wrap; }
+  .card.slim { padding: 14px 16px; }
+  .slim-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .rec { font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+  .rec.ok { color: var(--go); } .rec.look { color: var(--warn); }
+  .slim-line { font-size: 16px; line-height: 1.4; }
+  .small { font-size: 13px; } .warn { color: var(--warn); margin-top: 6px; }
+  .actions.big .btn { flex: 1; min-height: 48px; font-size: 16px; }
+  details.more { margin-top: 10px; } details.more[open] { border-top: 1px solid var(--line); padding-top: 8px; }
+  .linkbtn { background: none; border: 0; color: var(--accent); padding: 0; cursor: pointer; font: inherit; }
+  .inbox-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin: 8px 0 12px; }
+  .inbox-head h2 { margin: 0; }
+  .card.summary { font-size: 14px; }
+  details.report > summary { font-size: 14px; margin: 12px 0; }
   .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; display: none; max-width: 90vw; }
 </style>
 </head>
@@ -95,21 +108,28 @@ const STATUS = {
   failed: 'failed', skipped: 'skipped by editor', 'no-op': 'no change needed', rejected: 'closed', 'dry-run': 'dry run',
 };
 
+// One plain line on what changes, a recommendation, two big buttons. Everything else is one tap away.
+const recommend = (x) => !x.conflict && x.audit === 'pass' && x.confidence !== 'low';
 function inboxCard(x) {
-  return `<div class="card" data-pr="${x.pr}">
-    <div class="chips"><span class="chip ${esc(x.tier)}">${esc(x.tier)}</span>
-      <span class="chip ${x.audit === 'pass' ? 'pass' : 'fail'}">audit ${esc(x.audit)}</span>
-      <span class="chip">opened ${esc(x.opened)}</span>
-      <a class="chip" href="${esc(x.url)}" target="_blank" rel="noopener">PR #${x.pr}</a></div>
-    <h3>${esc(x.title)}</h3>
-    <div class="row files">${x.files.map((f) => `<code>${esc(f)}</code>`).join(' ')}</div>
-    ${x.publicNote ? `<div class="note">${esc(x.publicNote)}</div>` : ''}
-    ${x.what ? `<div class="row"><span class="k">Change</span>${esc(x.what)}</div>` : ''}
-    ${x.why ? `<div class="row"><span class="k">Why</span>${esc(x.why)}</div>` : ''}
-    ${x.auditSummary ? `<div class="row"><span class="k">Audit</span>${esc(x.auditSummary)}</div>` : ''}
-    ${x.date && x.id ? `<details data-diff="${esc(x.id)}" data-date="${esc(x.date)}"><summary>Diff</summary><pre class="diff">Loading…</pre></details>` : `<div class="row"><a href="${esc(x.url)}/files" target="_blank" rel="noopener">View diff on GitHub</a></div>`}
-    <div class="actions"><button class="btn go" data-act="go">${x.audit === 'pass' ? 'Go: merge' : 'Go anyway'}</button><button class="btn nogo" data-act="nogo">No-go: close PR</button><button class="btn" data-act="note">Note</button></div>
-    <textarea placeholder="Optional: why? The next brief reads this."></textarea>
+  if (x.conflict) return `<div class="card slim done"><div class="slim-top"><span class="rec">Being redrafted</span><span class="muted small">#${x.pr}</span></div>
+    <div class="slim-line">${esc(x.publicNote || x.title)}</div>
+    <div class="small muted">A newer change touched the same lesson. The next run rewrites this on the current site and it comes back here. Nothing to do.</div></div>`;
+  const rec = recommend(x);
+  return `<div class="card slim" data-pr="${x.pr}">
+    <div class="slim-top"><span class="rec ${rec ? 'ok' : 'look'}">${rec ? 'Recommend: Go' : 'Look closer'}</span><span class="muted small">${esc(x.tier)} · #${x.pr}</span></div>
+    <div class="slim-line">${esc(x.publicNote || x.title)}</div>
+    ${rec ? '' : `<div class="small warn">${x.audit !== 'pass' ? 'The audit flagged something.' : 'Low confidence.'} ${esc((x.auditSummary || '').split('. ')[0])}.</div>`}
+    <div class="actions big"><button class="btn go" data-act="go">Go</button><button class="btn nogo" data-act="nogo">No-go</button></div>
+    <details class="more"><summary>Details</summary>
+      <div class="row"><span class="k">Title</span>${esc(x.title)}</div>
+      <div class="row files">${x.files.map((f) => `<code>${esc(f)}</code>`).join(' ')}</div>
+      ${x.what ? `<div class="row"><span class="k">Change</span>${esc(x.what)}</div>` : ''}
+      ${x.why ? `<div class="row"><span class="k">Why</span>${esc(x.why)}</div>` : ''}
+      ${x.auditSummary ? `<div class="row"><span class="k">Audit</span>${esc(x.auditSummary)}</div>` : ''}
+      ${x.date && x.id ? `<details data-diff="${esc(x.id)}" data-date="${esc(x.date)}"><summary>Diff</summary><pre class="diff">Loading…</pre></details>` : ''}
+      <div class="row"><a href="${esc(x.url)}/files" target="_blank" rel="noopener">Open on GitHub</a> · <button class="linkbtn" data-act="note">Add a note</button></div>
+      <textarea placeholder="Why? The next brief reads this."></textarea>
+    </details>
   </div>`;
 }
 
@@ -117,10 +137,25 @@ async function loadInbox() {
   const items = await api('/api/inbox').catch(() => null);
   const el = $('#inbox');
   if (!items) { el.innerHTML = '<p class="muted">Could not load open PRs.</p>'; return; }
+  const recs = items.filter(recommend);
+  items.sort((a, b) => (a.conflict - b.conflict) || (recommend(a) - recommend(b)));   // "Look closer" first, redrafts last
+  const waiting = items.filter((x) => !x.conflict).length;
   el.innerHTML = items.length
-    ? `<h2>Inbox: ${items.length} change${items.length > 1 ? 's' : ''} waiting for you</h2>` + items.map(inboxCard).join('')
-    : '<h2>Inbox</h2><div class="card muted">Nothing waiting for you. Every open change has been decided.</div>';
+    ? `<div class="inbox-head"><h2>${waiting ? `${waiting} waiting for you` : 'Nothing needs you'}</h2>${recs.length ? `<button class="btn go" id="goall">Go on all ${recs.length} recommended</button>` : ''}</div>`
+      + items.map(inboxCard).join('')
+    : '<h2>Inbox</h2><div class="card muted">All caught up. Nothing is waiting for you.</div>';
   bindCards(el, null);
+  $('#goall')?.addEventListener('click', async (e) => {
+    if (!confirm(`Merge all ${recs.length} recommended changes? Each goes live in about 2 minutes.`)) return;
+    e.target.disabled = true;
+    let done = 0;
+    for (const x of recs) {
+      e.target.textContent = `Merging ${++done}/${recs.length}…`;
+      try { await api('/api/decision', { pr: x.pr, decision: 'go', note: 'approved in bulk (recommended)' }); } catch { /* shown on reload */ }
+    }
+    toast(`Approved ${recs.length}`);
+    load($('#day').value);
+  });
 }
 
 async function load(date) {
@@ -135,6 +170,11 @@ async function load(date) {
   if (!b) {
     h += `<p class="headline">No brief for ${esc(date)}. The run may have failed. See the log below.</p>`;
   } else {
+    const sw = d.sweep;
+    h += `<div class="card summary"><b>${esc(date)}:</b> ${d.prs.filter((p) => p.status === 'merged').length} shipped`
+      + `${sw ? ` · ${sw.checked.length} lessons re-checked, ${sw.checked.filter((c) => c.status === 'needs-update').length} needed fixes · <b>${sw.coverage.covered}/${sw.coverage.total}</b> lessons verified this month` : ''}`
+      + ` · $${d.cost.toFixed(2)}</div>`;
+    h += `<details class="report"><summary>Full report for ${esc(date)}</summary>`;
     h += `<p class="headline">${esc(b.headline)}</p>`;
     const t1 = b.changes.filter((c) => c.tier === 'T1'), t0 = b.changes.filter((c) => c.tier === 'T0');
     h += `<div class="stats">
@@ -155,6 +195,7 @@ async function load(date) {
   if (d.digest) h += `<h2>Email digest</h2><div class="card">${esc(d.digest.status)}${d.digest.url ? ` · <a href="${esc(d.digest.url)}" target="_blank" rel="noopener">open in Buttondown</a>` : ''}</div>`;
   const st = await api('/api/status');
   h += `<h2>Last run log</h2><pre class="log">${esc(st.lastLog)}</pre><p class="muted">Crawl: ${d.collected} new items. Phase ${st.phase}.</p>`;
+  if (b) h += `</details>`;
   $('#main').innerHTML = h;
   bind(date);
 }
@@ -239,6 +280,7 @@ function bindCards(root, date) {
   root.querySelectorAll('.card [data-act]').forEach((b) => b.addEventListener('click', async () => {
     const card = b.closest('.card'), ta = $('textarea', card), act = b.dataset.act;
     if (act === 'note' && ta.style.display !== 'block') { ta.style.display = 'block'; ta.focus(); b.textContent = 'Save note'; return; }
+    if (act === 'nogo' && card.dataset.pr && !ta.value && !confirm('Close this change without merging?')) return;
     if (act === 'go' && b.textContent.includes('anyway') && !confirm('The audit failed on this one. Merge anyway?')) return;
     card.querySelectorAll('button').forEach((x) => (x.disabled = true));
     try {
