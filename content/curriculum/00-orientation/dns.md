@@ -5,7 +5,7 @@ subtitle: How the internet finds your site.
 duration: 15 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-09-29"
 knowledgeCheck:
   - question: DNS translates domain names into IP addresses. Why do we need this translation layer? Why not just use IP addresses directly?
     hint: Think about what would happen if a server moved to a different IP address, and how many addresses you would need to memorize.
@@ -71,7 +71,7 @@ You deployed your site (Deployment lesson). Netlify gave you a URL like `my-proj
 The process:
 
 - Buy a domain from a registrar (**Namecheap**, **Cloudflare**, **Porkbun**).
-- In Netlify: Site settings → Domain management → Add custom domain.
+- In Netlify: open your project, select **Domain management** in the left sidebar, then **Add a domain** → **Add a domain you already own**.
 - Netlify tells you what DNS records to set.
 - Go to your registrar's DNS settings and add a `CNAME` record pointing your domain to `my-project.netlify.app`.
 - Wait for propagation (covered in the next section of this lesson).
