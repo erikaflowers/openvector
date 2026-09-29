@@ -4,6 +4,7 @@ title: Deployment
 subtitle: From localhost to the world.
 duration: 15 min
 status: available
+updatedAt: "2026-09-28"
 ---
 
 ## Deployment, Revisited
@@ -51,11 +52,11 @@ git log --all --full-history -- .env   # Should show nothing
 
 We use Netlify for Zero Vector and it is the simplest path for your first deploy.
 
-Go to netlify.com and sign up with your GitHub account. Click "Add new site" and select "Import an existing project." Choose GitHub as the source and select your repository.
+Go to netlify.com and sign up with your GitHub account. Click "Add new project" and select "Import an existing project." Choose GitHub as the source and select your repository.
 
 Netlify asks for two settings. Build command: npm run build. Publish directory: dist (for Vite projects; check your build tool if you use something else). Leave everything else as default.
 
-Click "Deploy site." Netlify clones your repo, runs the build, and publishes the output. In about 60-90 seconds, you have a URL. Click it. Your project is on the internet.
+Confirm with the deploy button at the bottom of the page. Netlify clones your repo, runs the build, and publishes the output. In about 60-90 seconds, you have a URL. Click it. Your project is on the internet.
 
 From now on, every push to your main branch triggers an automatic rebuild and redeploy. You do not need to visit Netlify again unless you are changing settings.
 
@@ -63,7 +64,7 @@ From now on, every push to your main branch triggers an automatic rebuild and re
 
 If your project uses environment variables (API keys, configuration), you need to add them to your hosting platform. Locally they live in .env. In production they live in the platform dashboard.
 
-On Netlify: Site settings → Environment variables → Add a variable. Set the same key and value as your .env file. The next deploy will pick them up.
+On Netlify: Project configuration → Environment variables → Add a variable. Set the same key and value as your .env file. The next deploy will pick them up.
 
 Remember: .env files are not deployed. They are local only. The hosting platform provides its own environment. This separation is a security feature: your secrets never touch your Git repository.
 
@@ -71,11 +72,11 @@ Remember: .env files are not deployed. They are local only. The hosting platform
 
 Your site is live at something-random.netlify.app. To use your own domain:
 
-In Netlify: Site settings → Domain management → Add custom domain. Type your domain (e.g., myproject.com).
+In Netlify: open your project, select Domain management in the left sidebar → Add a domain → Add a domain you already own. Type your domain (e.g., myproject.com).
 
-At your domain registrar (Namecheap, Cloudflare, etc.): Add a CNAME record pointing your domain to your Netlify URL. Or use Netlify DNS and point your domain's nameservers to Netlify directly.
+At your domain registrar (Namecheap, Cloudflare, etc.): For www (or any subdomain), add a CNAME record pointing to your Netlify URL (your-project.netlify.app). For the bare domain (myproject.com), add an ALIAS record to apex-loadbalancer.netlify.com, or an A record to 75.2.60.5 if your registrar has no ALIAS option. Or use Netlify DNS and point your domain's nameservers to Netlify directly.
 
-Wait for DNS propagation (usually 5-30 minutes). Netlify automatically provisions an SSL certificate. Your site is now live on your custom domain with HTTPS.
+Wait for DNS propagation (often minutes, but it can take up to 48 hours). Netlify automatically provisions an SSL certificate. Your site is now live on your custom domain with HTTPS.
 
 The DNS lesson in Level 00 covered the theory. This is the practice.
 
@@ -103,7 +104,7 @@ Read the error. Fix the cause. Push again. Netlify rebuilds automatically.
 :::
 
 :::resources{title="Go Deeper"}
-- [Netlify Docs: Site Deploys](https://docs.netlify.com/site-deploys/overview/): Everything about how Netlify builds and deploys your site.
+- [Netlify Docs: Deploy Overview](https://docs.netlify.com/deploy/deploy-overview/): Everything about how Netlify builds and deploys your site.
 - [Netlify Docs: Custom Domains](https://docs.netlify.com/domains-https/custom-domains/): Step-by-step guide for connecting your own domain.
 - [Vite: Deploying a Static Site](https://vite.dev/guide/static-deploy): Platform-specific deployment instructions for Vite projects.
 :::
