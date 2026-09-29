@@ -4,6 +4,7 @@ title: CLAUDE.md
 subtitle: Teaching your agents who they are.
 duration: 20 min
 status: available
+updatedAt: "2026-09-27"
 ---
 
 ## The Instruction File
@@ -81,6 +82,8 @@ This is useful for large projects. The root file says "this is a React app, use 
 
 Layering prevents your root CLAUDE.md from becoming a massive document. Each area of the project carries its own context. When the agent works in that area, it gets the relevant briefing automatically.
 
+If a repo was set up for other coding agents and has an AGENTS.md but no CLAUDE.md, Claude Code (v2.1.277+) reads AGENTS.md instead. To keep one shared file, import it from CLAUDE.md with `@AGENTS.md`.
+
 ## The Living Document
 
 A CLAUDE.md is not something you write once. It evolves with your project. When you discover that the agent keeps making the same mistake, add a rule. When you establish a new convention, document it. When something changes, update the file.
@@ -107,7 +110,7 @@ CLAUDE.md tells your agent how to behave in this project. But it does not tell y
 
 Together, they form the full Zero Vector context stack. VECTOR.md is the project brief: the vision, the audience, the success criteria, the decisions that shaped the product. CLAUDE.md is the agent's job description: the conventions, the guardrails, the tone, the workflow rules. The brief tells the agent what you are building and why. The job description tells the agent how to build it and what to watch out for.
 
-This pairing is what separates Zero Vector from ad hoc prompting. Without VECTOR.md, your agent knows the rules but not the reasons. Without CLAUDE.md, your agent knows the vision but not the method. Both documents live at the root of your project, both are read automatically, and both should exist before the first line of code is written.
+This pairing is what separates Zero Vector from ad hoc prompting. Without VECTOR.md, your agent knows the rules but not the reasons. Without CLAUDE.md, your agent knows the vision but not the method. Both documents live at the root of your project and both should exist before the first line of code is written. Claude Code loads CLAUDE.md automatically. To make it load VECTOR.md too, add a line like `See @VECTOR.md for the project brief.` to your CLAUDE.md, because an `@path` reference imports that file into every session.
 
 :::exercise{title="Write Your First CLAUDE.md"}
 - Create a `CLAUDE.md` for a project you are working on (or the practice project from earlier levels).
