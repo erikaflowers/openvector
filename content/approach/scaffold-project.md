@@ -5,7 +5,7 @@ subtitle: Folder structure, version control, CLAUDE.md, and your first commit. T
 duration: 25 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-09-29"
 category: getting-started
 prerequisites:
   - 00-orientation/terminal
@@ -46,6 +46,8 @@ Create the file and open it in your editor:
 touch CLAUDE.md
 ```
 
+For a project that already has code, you can instead run `/init` inside Claude Code. It reads your codebase and drafts a starting CLAUDE.md for you to refine. For a brand-new empty folder like this one, writing it by hand is better, because there is nothing yet for it to analyze.
+
 :::template{title="Starter CLAUDE.md"}
 # Project Name
 
@@ -83,7 +85,7 @@ public/        — Static assets (images, fonts)
 - Use semantic HTML
 :::
 
-Fill this in with your actual project details. The more specific you are, the better Claude Code will understand your project. This file is read automatically every time Claude Code starts in this directory.
+Fill this in with your actual project details. The more specific you are, the better Claude Code will understand your project. Claude Code loads this file at the start of every session in this directory.
 
 :::step{number="04" title="Create Your Folder Structure"}
 Set up the skeleton before writing any code. This is information architecture, deciding where things live before they exist.
@@ -132,7 +134,7 @@ Now start Claude Code in your project directory:
 claude
 ```
 
-Ask Claude to describe the project. If it reads your CLAUDE.md correctly, it will know what the project is, what stack you are using, and what conventions to follow. That is the test. If the AI understands your project structure, you set it up correctly.
+Ask Claude to describe the project. You can also type `/context` in the session and check that CLAUDE.md is listed under **Memory files**. If it reads your CLAUDE.md correctly, it will know what the project is, what stack you are using, and what conventions to follow. That is the test. If the AI understands your project structure, you set it up correctly.
 
 ## Your Project is Ready
 
