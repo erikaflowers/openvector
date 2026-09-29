@@ -120,13 +120,17 @@ export default async (req) => {
     const systemPrompt = socratic ? SYSTEM_PROMPT + SOCRATIC_ADDENDUM : SYSTEM_PROMPT;
 
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-5-20250929',
-      max_tokens: 1024,
+      model: 'claude-sonnet-5',
+      // Sonnet 5 thinks by default; short tutoring replies don't need it, and
+      // thinking tokens would eat into max_tokens. Its tokenizer also uses ~30%
+      // more tokens for the same text, so max_tokens is raised from 1024.
+      max_tokens: 1536,
+      thinking: { type: 'disabled' },
       system: systemPrompt,
       messages: trimmed,
     });
 
-    const text = response.content[0]?.text || '';
+    const text = response.content.find((b) => b.type === 'text')?.text || '';
 
     return new Response(JSON.stringify({ reply: text }), {
       status: 200,
