@@ -5,7 +5,7 @@ subtitle: The single artifact that holds your project's intent, architecture, an
 duration: 15 min
 status: available
 badge: new
-updatedAt: '2026-03-03'
+updatedAt: "2026-09-29"
 knowledgeCheck:
   - question: What problem does VECTOR.md solve?
     hint: Think about what AI agents know (or do not know) at the start of every session.
@@ -27,7 +27,7 @@ A `VECTOR.md` file is a single markdown document that captures your project's in
 
 ## The Context Problem
 
-AI agents have no memory between sessions. Every time you start a conversation with an AI assistant, it knows nothing about your project, your users, your architecture decisions, or why you chose React over Svelte. You have to re-explain everything. Every. Single. Time.
+Every AI agent session starts with a fresh context window. Tools like Claude Code can carry some things forward: instruction files like `CLAUDE.md`, and auto memory, where the agent jots down notes about your preferences and corrections. But none of that tells the agent what your project is for, who your users are, or why you chose React over Svelte. Unless you write that down somewhere the agent reads, you end up re-explaining it. Every. Single. Time.
 
 This is the fundamental problem `VECTOR.md` solves.
 
