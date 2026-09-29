@@ -5,7 +5,7 @@ subtitle: A home for your code.
 duration: 15 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-09-29"
 knowledgeCheck:
   - question: A repository contains much more than just code. What other files live in a typical repo, and why are they important for someone encountering the project for the first time?
     hint: Think about README.md, .gitignore, package.json, CLAUDE.md. What role does each one play?
@@ -114,7 +114,7 @@ You are now inside someone else's project, reading their work, and seeing their 
 
 :::resources{title="Go Deeper"}
 - [GitHub Hello World Guide](https://docs.github.com/en/get-started/start-your-journey/hello-world). GitHub's official walkthrough for creating your first repository.
-- [GitHub Skills](https://skills.github.com/). Free interactive courses that teach GitHub workflows step by step.
+- [GitHub Skills](https://learn.github.com/skills). Free interactive courses that teach GitHub workflows step by step.
 - [The Missing Semester: Version Control](https://missing.csail.mit.edu/2020/version-control/). MIT's deep dive into Git internals. Goes further than you need right now, so bookmark it for later.
 - [Awesome README](https://github.com/matiassingers/awesome-readme). A curated list of excellent README files for inspiration when writing your own.
 :::
