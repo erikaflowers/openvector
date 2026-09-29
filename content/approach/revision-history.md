@@ -5,7 +5,7 @@ subtitle: Git workflow for AI-assisted projects. Commit strategy, branch managem
 duration: 20 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-09-29"
 category: working-with-agents
 prerequisites:
   - 00-orientation/git-basics
@@ -18,7 +18,7 @@ How to use git as a safety net when AI is writing code. When to commit, how to r
 
 AI agents write code fast. That is both the power and the danger. Without disciplined version control, you can find yourself three hundred lines deep in changes you do not understand, with no way back to the version that worked.
 
-> The checkpoint commit is the most important habit in AI-assisted development. Before you tell Claude Code to make a change, commit what you have. If the change goes wrong, you can always get back to the last checkpoint.
+> The checkpoint commit is the most important habit in AI-assisted development. (Claude Code's own `/rewind` checkpoints help too, but they belong to one Claude Code session and are cleaned up after about 30 days. A commit stays until you remove it.) Before you tell Claude Code to make a change, commit what you have. If the change goes wrong, you can always get back to the last checkpoint.
 
 :::step{number="01" title="The Checkpoint Commit Pattern"}
 Before every significant Claude Code instruction, make a commit. Not after, before. This gives you a known-good state to return to if the AI produces something you do not want.
@@ -116,6 +116,8 @@ git log --oneline   # find the commit hash you want to go back to
 git reset --hard abc1234   # replace abc1234 with the actual hash
 ```
 
+> Claude Code also keeps its own checkpoints. Every prompt you send saves the state of the files Claude edits, and you can run `/rewind` (or press Esc twice with an empty prompt) to restore the code, the conversation, or both to an earlier prompt. It is a fast undo inside a session. It is not a replacement for git: it does not track changes Claude makes by running shell commands (like `rm` or `mv`), usually does not restore edits made by subagents, and does not capture edits you make outside Claude Code. Your git checkpoint commits are still the safety net that lasts.
+
 > Level 3 destroys everything after that commit. Only use it when you are sure. This is why checkpoint commits matter. They give you a recent, safe point to reset to instead of going all the way back to the beginning.
 
 :::step{number="06" title="Use Git Log to Understand Your History"}
@@ -132,7 +134,7 @@ git show abc1234
 # See what changed between two commits
 git diff abc1234..def5678
 
-# Find the commit that introduced a specific file
+# See every commit that touched a file, even across renames
 git log --follow src/components/ContactForm.jsx
 ```
 
