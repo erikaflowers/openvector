@@ -70,15 +70,18 @@ const prs = readJson(path.join(dir, 'prs.json'), []);
 const st = (s) => prs.filter((p) => p.status === s).length;
 const n = (tier) => brief ? brief.changes.filter((c) => c.tier === tier).length : 0;
 const DESK = 'https://julians-mac-mini.taila3dc77.ts.net:7810';
+// Three lines: what needs Samantha, how fresh the site is, where to tap.
+const waiting = prs.filter((p) => ['awaiting', 'audit-failed'].includes(p.status));
+const recommended = waiting.filter((p) => p.audit === 'pass').length;
 const tg = brief
-  ? [`Open Vector Updates, ${date}`, '', brief.headline, '',
-     prs.length
-       ? `${st('merged')} shipped · ${st('awaiting') + st('audit-failed')} PRs await your call · ${st('deferred')} deferred · ${brief.proposals.length} proposals`
-       : `${n('T1')} need your call · ${n('T0')} mechanical · ${brief.proposals.length} proposals · ${brief.fyi.length} FYI`,
-     `Health: ${hs.broken} broken, ${hs.moved} moved links; ${hs.stale}/${hs.lessons} lessons stale.`,
-     ...(sweep ? [`Freshness: re-verified ${sweep.checked.length} lessons (${sweep.checked.filter((c) => c.status === 'needs-update').length} need updates). Coverage ${sweep.coverage.covered}/${sweep.coverage.total}.`] : []),
-     '', `Desk: ${DESK}`].join('\n')
-  : `Open Vector Updates, ${date}: the brief stage failed. Check ${path.join(dir, 'run.log')}`;
+  ? [
+      waiting.length
+        ? `Open Vector: ${waiting.length} change${waiting.length > 1 ? 's' : ''} for you (${recommended} recommended Go)${st('merged') ? `, ${st('merged')} shipped` : ''}.`
+        : `Open Vector: nothing needs you today${st('merged') ? `; ${st('merged')} shipped` : ''}.`,
+      ...(sweep ? [`${sweep.coverage.covered}/${sweep.coverage.total} lessons verified this month.`] : []),
+      DESK,
+    ].join('\n')
+  : `Open Vector: today's run failed. The loop will retry. ${DESK}`;
 fs.writeFileSync(path.join(dir, 'telegram.txt'), tg + '\n');
 fs.writeFileSync(path.join(STATE, 'latest'), date + '\n');
 console.log(`render: brief.md (${brief ? brief.changes.length : 0} changes), telegram.txt, $${usd.toFixed(2)} today`);

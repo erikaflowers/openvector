@@ -56,7 +56,9 @@ function prRecords() {
 function inbox() {
   if (inboxCache.data && Date.now() - inboxCache.at < 30e3) return inboxCache.data;
   const open = JSON.parse(gh('pr', 'list', '--state', 'open', '--label', 'ov-autopilot', '--limit', '50',
-    '--json', 'number,title,url,isDraft,createdAt,files,body'));
+    '--json', 'number,title,url,isDraft,createdAt,files,body,mergeable'));
+  const queuedRefresh = new Set(fs.existsSync(path.join(STATE, 'refresh.jsonl'))
+    ? fs.readFileSync(path.join(STATE, 'refresh.jsonl'), 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l).pr) : []);
   const recs = prRecords();
   const data = open.map((p) => {
     const r = recs[p.number] || {};
@@ -68,6 +70,8 @@ function inbox() {
       audit: r.audit || (p.isDraft ? 'fail' : 'pass'), auditSummary: r.auditSummary || section('Audit'),
       publicNote: r.publicNote || section('Learner-facing note').replace(/^> /, ''),
       what: section('What'), why: section('Why'),
+      conflict: p.mergeable === 'CONFLICTING' || queuedRefresh.has(p.number),
+      confidence: r.change?.confidence || (p.body.match(/\*\*Confidence:\*\* (\w+)/) || [])[1] || 'medium',
     };
   }).sort((a, b) => a.pr - b.pr);
   inboxCache = { at: Date.now(), data };
