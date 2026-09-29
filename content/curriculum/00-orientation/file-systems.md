@@ -5,7 +5,7 @@ subtitle: Where your stuff lives, and why it matters.
 duration: 15 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-09-29"
 knowledgeCheck:
   - question: What is the difference between an absolute path and a relative path, and when would you use each one?
     hint: Think about what happens when you move a project to a different computer. Which type of path would break?
@@ -70,7 +70,7 @@ The root directory (just `/`) is the very top of the entire file system. Everyth
 
 Files and folders that start with a dot (.) are hidden by default. You will not see them in Finder or File Explorer unless you ask. But they are there, and they matter enormously.
 
-`.gitignore` tells Git which files to ignore. `.env` stores secret keys and passwords. `.eslintrc` configures your code linter. `CLAUDE.md` gives instructions to AI agents. These "dotfiles" are configuration. They control how your tools behave.
+`.gitignore` tells Git which files to ignore. `.env` stores secret keys and passwords. `.claude/` is a hidden folder that holds settings for Claude Code, your AI coding agent. These "dotfiles" are configuration. They control how your tools behave. (Not every config file is hidden. `CLAUDE.md`, the file that gives instructions to AI agents, and `eslint.config.js`, which configures your code linter, sit in plain sight.)
 
 To see hidden files in the terminal: `ls -a`. To see them in Mac Finder: press `Cmd+Shift+Period`. To see them in Windows Explorer: `View → Show → Hidden items`.
 
@@ -124,6 +124,6 @@ You just built a project skeleton by hand.
 
 :::resources{title="Go Deeper"}
 - [The Missing Semester: Files and Directories](https://missing.csail.mit.edu/2020/course-shell/). The shell lecture covers navigating and manipulating files in depth.
-- [MDN: Dealing with Files](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/Dealing_with_files). Mozilla's guide to file structure for web projects. Clear and beginner-friendly.
+- [MDN: Dealing with Files](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Dealing_with_files). Mozilla's guide to file structure for web projects. Clear and beginner-friendly.
 - [How to Organize Your Project](https://vite.dev/guide/). Vite's getting started guide shows the standard project layout you will see in modern web apps.
 :::
