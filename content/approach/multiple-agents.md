@@ -5,7 +5,7 @@ subtitle: Crew roles, CLAUDE.md per agent, switching contexts, and coordinating 
 duration: 30 min
 status: available
 badge: new
-updatedAt: "2026-09-28"
+updatedAt: "2026-09-30"
 category: working-with-agents
 prerequisites:
   - 04-orchestration/multi-agent
@@ -112,9 +112,9 @@ Verify each agent knows its role. Ask: "What is your role and what files do you 
 :::step{number="05" title="Establish the Coordination Protocol"}
 Multiple agents create a coordination problem: what happens when the frontend agent needs data from the backend agent? What if two agents try to modify the same file?
 
-The rule is simple: agents do not talk to each other. You are the coordinator. You relay information between them. If the frontend agent needs a new API endpoint, it tells you what shape the data should be. You tell the backend agent to build it. When it is done, you tell the frontend agent the endpoint is ready.
+The rule is simple: you are the coordinator. Claude Code sessions on the same machine can now send each other messages, and the experimental agent teams feature lets one lead session run teammates that coordinate on their own. Still, start by relaying information yourself. If the frontend agent needs a new API endpoint, it tells you what shape the data should be. You tell the backend agent to build it. When it is done, you tell the frontend agent the endpoint is ready.
 
-This sounds like overhead, but it is actually faster than letting agents coordinate themselves (which they cannot do) or having one agent try to handle everything (which it will do poorly).
+This sounds like overhead, but it keeps you in control of every handoff while you learn the pattern, and it beats having one agent try to handle everything (which it will do poorly). Once your contracts and boundaries are solid, you can let agents pass findings to each other directly.
 :::
 
 :::step{number="06" title="Define Interface Contracts"}
@@ -182,7 +182,7 @@ You are translating between domains. The frontend agent does not need to know ho
 :::step{number="09" title="Keep a Session Log"}
 At the end of each work session, update each agent's CLAUDE.md with what was accomplished. Add a "Current Sprint" or "Context Catchup" section that summarizes: what was done, what is in progress, and what is next.
 
-This is critical because Claude Code sessions do not persist across restarts. When you open the terminal tomorrow, the agent has no memory of yesterday. The CLAUDE.md is its memory. Keep it updated and the agent can pick up right where it left off.
+This is critical because every new Claude Code session starts with a fresh context window. You can reopen yesterday's conversation with `claude --continue` or `claude --resume`, and Claude keeps some notes of its own (auto memory), but the CLAUDE.md is the memory you control. Keep it updated and the agent can pick up right where it left off.
 :::
 
 > The crew model is not about managing AI complexity. It is about applying the oldest principle in engineering: separation of concerns. Each agent has a clear domain, clear boundaries, and a clear interface to the rest of the system. That is just good architecture.
@@ -196,4 +196,6 @@ Set up a two-agent crew for your project. Define a Frontend agent and a Backend 
 - [The Crew Model (Curriculum)](/learn/curriculum/04-orchestration/the-crew-model): How the Zero Vector crew is structured, including roles, boundaries, and coordination.
 - [CLAUDE.md (Curriculum)](/learn/curriculum/04-orchestration/claude-md): Writing effective context files that give each agent its identity.
 - [Quality Gates (Curriculum)](/learn/curriculum/04-orchestration/quality-gates): How to verify each agent's output before integration.
+- [Cross-Session Messaging (Claude Code Docs)](https://code.claude.com/docs/en/cross-session-messaging): How Claude passes messages between your Claude Code sessions.
+- [Agent Teams (Claude Code Docs)](https://code.claude.com/docs/en/agent-teams): The experimental feature where a lead session coordinates teammates that message each other directly.
 :::
