@@ -4,12 +4,12 @@ title: Deployment
 subtitle: From localhost to the world.
 duration: 15 min
 status: available
-updatedAt: "2026-09-28"
+updatedAt: "2026-09-30"
 ---
 
 ## Deployment, Revisited
 
-You learned about deployment in Level 00: what it means, static vs. dynamic, hosting platforms. This lesson is the hands-on version. You are going to take a real project and get it live.
+You learned about deployment in Level 00: what it means, static vs. dynamic, the build step, and how to drag a folder onto Netlify Drop for a first live URL. This lesson is the full pipeline. You are going to connect a real project's GitHub repository to Netlify, so every push goes live without you uploading anything.
 
 The difference between "knowing about deployment" and "having deployed" is enormous. Once you have done it once, the mystery disappears. It becomes a routine step: push code, site updates. But that first time matters.
 
@@ -94,14 +94,24 @@ Build error: something in your code that works in dev but fails in production (o
 
 Read the error. Fix the cause. Push again. Netlify rebuilds automatically.
 
-:::exercise{title="Deploy Your Project"}
+::::exercise{title="Deploy Your Project"}
+
+:::prereq
+You will need two things set up before starting this exercise:
+
+- **GitHub credentials configured locally.** You need to be able to push code from your terminal to GitHub. If you have not done this yet, follow GitHub's guide to [setting up authentication](https://docs.github.com/en/get-started/getting-started-with-git/set-up-git#authenticating-with-github-from-git). The easiest option is HTTPS with a personal access token or the GitHub CLI (`gh auth login`).
+- **A Netlify account connected to GitHub.** If you made a Netlify account with an email address in Level 00, you can keep it; Netlify asks for GitHub access when you import a repository. Otherwise, sign up at [netlify.com](https://www.netlify.com) using your GitHub account. The free tier is all you need.
+:::
+
 - Take the project you have been building (or create a fresh one with `npm create vite@latest my-site -- --template react`).
 - Make sure it builds: `npm run build`.
-- Create a GitHub repo and push your code.
-- Sign up for Netlify, import the repo, set build command to `npm run build` and publish directory to `dist`.
+- If the project is not a Git repository yet, initialize it: `git init && git add . && git commit -m "Initial commit"`
+- Go to [github.com/new](https://github.com/new) and create a new repository. Give it any name and leave everything else as default. Do not initialize it with a README.
+- GitHub shows you setup instructions. Copy the lines under "push an existing repository from the command line" and run them in your terminal.
+- In Netlify, import the repo, set build command to `npm run build` and publish directory to `dist`.
 - Deploy. Click the URL. You are on the internet.
 - Change something in your code, commit, push, and watch Netlify auto-deploy the update.
-:::
+::::
 
 :::resources{title="Go Deeper"}
 - [Netlify Docs: Deploy Overview](https://docs.netlify.com/deploy/deploy-overview/): Everything about how Netlify builds and deploys your site.
