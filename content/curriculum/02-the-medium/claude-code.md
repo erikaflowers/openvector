@@ -12,7 +12,7 @@ knowledgeCheck:
   - question: The lesson says Claude Code replaces typing, not thinking. What is the risk of accepting AI-generated code you do not understand, and how does that relate to the concept of "vibe coding"?
   - question: Context windows have a limited size. How does this constraint affect the way you should structure your prompts and your project when working with an AI agent?
     hint: Consider what happens when the conversation gets very long. What might the agent start to forget or miss?
-updatedAt: "2026-09-28"
+updatedAt: "2026-09-30"
 ---
 
 ## What Is Claude Code?
@@ -62,7 +62,7 @@ claude
 
 When you start Claude Code in a project folder, it can see your files, read your code, and understand your project structure. You talk to it in natural language. It responds with explanations, code changes, and terminal commands.
 
-The key concept: Claude Code uses tools. It does not just generate text; it takes actions. It reads files (Read tool), edits them (Edit tool), creates new ones (Write tool), searches your codebase (Grep, Glob), and runs terminal commands (Bash). Each action requires your approval, so nothing happens without your consent.
+The key concept: Claude Code uses tools. It does not just generate text; it takes actions. It reads files (Read tool), edits them (Edit tool), creates new ones (Write tool), searches your codebase (Grep, Glob), and runs terminal commands (Bash). Reading and searching files inside your project happens without asking. What happens next depends on the permission mode. New sessions start in auto mode, where a safety classifier reviews actions instead of you, so you will not see most requests. In Manual mode, editing files, running most terminal commands and fetching from the web ask for your approval first. While you are learning, switch to Manual mode and read every request before you approve it. Press Shift+Tab during a session to cycle through the modes, or set `"defaultMode": "default"` under `permissions` in `~/.claude/settings.json` to start every session in Manual mode.
 
 Think of it as pair programming where your partner has read the documentation for every library you are using, remembers every file in your project, and types at the speed of light. But you are still the driver. You set the direction.
 
@@ -118,5 +118,6 @@ It can produce code you do not understand. This is the most important risk. If y
 :::resources{title="Go Deeper"}
 - [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code/overview): The official docs. Start with the overview, then read the tutorials section.
 - [Claude Code Tutorials](https://docs.anthropic.com/en/docs/claude-code/tutorials): Step-by-step guides for common workflows: creating projects, debugging, refactoring.
+- [Configure Permissions](https://code.claude.com/docs/en/permissions): Which actions ask for approval, how the permission modes differ, and how to set your own rules.
 - [Anthropic Cookbook](https://github.com/anthropics/anthropic-cookbook): Example projects and patterns for working with Claude. Practical, code-heavy.
 :::
