@@ -4,6 +4,7 @@ title: Quality Gates
 subtitle: When to stop and verify.
 duration: 18 min
 status: available
+updatedAt: "2026-09-30"
 ---
 
 ## What Is a Quality Gate?
@@ -49,6 +50,8 @@ Five minutes. That is all it takes to catch 90% of issues before they become exp
 Some quality gates can be automated. A linter checks code style. A type checker catches type errors. A test suite verifies behavior. A build script confirms the project compiles.
 
 Set up automated gates early. Even a basic setup (a linter and a build check) catches a surprising number of issues. The agent writes code that works but uses double quotes when your project uses single quotes. The linter catches it. The agent forgets to import a component. The build fails and reports exactly what is missing.
+
+Claude Code can run these gates for you. [Hooks](https://code.claude.com/docs/en/hooks) are shell commands that run automatically before or after the agent acts, for example running your linter after every file edit or your build before a commit. When a check fails, the hook can report the error back to the agent, so it can fix the problem before you review the work.
 
 Automated gates are fast, consistent, and never skip steps. Human gates are flexible, contextual, and can catch things automation misses. Use both. Automate what can be automated. Manually review what requires judgment.
 
