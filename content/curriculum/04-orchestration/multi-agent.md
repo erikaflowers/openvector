@@ -4,7 +4,7 @@ title: Multi-Agent Systems
 subtitle: More than one mind on the problem.
 duration: 22 min
 status: available
-updatedAt: "2026-09-28"
+updatedAt: "2026-09-30"
 ---
 
 ## Why More Than One Agent?
@@ -96,7 +96,7 @@ The ceiling for most individual projects is three to five agents. Beyond that, t
 :::
 
 :::resources{title="Go Deeper"}
-- [Claude Code Documentation: Multi-file Projects](https://docs.anthropic.com/en/docs/claude-code). How Claude Code handles project context and multiple sessions.
+- [Claude Code Documentation: Multi-file Projects](https://code.claude.com/docs). How Claude Code handles project context and multiple sessions.
 - [The Mythical Man-Month by Fred Brooks](https://en.wikipedia.org/wiki/The_Mythical_Man-Month). The classic on why adding people to a project is not linear. The same principles apply to agents.
 - [Team Topologies by Skelton & Pais](https://teamtopologies.com/). Modern thinking on team structure and boundaries. Directly applicable to agent architecture.
 :::
