@@ -4,7 +4,7 @@ title: CLAUDE.md
 subtitle: Teaching your agents who they are.
 duration: 20 min
 status: available
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-01"
 ---
 
 ## The Instruction File
@@ -76,7 +76,7 @@ The Zero Vector crew model (which you will learn in the final lesson of this lev
 
 ## Layered Instructions
 
-CLAUDE.md files can be layered. A root CLAUDE.md covers the whole project. A CLAUDE.md inside a subdirectory adds rules specific to that area. The agent reads all of them, with more specific files taking priority.
+CLAUDE.md files can be layered. A root CLAUDE.md covers the whole project. A CLAUDE.md inside a subdirectory adds rules specific to that area. The agent reads all of them: the root file at the start of every session, and a subdirectory's file when it starts working in that folder. They add up rather than override each other, so keep them consistent, because if two files contradict each other the agent may follow either one.
 
 This is useful for large projects. The root file says "this is a React app, use these conventions." The api/ subdirectory file says "this is the backend, use Python, follow these API patterns." The tests/ file says "always use this test framework, mock external services."
 
@@ -127,6 +127,6 @@ This pairing is what separates Zero Vector from ad hoc prompting. Without VECTOR
 
 :::resources{title="Go Deeper"}
 - [Claude Code Documentation](https://code.claude.com/docs). Official docs on CLAUDE.md files and how Claude Code reads project instructions.
-- [Anthropic Cookbook: CLAUDE.md Examples](https://github.com/anthropics/anthropic-cookbook). Real-world examples of instruction files for various project types.
+- [Claude Cookbooks](https://github.com/anthropics/claude-cookbooks). Anthropic's official recipe collection. Its root `CLAUDE.md` is a real-world example of a project instruction file.
 - [The Twelve-Factor App](https://12factor.net/). Not about AI, but the same principle: encode configuration so every environment gets the right setup automatically.
 :::
