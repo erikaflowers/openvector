@@ -4,6 +4,7 @@ title: Shipping
 subtitle: Get it into hands. Learn. Ship again.
 duration: 18 min
 status: available
+updatedAt: "2026-10-02"
 ---
 
 ## Shipping Is a Skill
@@ -94,5 +95,5 @@ The pipeline is your superpower. Combined with AI tools, it lets one person do w
 - [Shape Up by Basecamp](https://basecamp.com/shapeup). How to scope, build, and ship in six-week cycles. The best book on shipping discipline.
 - [The Practice by Seth Godin](https://seths.blog/thepractice/). On the discipline of shipping creative work. "Ship before you are ready."
 - [Indie Hackers](https://www.indiehackers.com/). A community of people building and shipping products independently. Inspiring case studies and honest retrospectives.
-- [Building in Public (Kevon Cheung)](https://www.buildinpublic.com/). A guide to sharing your building process and creating an audience around your work.
+- [Building in Public (Kevon Cheung)](https://publiclab.co/build-in-public). A guide to sharing your building process and creating an audience around your work.
 :::
