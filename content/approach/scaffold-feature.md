@@ -5,7 +5,7 @@ subtitle: 'From idea to shipped feature: plan it, describe it, build it, test it
 duration: 30 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-10-02"
 category: build-workflow
 prerequisites:
   - 01-foundation/architecture
@@ -183,6 +183,6 @@ Pick a feature from your project plan, something you can build in one session. F
 - [Architecture (Curriculum)](/learn/curriculum/01-foundation/architecture): Understanding the structure of applications, what components are and how they fit together.
 - [Claude Code (Curriculum)](/learn/curriculum/02-the-medium/claude-code): How to work with Claude Code effectively as your build tool.
 - [Giving Effective Instructions (Approach)](/learn/approach/working-with-agents/effective-instructions): How to write the clear, specific instructions that produce the best results.
-- [Managing Revision History (Approach)](/learn/approach/build-workflow/revision-history): The git workflow that keeps you safe when AI is writing code.
-- [Testing (Curriculum)](/learn/curriculum/03-the-pipeline/testing): How to test what you build, not just "does it load" but "does it work."
+- [Managing Revision History (Approach)](/learn/approach/working-with-agents/revision-history): The git workflow that keeps you safe when AI is writing code.
+- [Quality Gates (Curriculum)](/learn/curriculum/04-orchestration/quality-gates): When to stop and verify what you build, not just "does it load" but "does it work."
 :::
