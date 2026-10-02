@@ -5,7 +5,7 @@ subtitle: From a blank document to a complete product requirements document. The
 duration: 25 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-10-02"
 category: planning
 prerequisites:
   - 01-foundation/planning
@@ -99,12 +99,14 @@ Put it all together using the template below. This does not need to be long. One
 
 ## Using Your PRD with Claude Code
 
-Once your PRD is written, you can paste it directly into a Claude Code session as context. Or better yet, save it as a markdown file in your project root and reference it in your CLAUDE.md:
+Once your PRD is written, you can paste it directly into a Claude Code session as context. Or better yet, save it as PRD.md in your project root and import it in your CLAUDE.md with an @ in front of the filename:
 
 ```
 ## Project Requirements
-See PRD.md for full product requirements.
+See @PRD.md for full product requirements.
 ```
+
+The @ matters: it tells Claude Code to load PRD.md into context at the start of every session. Without it, Claude only sees the filename and may never open the file.
 
 Now when you give Claude Code an instruction like "build the homepage," it has the full context of what the homepage should contain, who it is for, and what success looks like. Your instructions become surgical because the context is already loaded.
 
