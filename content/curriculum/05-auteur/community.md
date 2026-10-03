@@ -4,6 +4,7 @@ title: Community
 subtitle: We make everyone around us better.
 duration: 15 min
 status: available
+updatedAt: "2026-10-03"
 ---
 
 ## Why Community Matters
@@ -20,7 +21,7 @@ Community is the antidote. Not a community that validates everything you do, but
 
 You do not need a large community. Three to five people who care about the same things you do is enough. A small group where everyone knows each other produces deeper conversations than a large one where everyone is a stranger.
 
-Where to find them: online communities around the tools you use (Discord servers, GitHub discussions, Reddit). Local meetups for designers and developers. Twitter and Mastodon accounts of people whose work you admire. Open-source projects where contributors interact.
+Where to find them: online communities around the tools you use (Discord servers, GitHub discussions, Reddit). Local meetups for designers and developers. X (formerly Twitter) and Mastodon accounts of people whose work you admire. Open-source projects where contributors interact.
 
 The best way to find your people is to share your work publicly. Write about what you are building. Post your projects. Explain your process. The people who respond, who engage with substance, not just likes, are your potential community.
 
