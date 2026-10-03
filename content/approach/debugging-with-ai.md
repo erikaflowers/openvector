@@ -5,7 +5,7 @@ subtitle: 'When something breaks: how to describe the problem, share context, an
 duration: 20 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-10-03"
 category: build-workflow
 prerequisites:
   - 02-the-medium/claude-code
@@ -46,8 +46,7 @@ The terminal: Look at the terminal where your dev server is running. Are there c
 
 # 2. Terminal (where your dev server runs)
 # Look for compilation errors like:
-# ERROR in src/components/ProjectList.jsx
-# Module not found: Can't resolve './ProjectCard'
+# [plugin:vite:import-analysis] Failed to resolve import "./ProjectCard" from "src/components/ProjectList.jsx". Does the file exist?
 
 # 3. Network tab (Dev Tools → Network tab)
 # Look for failed requests (red, status 400/404/500)
@@ -105,23 +104,23 @@ Sometimes you do not have a clear error message. The page just looks wrong, or a
 
 The idea: isolate the problem by eliminating half the possible causes at a time. If the bug appeared after a Claude Code session where ten files were modified, check if the first five changes work without the last five. If they do, the bug is in the last five. Check if the first three of those five work. Narrow it down until you find the single change that caused the break.
 
-In practice, this means reverting changes file by file. Start by reverting the most recently changed file and see if the bug persists:
+In practice, this means setting changes aside file by file. `git stash` sets a file's changes aside without throwing them away, so you can bring them back. Start with the most recently changed file and see if the bug persists:
 :::
 
 ```
 # See which files changed
 git diff --stat
 
-# Revert one file at a time and test
-git checkout -- src/content/projects.js
+# Set one file's changes aside and test
+git stash push -- src/content/projects.js
 # Test in browser — is the bug gone?
 
-# If yes: the bug was in projects.js. Restore it and fix it.
-git checkout HEAD -- src/content/projects.js
+# If yes: the bug was in projects.js. Bring your changes back and fix it.
+git stash pop
 
-# If no: restore that file and try the next one
-git checkout HEAD -- src/content/projects.js
-git checkout -- src/pages/ProjectList.jsx
+# If no: bring that file back and try the next one
+git stash pop
+git stash push -- src/pages/ProjectList.jsx
 # Test again...
 ```
 
