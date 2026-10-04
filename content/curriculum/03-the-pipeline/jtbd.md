@@ -4,6 +4,7 @@ title: Jobs to Be Done
 subtitle: Nobody wants a drill. They want a hole.
 duration: 18 min
 status: available
+updatedAt: "2026-10-04"
 ---
 
 ## The Core Idea
@@ -76,7 +77,6 @@ That prompt encodes the situation (found a recipe elsewhere), the motivation (ca
 
 :::resources{title="Go Deeper"}
 - [Competing Against Luck by Clayton Christensen](https://www.hbs.edu/faculty/Pages/item.aspx?num=51207). The definitive book on JTBD by the framework's originator. Accessible and full of examples.
-- [JTBD.info](https://jtbd.info/). A comprehensive resource with templates, examples, and interview guides for JTBD practice.
 - [Intercom on Jobs to Be Done](https://www.intercom.com/resources/books/intercom-jobs-to-be-done). A free, practical guide to applying JTBD in product development.
 - [Know Your Customers' Jobs to Be Done (HBR)](https://hbr.org/2016/09/know-your-customers-jobs-to-be-done). Clayton Christensen's Harvard Business Review article. A concise introduction to the theory.
 :::
