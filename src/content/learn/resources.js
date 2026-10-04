@@ -612,14 +612,6 @@ const resources = [
     topics: ['research'],
   },
   {
-    title: 'JTBD.info',
-    author: null,
-    url: 'https://jtbd.info/',
-    description: 'Jobs to Be Done resource hub. Articles, tools, and case studies.',
-    type: 'article',
-    topics: ['research'],
-  },
-  {
     title: 'IDEO Design Thinking',
     author: 'IDEO',
     url: 'https://designthinking.ideo.com/',
