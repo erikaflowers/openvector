@@ -5,7 +5,7 @@ subtitle: The methodology, the mindset, and what you are building toward.
 duration: 15 min
 status: available
 badge: new
-updatedAt: '2026-03-03'
+updatedAt: "2026-10-04"
 knowledgeCheck:
   - question: What is the difference between Zero Vector Design and vibe coding?
     hint: Think about intent, architecture, and understanding the system vs. reactive prompting.
@@ -61,7 +61,7 @@ Level 03, The Pipeline, walks you through the full product development cycle: re
 
 Level 04, Orchestration, is where you learn to direct multiple AI agents as a coordinated crew. CLAUDE.md files, prompt engineering, context management, multi-agent workflows.
 
-Level 05, The Capstone, is the final level. You will build a complete, polished application from scratch using everything you have learned. Not a toy. A real, shippable product.
+Level 05, Auteur, is the final level. You stop following the curriculum and start building your own: a personal methodology, frameworks others can follow, teaching what you know, and contributing back to the community. The student becomes the practitioner. The practitioner becomes the Auteur.
 
 By the end, you will not just know about building with AI. You will have done it.
 
