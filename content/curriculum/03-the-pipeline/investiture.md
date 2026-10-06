@@ -5,7 +5,7 @@ subtitle: The scaffold that turns your Pipeline work into a structured, AI-ready
 duration: 20 min
 status: available
 badge: updated
-updatedAt: "2026-09-28"
+updatedAt: "2026-09-30"
 knowledgeCheck:
   - question: What does the Investiture scaffold give you that a blank project does not?
     hint: Think about structure, documentation, and what an AI agent needs to be effective from the first commit.
@@ -21,7 +21,7 @@ Now what? You open a blank folder and start from scratch?
 
 No. That is what Investiture solves.
 
-Investiture is a project scaffold with a skill chain that enforces your doctrine. Run npx investiture init in any existing project and it injects structured research schemas, architecture skills, and the VECTOR.md convention without touching your code. Or clone the full scaffold for a greenfield project with React, Vite, and the doctrine system built in.
+Investiture is a project scaffold with a skill chain that enforces your doctrine. Run npx investiture init in any existing project and it injects structured research schemas, the doctrine skill chain, and the VECTOR.md convention without touching your code. (The npm release installs the three doctrine skills. For all eight, run the inject script from the repo: `bash <(curl -fsSL https://raw.githubusercontent.com/erikaflowers/investiture/main/inject.sh)`.) Or clone the full scaffold for a greenfield project with React, Vite, and the doctrine system built in.
 
 As of v1.5, Investiture includes eight executable skills in two chains. The doctrine chain (/invest-backfill, /invest-doctrine, /invest-architecture) reads your doctrine files at runtime and audits your project against them. Backfill surveys your codebase and generates starter doctrine. Doctrine validates it. Architecture enforces it. The audit chain (/invest-preflight, /invest-manifest, /invest-repo-audit, /invest-remediate, /invest-verify-remediation) scans an existing codebase, inventories it, audits its quality, plans the fixes, and verifies them.
 
@@ -39,7 +39,7 @@ Investiture eliminates that entire class of problem. The structure is explicit. 
 
 ## What the Scaffold Gives You
 
-Run npx investiture init in any project and you get the skill chain and research system injected without touching your existing code. Clone the full scaffold for a greenfield project. Either way, here is what you get:
+Run npx investiture init (doctrine chain) or the repo's inject script (all eight skills) in any project and you get the skill chain and research system injected without touching your existing code. Clone the full scaffold for a greenfield project. Either way, here is what you get:
 
 Eight executable skills in two chains. The doctrine chain reads your doctrine at runtime: /invest-backfill surveys your codebase and generates VECTOR.md, CLAUDE.md, and ARCHITECTURE.md. /invest-doctrine validates those files for completeness and consistency. /invest-architecture checks every source file against your declared layers, naming, and import rules. The audit chain (/invest-preflight, /invest-manifest, /invest-repo-audit, /invest-remediate, /invest-verify-remediation) takes you from a quick reconnaissance of a codebase to a verified remediation plan.
 
@@ -74,7 +74,7 @@ your-project/
 ├── VECTOR.md                 # Project doctrine (read first)
 ├── CLAUDE.md                 # Contributor onboarding (read second)
 ├── ARCHITECTURE.md           # Technical guide (read third)
-├── .claude/skills/           # Skill chains (8 skills)
+├── .claude/skills/           # Skill chains (3 via npx, 8 via inject.sh)
 │   ├── invest-backfill/      # Survey codebase, generate doctrine
 │   ├── invest-doctrine/      # Validate doctrine files
 │   ├── invest-architecture/  # Enforce architecture rules
@@ -92,7 +92,7 @@ your-project/
 
 :::exercise{title="Try It"}
 - Create a test directory: `mkdir investiture-test && cd investiture-test && git init`.
-- Run `npx investiture init`. Watch what it installs.
+- Run `npx investiture init`. Watch what it installs: the three doctrine skills. To get the audit chain too, run `bash <(curl -fsSL https://raw.githubusercontent.com/erikaflowers/investiture/main/inject.sh)` instead.
 - Browse the `.claude/skills/` directory and read one of the `SKILL.md` files. Notice how each skill declares what it reads, what it checks, and what it produces.
 - Open `vector/schemas/` and pick a schema. Notice the machine-readable structure.
 - Open Claude Code in that directory and run `/invest-backfill`. Watch it survey the (empty) project and generate starter doctrine.
@@ -101,7 +101,7 @@ your-project/
 :::
 
 :::resources{title="Go Deeper"}
-- [Investiture on GitHub](https://github.com/erikaflowers/investiture). npx investiture init, or clone the full scaffold.
+- [Investiture on GitHub](https://github.com/erikaflowers/investiture). npx investiture init, the inject script, or clone the full scaffold.
 - [Investiture Framework Page](https://zerovector.design/investiture). The Investiture deep dive on Zero Vector.
 - [VECTOR.md Lesson (Level 01)](/learn/curriculum/01-foundation/vector-md). The artifact that gives agents project context.
 :::
