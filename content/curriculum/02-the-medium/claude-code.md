@@ -12,7 +12,7 @@ knowledgeCheck:
   - question: The lesson says Claude Code replaces typing, not thinking. What is the risk of accepting AI-generated code you do not understand, and how does that relate to the concept of "vibe coding"?
   - question: Context windows have a limited size. How does this constraint affect the way you should structure your prompts and your project when working with an AI agent?
     hint: Consider what happens when the conversation gets very long. What might the agent start to forget or miss?
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-06"
 ---
 
 ## What Is Claude Code?
@@ -116,8 +116,8 @@ It can produce code you do not understand. This is the most important risk. If y
 :::
 
 :::resources{title="Go Deeper"}
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code/overview): The official docs. Start with the overview, then read the tutorials section.
-- [Claude Code Tutorials](https://docs.anthropic.com/en/docs/claude-code/tutorials): Step-by-step guides for common workflows: creating projects, debugging, refactoring.
+- [Claude Code Documentation](https://code.claude.com/docs/en/overview): The official docs. Start with the overview, then read Common Workflows.
+- [Claude Code Common Workflows](https://code.claude.com/docs/en/common-workflows): Step-by-step recipes for exploring a codebase, fixing bugs, refactoring, testing and resuming sessions.
 - [Configure Permissions](https://code.claude.com/docs/en/permissions): Which actions ask for approval, how the permission modes differ, and how to set your own rules.
 - [Anthropic Cookbook](https://github.com/anthropics/anthropic-cookbook): Example projects and patterns for working with Claude. Practical, code-heavy.
 :::
