@@ -2,30 +2,24 @@
 slug: deployment
 title: Deployment
 subtitle: From your computer to the internet.
-duration: 18 min
+duration: 10 min
 status: available
 badge: new
-updatedAt: "2026-09-28"
+updatedAt: "2026-09-30"
 knowledgeCheck:
   - question: What does deployment actually accomplish? Why is "it works on my machine" not the same as "it is live"?
     hint: Think about what localhost means, who can access it, and who cannot.
+  - question: What is the difference between a static site and a dynamic site, and why is a static site simpler to deploy?
+    hint: Think about whether the server has to run any code when someone visits the page.
   - question: The build step compiles your source code into a dist/ folder. Why do you ship the compiled output instead of your original source files?
     hint: Consider what browsers can and cannot understand natively, and what you would not want exposed publicly.
-  - question: Why would deploying directly from your local machine be risky compared to using a platform like Netlify that builds from your Git repository?
-    hint: Think about reproducibility. What if your local machine has something installed that the server does not?
-  - question: When a deploy fails, the lesson says to read the build log from the bottom up. Why the bottom, and what kind of information does a build log give you that you would not get from just looking at your code?
+  - question: Dragging a folder onto Netlify Drop puts it online in seconds. What would you have to do every time you changed the site, and why might connecting a Git repository be better later on?
+    hint: Think about who remembers to re-upload, and what happens when you push a commit.
 ---
-
-:::prereq
-You will need two things set up before starting this lesson:
-
-- **GitHub credentials configured locally.** You need to be able to push code from your terminal to GitHub. If you have not done this yet, follow GitHub's guide to [setting up authentication](https://docs.github.com/en/get-started/getting-started-with-git/set-up-git#authenticating-with-github-from-git). The easiest option is HTTPS with a personal access token or the GitHub CLI (`gh auth login`).
-- **A Netlify account.** Sign up at [netlify.com](https://www.netlify.com) using your GitHub account. The free tier is all you need.
-:::
 
 ## What Does "Deployed" Mean?
 
-Your project works on your computer at an address like `localhost:5173` (the default for Vite, which this lesson uses). You can see it, click around, and it feels real. But nobody else can see it. Your computer is not a web server; it is not listening for requests from the outside world.
+Your project works on your computer at an address like `localhost:5173` (the default for Vite, a tool you will meet later). You can see it, click around, and it feels real. But nobody else can see it. Your computer is not a web server; it is not listening for requests from the outside world.
 
 Deployment means putting your project on a server that is connected to the internet, so anyone with the URL can access it. That is the gap between "it works on my machine" and "it is live." Closing that gap is one of the most satisfying moments in building.
 
@@ -35,7 +29,7 @@ Deployment means putting your project on a server that is connected to the inter
 
 There are two kinds of websites, and the distinction matters for deployment:
 
-A static site is a collection of pre-built files (HTML, CSS, JavaScript) served as-is. The server does not think. It just hands over files when asked. Blogs, portfolios, documentation sites, and marketing pages are usually static. This entire Zero Vector site is static.
+A static site is a collection of pre-built files (HTML, CSS, JavaScript) served as-is. The server does not think. It hands over files when asked. Blogs, portfolios, documentation sites, and marketing pages are usually static. This entire Zero Vector site is static.
 
 A dynamic site runs code on the server for every request. It talks to databases, processes user input, and generates pages on the fly. Web apps with login systems, dashboards, and real-time features are dynamic.
 
@@ -62,60 +56,51 @@ npm run build
 # └── images/
 ```
 
+You do not need to run a build today. A plain `index.html` file is already something a browser understands, so it can be deployed as it is. That is what you will do below.
+
 ## Hosting Platforms
 
-The easiest way to deploy a static site is through a platform that connects to your GitHub repo, watches for pushes, and auto-deploys your latest code. The three most popular:
+A hosting platform is a company that runs the servers for you. You hand it your files, and it gives you a public URL. The three most popular for static sites:
 
-**Netlify** offers a generous free tier, excellent for static sites and simple serverless functions. Zero Vector is deployed on Netlify. Drag-and-drop deploy is available, but Git-based deploy is better.
+**Netlify** offers a generous free tier, excellent for static sites and simple serverless functions. Zero Vector is deployed on Netlify.
 
 **Vercel** was built by the creators of Next.js. Great developer experience, fast CDN, similar free tier. Particularly good for Next.js and React projects.
 
 **GitHub Pages** provides free hosting directly from a GitHub repository. More limited than Netlify or Vercel, but zero configuration for simple projects. Good for portfolios and documentation.
 
-All three follow the same pattern: connect your repo, set the build command (`npm run build`) and publish directory (`dist`), and every push to `main` automatically builds and deploys. This is called continuous deployment: you push code, it goes live.
+There are two ways to hand over your files. The first is to upload a folder by hand. The second is to connect a Git repository, so the platform rebuilds and redeploys every time you push to `main`. That second way is called continuous deployment, and it is how real projects are run. You will set it up in Level 02. Today you will use the first way, because it needs nothing but a browser.
 
-## Your First Deploy
+## Your First Live URL
 
-Let us walk through the Netlify workflow, since it is what we use:
+Netlify Drop lets you drag a folder from your computer into a browser window and get a live URL back. There is no Git, no GitHub setup, and no build command involved. You only need a free Netlify account, and you can sign up with an email address.
 
-1. Click "Add new site" → "Import an existing project" → select GitHub.
+Netlify serves whatever is inside the folder you drop. For a plain HTML site, that is the folder holding your `index.html`. For a built project, it is the `dist/` folder.
 
-2. Pick the repository you want to deploy from the list of your existing GitHub repos.
+::::exercise{title="Put a Page on the Internet"}
 
-3. Set the build command: `npm run build`.
-
-4. Set the publish directory: `dist` (or `build`, depending on your tool).
-
-5. Click "Deploy." Netlify clones your repo, runs the build, and publishes the output.
-
-In about 90 seconds, you have a live URL like `your-project-name.netlify.app`. That is it. Your project is on the internet.
-
-From this point on, every time you push to `main`, Netlify rebuilds and redeploys automatically. You do not need to manually deploy again. Push code → it goes live.
-
-## When Deployment Fails
-
-Your deploy will fail eventually. This is normal. The build log tells you exactly what went wrong.
-
-The most common failures: a missing dependency (you installed something locally but forgot to save it to `package.json`), a build error (something in your code that works in development but fails in production), or an environment variable that is set locally but not on the hosting platform.
-
-Read the build log from the bottom up. The last error is usually the cause. Fix it, push again, and the platform rebuilds automatically. This loop (push, fail, read the log, fix, push again) is completely normal. Even experienced developers go through it.
-
-:::exercise{title="Deploy Something"}
-If you have a project with a `package.json` and a build command, deploy it to Netlify following the steps above. If you do not have a project yet, create the simplest possible one:
-
-- Run `npm create vite@latest my-site -- --template vanilla`
-- `cd my-site` and run `npm install`
-- Initialize a repo: `git init && git add . && git commit -m "Initial commit"`
-- Go to [github.com/new](https://github.com/new) and create a new repository (give it any name, leave everything else as default — do not initialize with a README)
-- GitHub will show you setup instructions — copy the two lines under "push an existing repository from the command line" and run them in your terminal
-- Follow the "Your First Deploy" steps above to connect the repo to Netlify
-
-The goal is not a polished product. It is experiencing the act of going from local to live. Get something on the internet. You can always improve it later.
+:::prereq
+Create a free account at [netlify.com](https://www.netlify.com) and make sure you are logged in. Signing up with an email address is enough.
 :::
 
+- Open your terminal and create a folder: `mkdir ~/Desktop/my-first-site && cd ~/Desktop/my-first-site`
+- Create a page inside it: `echo "<h1>Hello from my first deploy</h1>" > index.html`
+- Open the file in your browser to check it: `open index.html` on Mac, or `start index.html` on Windows
+- Go to [app.netlify.com/drop](https://app.netlify.com/drop)
+- Drag the `my-first-site` folder from your Desktop into the drop area on the page
+- Wait a few seconds. Netlify gives you a URL ending in `.netlify.app`. Open it, then send it to a friend or open it on your phone.
+
+That page is on the internet. To change it, edit `index.html`, open your site in Netlify, go to its Deploys page, and drag the folder onto the dropzone at the bottom. Dropping it on app.netlify.com/drop again would create a new site with a different URL. The goal is not a polished product. It is experiencing the act of going from local to live.
+::::
+
+## Where This Goes Next
+
+Dragging a folder works, but it depends on you remembering to do it after every change. In Level 02, once you have been building with Claude Code, the [hands-on Deployment lesson](/learn/curriculum/02-the-medium/deploy) connects a GitHub repository to Netlify. From then on, every push goes live on its own, and you will learn to read a build log when a deploy fails.
+
+You have not skipped anything. The concepts in this lesson are the foundation for that pipeline, and the next lesson, DNS, shows how a domain name like `my-project.com` can point at the site you deployed today.
+
 :::resources{title="Go Deeper"}
-- [Netlify Docs: Get Started](https://docs.netlify.com/get-started/). Step-by-step guide to deploying your first site on Netlify.
+- [Netlify Drop](https://app.netlify.com/drop). Drag and drop a folder to deploy it instantly.
+- [Netlify Docs: Get Started](https://docs.netlify.com/get-started/). Netlify's guide to deploying your first site, including drag-and-drop and Git-based deploys.
 - [Vercel Docs: Deployments](https://vercel.com/docs/deployments/overview). Vercel's deployment concepts explained clearly.
 - [GitHub Pages Docs](https://docs.github.com/en/pages). How to deploy directly from a GitHub repository for free.
-- [Vite Deploying a Static Site](https://vite.dev/guide/static-deploy). Vite's official guide covers deployment to every major platform.
 :::
