@@ -4,12 +4,12 @@ title: The Crew Model
 subtitle: They are not assistants. They are crew.
 duration: 22 min
 status: available
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-01"
 ---
 
 ## From Assistants to Crew
 
-Most people use AI agents as assistants. They ask a question, get an answer, move on. The agent has no memory between sessions, no persistent identity, no area of ownership. Every conversation starts from scratch.
+Most people use AI agents as assistants. They ask a question, get an answer, move on. The agent may remember a few of your preferences (Claude Code keeps auto memory notes), but it has no persistent identity, no defined role, no area of ownership. Every conversation starts as a generalist.
 
 The crew model is different. Each agent has a name, a role, a domain, and a persistent briefing (CLAUDE.md). They are not interchangeable helpers; they are specialists with continuity. When you open a session with your frontend agent, it already knows the project, the conventions, and its responsibilities. It picks up where it left off.
 
