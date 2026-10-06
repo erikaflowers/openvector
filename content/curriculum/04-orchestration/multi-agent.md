@@ -4,7 +4,7 @@ title: Multi-Agent Systems
 subtitle: More than one mind on the problem.
 duration: 22 min
 status: available
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-06"
 ---
 
 ## Why More Than One Agent?
@@ -46,7 +46,7 @@ You are the reviewer. Find bugs, edge cases, and accessibility issues.
 Never write code. Report what you find, ranked by severity.
 ```
 
-Claude Code also has agent teams, an experimental feature that is off by default, where one session spawns a group of sessions, supervises them, and lets them message each other.
+Claude Code also has [agent teams](https://code.claude.com/docs/en/agent-teams), an experimental feature that is off by default, where one session spawns a group of sessions, supervises them, and lets them message each other.
 
 ## Agent Boundaries
 
@@ -96,7 +96,8 @@ The ceiling for most individual projects is three to five agents. Beyond that, t
 :::
 
 :::resources{title="Go Deeper"}
-- [Claude Code Documentation: Multi-file Projects](https://code.claude.com/docs). How Claude Code handles project context and multiple sessions.
+- [Claude Code: Subagents](https://code.claude.com/docs/en/sub-agents). How to define reviewer, tester and other specialist agents that run inside one session.
+- [Claude Code: Agent Teams](https://code.claude.com/docs/en/agent-teams). The experimental mode where sessions share a task list and message each other.
 - [The Mythical Man-Month by Fred Brooks](https://en.wikipedia.org/wiki/The_Mythical_Man-Month). The classic on why adding people to a project is not linear. The same principles apply to agents.
 - [Team Topologies by Skelton & Pais](https://teamtopologies.com/). Modern thinking on team structure and boundaries. Directly applicable to agent architecture.
 :::
