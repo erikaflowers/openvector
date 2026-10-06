@@ -5,7 +5,7 @@ subtitle: Version control is not Google Drive.
 duration: 20 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-10-03"
 knowledgeCheck:
   - question: A commit is often described as a "snapshot." What makes it different from an auto-save, and why does that distinction matter for understanding your project history?
   - question: Git and GitHub are often confused. If GitHub went offline tomorrow, would you lose your local Git history? Why or why not?
@@ -18,8 +18,8 @@ knowledgeCheck:
 :::prereq
 Confirm Git is installed: run `git --version` in your terminal. If you see a version number, you are ready. If not:
 
-- **Mac:** Run `xcode-select --install` in your terminal. When it finishes, Git will be available. Alternatively, download the installer from [git-scm.com](https://git-scm.com/download/mac).
-- **Windows:** Download Git for Windows from [git-scm.com](https://git-scm.com/download/win) and run the installer with default settings. It includes Git Bash, a terminal that works with the commands in this lesson.
+- **Mac:** Run `xcode-select --install` in your terminal. When it finishes, Git will be available. If you use Homebrew, `brew install git` works too. Other options are listed at [git-scm.com](https://git-scm.com/install/mac).
+- **Windows:** Download Git for Windows from [git-scm.com](https://git-scm.com/install/windows) and run the installer with default settings. It includes Git Bash, a terminal that works with the commands in this lesson.
 :::
 
 ## What Is Version Control?
