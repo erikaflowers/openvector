@@ -4,7 +4,7 @@ title: Quality Gates
 subtitle: When to stop and verify.
 duration: 18 min
 status: available
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-06"
 ---
 
 ## What Is a Quality Gate?
@@ -73,6 +73,8 @@ The reviewer's CLAUDE.md should focus on what to look for: "Check for bugs, edge
 
 A reviewer agent typically finds issues that the builder would not catch in its own work. It spots the missing null check, the accessibility violation, the CSS that breaks on mobile. It is an extra pair of eyes that never gets tired and has no ego about the code it reviews.
 
+You don't need a second terminal to try this. Claude Code ships with a `/code-review` command that checks your current changes for bugs, and `/security-review` that looks for security problems. To run your own reviewer with your own rules, save it as a [subagent](https://code.claude.com/docs/en/sub-agents) (see the Multi-Agent Systems lesson). It reviews in its own fresh context and reports back to your session.
+
 ## Recovery When Gates Fail
 
 Quality gates will catch problems. That is their purpose. The question is: what do you do when something fails?
@@ -102,4 +104,5 @@ Git makes recovery safe. You committed after each stage, right? Then reverting i
 - [The Checklist Manifesto by Atul Gawande](https://atulgawande.com/book/the-checklist-manifesto/). How simple checklists prevent complex failures. Originally about surgery, but directly applicable to software.
 - [Accelerate by Forsgren, Humble & Kim](https://itrevolution.com/product/accelerate/). Research-backed evidence that quality gates (continuous integration, testing) accelerate delivery rather than slowing it down.
 - [Code Review Best Practices (Google)](https://google.github.io/eng-practices/review/). Google's internal code review guidelines, and the gold standard for what to look for in code review.
+- [Claude Code commands](https://code.claude.com/docs/en/commands). Built-in review commands, including /code-review and /security-review.
 :::
