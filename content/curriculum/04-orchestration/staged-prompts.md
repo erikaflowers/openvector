@@ -4,7 +4,7 @@ title: Staged Prompts
 subtitle: Complex work in deliberate phases.
 duration: 18 min
 status: available
-updatedAt: "2026-09-27"
+updatedAt: "2026-10-03"
 ---
 
 ## The Problem with One Big Prompt
@@ -102,6 +102,6 @@ The workflow: complete a stage → verify it works → commit with a descriptive
 :::
 
 :::resources{title="Go Deeper"}
-- [Shape Up: Scoping](https://basecamp.com/shapeup/3.2-chapter-10). Basecamp's approach to scoping work into stages. The same principles apply to prompts.
+- [Shape Up: Map the Scopes](https://basecamp.com/shapeup/3.3-chapter-11). Basecamp's approach to scoping work into stages. The same principles apply to prompts.
 - [Working Backwards (Amazon Method)](https://www.allthingsdistributed.com/2006/11/working_backwards.html). Amazon's approach to starting from the desired outcome and working backwards. Useful for deciding what stages you need.
 :::
