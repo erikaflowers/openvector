@@ -120,12 +120,14 @@ export default async (req) => {
     const systemPrompt = socratic ? SYSTEM_PROMPT + SOCRATIC_ADDENDUM : SYSTEM_PROMPT;
 
     const response = await client.messages.create({
-      model: 'claude-sonnet-5',
-      // Sonnet 5 thinks by default; short tutoring replies don't need it, and
-      // thinking tokens would eat into max_tokens. Its tokenizer also uses ~30%
-      // more tokens for the same text, so max_tokens is raised from 1024.
+      model: 'claude-sonnet-5-5',
+      // Sonnet 5.5 thinks by default; short tutoring replies don't need it, and
+      // thinking tokens would eat into max_tokens. 'disabled' returns a 400 on
+      // Sonnet 5.5; 'between_tools' is its lowest setting and turns off up-front
+      // thinking. Its tokenizer also uses ~30% more tokens for the same text, so
+      // max_tokens is raised from 1024.
       max_tokens: 1536,
-      thinking: { type: 'disabled' },
+      thinking: { type: 'between_tools' },
       system: systemPrompt,
       messages: trimmed,
     });
