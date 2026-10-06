@@ -5,7 +5,7 @@ subtitle: From zero to a working project in one sitting. No prior coding experie
 duration: 30 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-09-30"
 category: getting-started
 prerequisites:
   - 00-orientation/terminal
@@ -20,7 +20,7 @@ This is not a demo. You are going to do this yourself, on your own machine, righ
 
 ## What You Need
 
-A computer running macOS, Windows, or Linux. An internet connection. A Claude account with Claude Code access. That is it. If you do not have Claude Code installed yet, visit docs.anthropic.com and follow the installation instructions. It takes about five minutes.
+A computer running macOS, Windows, or Linux. An internet connection. A Claude account with Claude Code access. That is it. If you do not have Claude Code installed yet, run `curl -fsSL https://claude.ai/install.sh | bash` on macOS or Linux (Windows PowerShell: `irm https://claude.ai/install.ps1 | iex`), then check it worked with `claude --version`. The [Claude Code lesson](/learn/curriculum/02-the-medium/claude-code) walks through it, and the official setup page is at https://code.claude.com/docs/en/setup.
 
 :::step{number="01" title="Open Your Terminal"}
 On macOS, press Command + Space, type "Terminal", and hit Enter. On Windows, search for "Terminal" or "PowerShell" in the Start menu. On Linux, you already know.
