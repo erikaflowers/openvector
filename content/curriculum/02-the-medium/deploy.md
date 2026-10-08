@@ -4,7 +4,7 @@ title: Deployment
 subtitle: From localhost to the world.
 duration: 15 min
 status: available
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-07"
 ---
 
 ## Deployment, Revisited
@@ -56,7 +56,7 @@ Go to netlify.com and sign up with your GitHub account. Click "Add new project" 
 
 Netlify asks for two settings. Build command: npm run build. Publish directory: dist (for Vite projects; check your build tool if you use something else). Leave everything else as default.
 
-Confirm with the deploy button at the bottom of the page. Netlify clones your repo, runs the build, and publishes the output. In about 60-90 seconds, you have a URL. Click it. Your project is on the internet.
+Confirm with the Publish button at the bottom of the page. Netlify clones your repo, runs the build, and publishes the output. In about 60-90 seconds, you have a URL. Click it. Your project is on the internet.
 
 From now on, every push to your main branch triggers an automatic rebuild and redeploy. You do not need to visit Netlify again unless you are changing settings.
 
@@ -109,7 +109,7 @@ You will need two things set up before starting this exercise:
 - Go to [github.com/new](https://github.com/new) and create a new repository. Give it any name and leave everything else as default. Do not initialize it with a README.
 - GitHub shows you setup instructions. Copy the lines under "push an existing repository from the command line" and run them in your terminal.
 - In Netlify, import the repo, set build command to `npm run build` and publish directory to `dist`.
-- Deploy. Click the URL. You are on the internet.
+- Click Publish. Click the URL. You are on the internet.
 - Change something in your code, commit, push, and watch Netlify auto-deploy the update.
 ::::
 
