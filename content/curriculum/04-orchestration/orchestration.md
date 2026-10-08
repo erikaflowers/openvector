@@ -4,6 +4,7 @@ title: Orchestration
 subtitle: Conducting the symphony.
 duration: 22 min
 status: available
+updatedAt: "2026-10-07"
 ---
 
 ## What Is Orchestration?
@@ -58,6 +59,8 @@ Good orchestration manages sessions deliberately. Start a fresh session for each
 
 When a session gets long and the agent starts making mistakes or forgetting earlier decisions, that is your signal to start fresh. Commit what you have, open a new session, and give it a focused brief: "Here is what exists. Here is what to build next."
 
+In Claude Code you don't have to quit to start fresh. `/clear` wipes the conversation and starts a new session in the same window, and `/resume` brings an earlier one back. `/compact` summarizes the conversation so far so you can keep going with less clutter. You can tell it what to keep, for example `/compact Focus on the API contract and open bugs`. Claude Code also compacts on its own when a session nears its context limit, but a summary is lossy. For a new major task, `/clear` plus a focused brief is still the cleaner move.
+
 Think of sessions as working memory. The CLAUDE.md is long-term memory. Your prompts are short-term instructions. Managing the balance between these is a core orchestration skill.
 
 ## The Daily Workflow
@@ -97,5 +100,6 @@ No contracts: Running parallel agents without agreeing on interfaces first. The 
 :::resources{title="Go Deeper"}
 - [Designing Data-Intensive Applications by Martin Kleppmann](https://dataintensive.net/). The definitive book on distributed systems. Orchestration at the infrastructure level.
 - [A Philosophy of Software Design by John Ousterhout](https://web.stanford.edu/~ouster/cgi-bin/book.php). On managing complexity through interface design. Directly applicable to agent contracts.
+- [Manage context (Claude Code Docs)](https://code.claude.com/docs/en/costs#manage-context-proactively). When to clear, when to compact, and how to tell Claude what to keep.
 - [Staff Engineer by Will Larson](https://staffeng.com/book). On the skill of technical leadership: seeing the whole system and directing the pieces.
 :::
