@@ -5,7 +5,7 @@ subtitle: Version control is not Google Drive.
 duration: 20 min
 status: available
 badge: new
-updatedAt: "2026-10-03"
+updatedAt: "2026-10-11"
 knowledgeCheck:
   - question: A commit is often described as a "snapshot." What makes it different from an auto-save, and why does that distinction matter for understanding your project history?
   - question: Git and GitHub are often confused. If GitHub went offline tomorrow, would you lose your local Git history? Why or why not?
@@ -96,7 +96,7 @@ Here is the most important thing about Git: you almost cannot lose work. If you 
 
 If you are unsure what state things are in, run `git status`. It always tells you the truth.
 
-If you made changes you want to undo before committing, `git checkout -- filename` restores a file to its last committed state.
+If you made changes you want to undo before committing, `git restore filename` restores a file to its last committed state. (`git status` suggests this command too. Older guides use `git checkout -- filename`, which does the same thing.)
 
 If you committed something you did not mean to, `git revert` creates a new commit that undoes the previous one without erasing history.
 
