@@ -5,7 +5,7 @@ subtitle: Organizing what people need to find.
 duration: 18 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-10-11"
 knowledgeCheck:
   - question: Information architecture and UI design are often confused. What does IA focus on that UI design does not, and why does IA need to come first?
     hint: Think about what problems IA solves (finding things, understanding structure) versus what UI solves.
@@ -124,5 +124,5 @@ An agent reading a project with clear information architecture (components group
 - [Information Architecture by Rosenfeld, Morville & Arango](https://www.oreilly.com/library/view/information-architecture-4th/9781491911686/): The definitive book on IA. The "polar bear book." If you read one book on this topic, make it this one.
 - [Abby Covert: How to Make Sense of Any Mess](https://www.howtomakesenseofanymess.com/): A free, visual, beginner-friendly book on IA principles. Excellent starting point.
 - [Nielsen Norman Group: IA Articles](https://www.nngroup.com/topic/information-architecture/): Research-backed articles on IA from the world's leading UX research firm.
-- [OptimalSort (Card Sorting Tool)](https://www.optimalworkshop.com/optimalsort/): A professional tool for running remote card sorts with real users.
+- [Optimal Card Sorting](https://www.optimalworkshop.com/product/card-sorting): A professional tool for running remote card sorts (open, closed, or hybrid) with real users.
 :::
