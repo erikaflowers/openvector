@@ -3,3 +3,6 @@ dist/
 .env
 .DS_Store
 *.local
+
+# Netlify site link + build cache
+.netlify
