@@ -120,7 +120,7 @@ const resources = [
   {
     title: 'Just Enough Research',
     author: 'Erika Hall',
-    url: 'https://abookapart.com/products/just-enough-research',
+    url: 'https://www.mulebooks.com/just-enough-research',
     description: 'How to do meaningful design research without getting lost. Sharp and funny.',
     type: 'book',
     topics: ['research'],

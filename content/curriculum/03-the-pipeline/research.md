@@ -4,6 +4,7 @@ title: Research
 subtitle: Understand before you build.
 duration: 20 min
 status: available
+updatedAt: "2026-10-09"
 ---
 
 ## Why Research Comes First
@@ -70,7 +71,7 @@ This document becomes the foundation of everything that follows: your JTBD state
 :::
 
 :::resources{title="Go Deeper"}
-- [Just Enough Research by Erika Hall](https://abookapart.com/products/just-enough-research). The best book on practical research for builders. Short, opinionated, and actionable.
+- [Just Enough Research by Erika Hall](https://www.mulebooks.com/just-enough-research). The best book on practical research for builders. Short, opinionated, and actionable.
 - [The Mom Test by Rob Fitzpatrick](https://www.momtestbook.com/). How to talk to customers without getting lied to. Essential reading on interview technique.
 - [Nielsen Norman Group: User Research Methods](https://www.nngroup.com/articles/which-ux-research-methods/). A comprehensive overview of when to use which research method.
 :::
