@@ -12,7 +12,7 @@ knowledgeCheck:
   - question: The lesson says Claude Code replaces typing, not thinking. What is the risk of accepting AI-generated code you do not understand, and how does that relate to the concept of "vibe coding"?
   - question: Context windows have a limited size. How does this constraint affect the way you should structure your prompts and your project when working with an AI agent?
     hint: Consider what happens when the conversation gets very long. What might the agent start to forget or miss?
-updatedAt: "2026-10-07"
+updatedAt: "2026-10-12"
 ---
 
 ## What Is Claude Code?
@@ -39,9 +39,14 @@ curl -fsSL https://claude.ai/install.sh | bash
 # Windows PowerShell:
 irm https://claude.ai/install.ps1 | iex
 
+# Windows Command Prompt (CMD):
+curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
+
 # Open a new terminal window, then verify it worked
 claude --version
 ```
+
+On Windows, your prompt starts with PS in PowerShell and has no PS in Command Prompt. If you see "'irm' is not recognized", you are in Command Prompt, so use the CMD line.
 
 Once installed, navigate to any project folder in your terminal and type claude to start a session. That is it. No IDE plugins. No complex setup. Just your terminal, your project folder, and a conversation.
 
