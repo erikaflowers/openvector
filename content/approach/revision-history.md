@@ -5,7 +5,7 @@ subtitle: Git workflow for AI-assisted projects. Commit strategy, branch managem
 duration: 20 min
 status: available
 badge: new
-updatedAt: "2026-09-29"
+updatedAt: "2026-10-11"
 category: working-with-agents
 prerequisites:
   - 00-orientation/git-basics
@@ -106,10 +106,10 @@ There are three levels of reverting, from gentle to nuclear:
 
 ```
 # Level 1: Undo changes to a specific file (discard all uncommitted changes)
-git checkout -- src/components/ContactForm.jsx
+git restore src/components/ContactForm.jsx
 
 # Level 2: Undo all uncommitted changes (back to last commit)
-git checkout .
+git restore .
 
 # Level 3: Go back to a specific commit (the nuclear option)
 git log --oneline   # find the commit hash you want to go back to
@@ -158,7 +158,7 @@ Here is the complete git workflow for an AI-assisted development session. This b
    git add .
    git commit -m "[what this change does]"
    # If bad:
-   git checkout .           (undo everything back to checkpoint)
+   git restore .            (undo everything back to checkpoint)
 
 4. END OF SESSION
    git add .
@@ -181,7 +181,7 @@ git status
 git commit -m "add contact form component and styles"
 
 # Discard the changes you did not want
-git checkout -- src/pages/Home.jsx
+git restore src/pages/Home.jsx
 ```
 
 Selective staging is a superpower. It lets you accept the changes you want and reject the ones you did not ask for, all in one step.
