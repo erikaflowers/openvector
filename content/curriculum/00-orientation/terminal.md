@@ -5,7 +5,7 @@ subtitle: Your first interface was a command line. It still is.
 duration: 20 min
 status: available
 badge: new
-updatedAt: '2026-04-10'
+updatedAt: "2026-10-13"
 knowledgeCheck:
   - question: What does "cd" stand for, and why is it one of the most-used commands in any terminal workflow?
     hint: Think about what you do constantly when working on projects, like moving between folders.
@@ -93,11 +93,13 @@ cat src/index.js        # Show its contents (empty)
 cd ..                   # Go back up one level
 ```
 
+On Windows PowerShell, `ls -la` and `touch` give an error. Use `ls -Force` to show hidden files and `New-Item` to create a file.
+
 ## Flags and Options
 
 Most commands accept flags, which are modifiers that change their behavior. Flags start with a dash. `ls -l` shows a detailed list. `ls -a` shows hidden files. `ls -la` does both.
 
-The pattern is always: `command -flags target`. That is it. If you ever want to know what a command does and what flags it supports, type `man command`. For example: `man ls` pulls up the manual page for `ls`. Press `q` to quit and return to the prompt. `man` is short for "manual" and it works on every Unix system, including macOS and Linux.
+The pattern is always: `command -flags target`. That is it. If you ever want to know what a command does and what flags it supports, type `man command`. For example: `man ls` pulls up the manual page for `ls`. Press `q` to quit and return to the prompt. `man` is short for "manual" and it works on every Unix system, including macOS and Linux. In PowerShell, use `Get-Help command` instead of `man`.
 
 You will also see `command --help` used a lot, especially in tutorials written for Linux. It works on most Linux tools, but not on all of macOS's built-in commands, which come from a different lineage called BSD. `ls --help` on a Mac will give you an error, not a help page. When in doubt, reach for `man`.
 
@@ -136,7 +138,7 @@ Open your terminal.
 - Run `cd ~/Desktop` to navigate to your Desktop (or `cd $HOME/Desktop` on some systems) 
 - Run `mkdir terminal-practice` to create a folder 
 - Run `cd terminal-practice` to go inside it
-- Run `touch hello.txt` to create a file
+- Run `touch hello.txt` to create a file (Windows PowerShell: `New-Item hello.txt`)
 - Run `ls` to confirm it is there
 - Run `cat hello.txt`; it is empty, that is fine
 - Run `cd ..` to go back up
@@ -149,4 +151,5 @@ You just navigated, created, and explored. That is 90% of terminal use.
 - [Command Line Power User](https://commandlinepoweruser.com/). Free video series by Wes Bos. Quick, practical, well-produced.
 - [explainshell.com](https://explainshell.com/). Paste any command and it breaks down every part. Brilliant learning tool.
 - [Linux Command Library](https://linuxcommandlibrary.com/). Searchable reference for every command. Works for Mac too (they share most commands).
+- [Claude Code terminal guide](https://code.claude.com/docs/en/terminal-guide). Anthropic's own walkthrough for opening a terminal and pasting your first command, on each OS.
 :::
