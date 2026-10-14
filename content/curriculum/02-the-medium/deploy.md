@@ -4,7 +4,7 @@ title: Deployment
 subtitle: From localhost to the world.
 duration: 15 min
 status: available
-updatedAt: "2026-10-07"
+updatedAt: "2026-10-14"
 ---
 
 ## Deployment, Revisited
@@ -25,7 +25,7 @@ Your project works locally: Run npm run dev, open it in the browser, and click t
 
 Your code is committed and pushed: The hosting platform deploys from your GitHub repository. If your latest changes are not pushed, the deployed version will be behind.
 
-No secrets in the code: Check that .env is in your .gitignore. API keys, passwords, and tokens should never be committed. If they are, rotate them immediately.
+No secrets in the code: Check that .env is in your .gitignore. API keys, passwords, and tokens should never be committed. If they are, rotate them immediately. GitHub's push protection now stops many known key types at `git push`, including Anthropic API keys, on public repositories. If a push is blocked for a secret, take the key out of the commit and rotate it. Treat this as a safety net, not a substitute for .gitignore.
 
 ```bash
 # The deploy checklist in terminal commands:
