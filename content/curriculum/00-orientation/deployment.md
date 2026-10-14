@@ -5,7 +5,7 @@ subtitle: From your computer to the internet.
 duration: 10 min
 status: available
 badge: new
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-14"
 knowledgeCheck:
   - question: What does deployment actually accomplish? Why is "it works on my machine" not the same as "it is live"?
     hint: Think about what localhost means, who can access it, and who cannot.
@@ -87,7 +87,8 @@ Create a free account at [netlify.com](https://www.netlify.com) and make sure yo
 - Open the file in your browser to check it: `open index.html` on Mac, or `start index.html` on Windows
 - Go to [app.netlify.com/drop](https://app.netlify.com/drop)
 - Drag the `my-first-site` folder from your Desktop into the drop area on the page
-- Wait a few seconds. Netlify gives you a URL ending in `.netlify.app`. Open it, then send it to a friend or open it on your phone.
+- Wait a few seconds. Netlify gives you a URL ending in `.netlify.app`. Open it to check your page.
+- New Netlify accounts keep new sites private, so only you can see them at first. If your site shows a private banner, select **Make public** (or go to **Project configuration > General > Visitor access > Project visibility** and choose public). Then send the URL to a friend or open it on your phone.
 
 That page is on the internet. To change it, edit `index.html`, open your site in Netlify, go to its Deploys page, and drag the folder onto the dropzone at the bottom. Dropping it on app.netlify.com/drop again would create a new site with a different URL. The goal is not a polished product. It is experiencing the act of going from local to live.
 ::::
@@ -101,6 +102,6 @@ You have not skipped anything. The concepts in this lesson are the foundation fo
 :::resources{title="Go Deeper"}
 - [Netlify Drop](https://app.netlify.com/drop). Drag and drop a folder to deploy it instantly.
 - [Netlify Docs: Get Started](https://docs.netlify.com/get-started/). Netlify's guide to deploying your first site, including drag-and-drop and Git-based deploys.
-- [Vercel Docs: Deployments](https://vercel.com/docs/deployments/overview). Vercel's deployment concepts explained clearly.
+- [Vercel Docs: Deployments](https://vercel.com/docs/deployments). Vercel's deployment concepts explained clearly.
 - [GitHub Pages Docs](https://docs.github.com/en/pages). How to deploy directly from a GitHub repository for free.
 :::
