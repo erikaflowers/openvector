@@ -5,7 +5,7 @@ subtitle: How to decompose what your product should do into concrete, buildable 
 duration: 20 min
 status: available
 badge: new
-updatedAt: '2026-02-14'
+updatedAt: "2026-10-13"
 category: planning
 prerequisites:
   - 01-foundation/planning
@@ -143,9 +143,11 @@ touch use-cases.md
 
 # Reference it in your CLAUDE.md
 ## Documentation
-See PRD.md for product requirements.
-See use-cases.md for detailed user scenarios and build tasks.
+See @PRD.md for product requirements.
+See @use-cases.md for detailed user scenarios and build tasks.
 ```
+
+The @ matters: it tells Claude Code to load the file into context at the start of every session. Without it, Claude only sees the filename and may never open the file.
 
 :::exercise{title="Try It"}
 Take one feature from your PRD and write a complete use case for it. Include at least five steps, identify two edge cases, and translate it into a build task list. If you do not have a PRD yet, use this feature: "A reader can browse blog posts by category and read a full post on its own page."
