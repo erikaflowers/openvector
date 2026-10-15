@@ -4,7 +4,7 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { STATE, loadYaml, readJson, writeJson } from '../lib.mjs';
 
@@ -15,19 +15,25 @@ const RUNS = path.join(STATE, 'runs');
 const PAUSED = path.join(STATE, 'PAUSED');
 const FEEDBACK = path.join(STATE, 'feedback.jsonl');
 const QUEUE = path.join(STATE, 'queue.jsonl');
+const LOCK = path.join(STATE, 'lock');
+const RUN_SH = path.join(HERE, '..', 'run.sh');
+const ENGINE_LOG = path.join(process.env.HOME, 'Library/Logs/ov-autopilot.log');
 
 const gh = (...args) => execFileSync('gh', [...args, '-R', config.github], { encoding: 'utf8' }).trim();
 const validDate = (d) => /^\d{4}-\d{2}-\d{2}$/.test(d);
 const validId = (s) => /^[a-z0-9-]{1,60}$/.test(s);
 const days = () => (fs.existsSync(RUNS) ? fs.readdirSync(RUNS).filter(validDate).sort().reverse() : []);
+const costOf = (date) => {
+  const f = path.join(RUNS, date, 'cost.jsonl');
+  return fs.existsSync(f) ? fs.readFileSync(f, 'utf8').trim().split('\n').filter(Boolean).reduce((s, l) => s + (JSON.parse(l).usd || 0), 0) : 0;
+};
 const decisions = () => fs.existsSync(FEEDBACK)
   ? fs.readFileSync(FEEDBACK, 'utf8').trim().split('\n').filter(Boolean).map((l) => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean)
   : [];
 
 function day(date) {
   const d = path.join(RUNS, date);
-  const cost = fs.existsSync(path.join(d, 'cost.jsonl'))
-    ? fs.readFileSync(path.join(d, 'cost.jsonl'), 'utf8').trim().split('\n').filter(Boolean).reduce((s, l) => s + (JSON.parse(l).usd || 0), 0) : 0;
+  const cost = costOf(date);
   return {
     date,
     brief: readJson(path.join(d, 'brief.json'), null),
@@ -175,8 +181,13 @@ http.createServer(async (req, res) => {
       return fs.existsSync(p) ? send(res, 200, fs.readFileSync(p, 'utf8'), 'text/plain; charset=utf-8') : send(res, 404, 'no diff', 'text/plain');
     }
     if (req.method === 'GET' && url.pathname === '/api/status') {
-      const log = path.join(process.env.HOME, 'Library/Logs/ov-autopilot.log');
-      return send(res, 200, { paused: fs.existsSync(PAUSED), phase: config.phase, latest: days()[0] || null, lastLog: fs.existsSync(log) ? fs.readFileSync(log, 'utf8').split('\n').slice(-12).join('\n') : '' });
+      const since = new Date(Date.now() - 6 * 864e5).toISOString().slice(0, 10);
+      const latest = days()[0] || null;
+      return send(res, 200, {
+        paused: fs.existsSync(PAUSED), running: fs.existsSync(LOCK), phase: config.phase, latest,
+        latestCost: latest ? costOf(latest) : 0, cost7d: days().filter((d) => d >= since).reduce((s, d) => s + costOf(d), 0),
+        lastLog: fs.existsSync(ENGINE_LOG) ? fs.readFileSync(ENGINE_LOG, 'utf8').split('\n').slice(-12).join('\n') : '',
+      });
     }
     if (req.method === 'POST') {
       // Same-origin guard: the page sends this header; a cross-site form cannot.
@@ -186,6 +197,14 @@ http.createServer(async (req, res) => {
       if (url.pathname === '/api/pause') {
         body.paused ? fs.writeFileSync(PAUSED, `paused from the Desk ${new Date().toISOString()}\n`) : fs.rmSync(PAUSED, { force: true });
         return send(res, 200, { paused: fs.existsSync(PAUSED) });
+      }
+      if (url.pathname === '/api/run') {
+        // Run now: one full run, even when automation is OFF. run.sh's lock stops a second concurrent run.
+        if (fs.existsSync(LOCK)) return send(res, 409, { error: 'a run is already in progress' });
+        const log = fs.openSync(ENGINE_LOG, 'a');
+        spawn('/bin/zsh', [RUN_SH, '--manual'], { detached: true, stdio: ['ignore', log, log] }).unref();
+        fs.closeSync(log);
+        return send(res, 200, { started: true });
       }
     }
     send(res, 404, { error: 'not found' });

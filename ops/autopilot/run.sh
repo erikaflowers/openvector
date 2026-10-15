@@ -4,10 +4,11 @@
 #   ops/autopilot/run.sh --dry-run  no Telegram, does not mark crawl items as seen
 #   ops/autopilot/run.sh --topic-map   also regenerate topic-map.yaml
 #   ops/autopilot/run.sh --force       run even if today's run already completed
+#   ops/autopilot/run.sh --manual      run now even when automation is OFF (the Desk's Run now button)
 # The LaunchAgent fires every 30 minutes; this script runs the day's work once, after 05:00, and only
 # until a run completes (marker runs/<date>/.complete). launchd's single 05:00 calendar trigger proved
 # unreliable on this headless Mini (2026-09-28: skipped 05:00, fired at 08:00).
-# Kill switch: touch "$OV_STATE/PAUSED"
+# Kill switch (the Desk's "Automation is ON/OFF" toggle): touch "$OV_STATE/PAUSED". --manual ignores it.
 set -euo pipefail
 export PATH="$HOME/.local/share/fnm/aliases/default/bin:$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
@@ -15,11 +16,11 @@ HERE="${0:A:h}"
 CODE_REPO="${HERE:h:h}"
 export OV_STATE="${OV_STATE:-$HOME/Library/Application Support/ov-autopilot}"
 MATILDA="$HOME/claude projects/matildacomm"
-DRY=0; TOPIC=0; FORCE=0
-for a in "$@"; do case $a in --dry-run) DRY=1 ;; --topic-map) TOPIC=1 ;; --force) FORCE=1 ;; esac; done
+DRY=0; TOPIC=0; FORCE=0; MANUAL=0
+for a in "$@"; do case $a in --dry-run) DRY=1 ;; --topic-map) TOPIC=1 ;; --force) FORCE=1 ;; --manual) FORCE=1; MANUAL=1 ;; esac; done
 
 mkdir -p "$OV_STATE"
-[[ -f "$OV_STATE/PAUSED" ]] && { echo "ov-autopilot paused ($OV_STATE/PAUSED)"; exit 0; }
+[[ -f "$OV_STATE/PAUSED" ]] && (( ! MANUAL )) && { echo "ov-autopilot paused ($OV_STATE/PAUSED)"; exit 0; }
 LOCK="$OV_STATE/lock"
 mkdir "$LOCK" 2>/dev/null || { echo "ov-autopilot already running ($LOCK)"; exit 0; }
 trap 'rmdir "$LOCK"' EXIT
@@ -32,7 +33,7 @@ if (( ! FORCE && ! DRY )); then
 fi
 mkdir -p "$RUN"
 exec > >(tee -a "$RUN/run.log") 2>&1
-echo "=== ov-autopilot $(date '+%F %T') dry=$DRY ==="
+echo "=== ov-autopilot $(date '+%F %T') dry=$DRY manual=$MANUAL ==="
 
 # Inspect the live site: a detached worktree of origin/main, separate from any working checkout.
 SITE="$OV_STATE/site"
