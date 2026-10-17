@@ -4,7 +4,7 @@ title: Quality Gates
 subtitle: When to stop and verify.
 duration: 18 min
 status: available
-updatedAt: "2026-10-06"
+updatedAt: "2026-10-17"
 ---
 
 ## What Is a Quality Gate?
@@ -105,4 +105,5 @@ Git makes recovery safe. You committed after each stage, right? Then reverting i
 - [Accelerate by Forsgren, Humble & Kim](https://itrevolution.com/product/accelerate/). Research-backed evidence that quality gates (continuous integration, testing) accelerate delivery rather than slowing it down.
 - [Code Review Best Practices (Google)](https://google.github.io/eng-practices/review/). Google's internal code review guidelines, and the gold standard for what to look for in code review.
 - [Claude Code commands](https://code.claude.com/docs/en/commands). Built-in review commands, including /code-review and /security-review.
+- [How the Claude Code team does code review](https://claude.dev/blog/solving-code-review-at-anthropic/). How Anthropic matches review to risk: agents verify their own work first, a REVIEW.md tells reviewers what matters, and humans stay on the judgment calls.
 :::
