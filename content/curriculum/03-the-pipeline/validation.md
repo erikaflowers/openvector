@@ -4,6 +4,7 @@ title: Validation
 subtitle: Test the real thing, not a picture of it.
 duration: 18 min
 status: available
+updatedAt: "2026-10-17"
 ---
 
 ## What Is Validation?
@@ -81,8 +82,8 @@ The hardest decision is the pivot. You have invested time and emotion. But pivot
 :::
 
 :::resources{title="Go Deeper"}
-- [Rocket Surgery Made Easy by Steve Krug](https://www.sensible.com/rocket-surgery-made-easy/). The most practical guide to usability testing ever written. You can run your first test today.
-- [Don't Make Me Think by Steve Krug](https://www.sensible.com/dont-make-me-think/). The classic on web usability. Short, visual, and immediately applicable.
+- [Rocket Surgery Made Easy by Steve Krug](https://www.informit.com/store/rocket-surgery-made-easy-the-do-it-yourself-guide-to-9780321657299). The most practical guide to usability testing ever written. You can run your first test today.
+- [Don't Make Me Think by Steve Krug](https://www.informit.com/store/dont-make-me-think-revisited-a-common-sense-approach-9780321965516). The classic on web usability. Short, visual, and immediately applicable.
 - [Nielsen Norman Group: Usability Testing 101](https://www.nngroup.com/articles/usability-testing-101/). A thorough introduction to usability testing methodology from the leaders in the field.
 - [The Lean Startup: Build-Measure-Learn](http://theleanstartup.com/). The framework for validated learning that JTBD and prototyping feed into.
 :::
