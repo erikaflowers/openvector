@@ -8,7 +8,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import yaml from 'js-yaml';
-import { HERE, REPO, STATE, loadYaml, readJson, writeJson, runDir } from './lib.mjs';
+import { HERE, REPO, STATE, loadYaml, readJson, writeJson, runDir, monthSpend } from './lib.mjs';
 
 const config = loadYaml('config.yaml');
 
@@ -41,6 +41,11 @@ export function runStage(name, { cwd = REPO, vars = {}, tools, outPath } = {}) {
   const stage = config.stages[name];
   if (!stage) throw new Error(`no stage "${name}" in config.yaml`);
   const dir = runDir();
+  // Monthly cap, checked before every call. claude's --max-budget-usd stops a call only after it passes the
+  // limit, so leave a margin: no call starts with less than `budget.minCallUsd` left.
+  const cap = config.budget?.monthlyUsd ?? Infinity;
+  const left = cap - monthSpend();
+  if (left < (config.budget?.minCallUsd ?? 0.5)) throw new Error(`${name}: monthly budget reached ($${(cap - left).toFixed(2)} of $${cap}), not started`);
   const all = { ...defaultVars(dir), ...vars };
 
   const prompt = fs.readFileSync(path.join(HERE, 'prompts', `${name}.md`), 'utf8').replace(/\{\{(\w+)\}\}/g, (_, k) => {
@@ -56,7 +61,7 @@ export function runStage(name, { cwd = REPO, vars = {}, tools, outPath } = {}) {
     '--json-schema', fs.readFileSync(path.join(HERE, 'schemas', `${name}.json`), 'utf8'),
     '--allowedTools', ...(tools || stage.tools),
     '--disallowedTools', 'Bash', 'NotebookEdit', ...(stage.denyWrites === false ? [] : ['Edit', 'Write']),
-    '--max-budget-usd', String(stage.maxBudgetUsd ?? config.limits.maxBudgetUsdPerStage),
+    '--max-budget-usd', String(Math.min(stage.maxBudgetUsd ?? config.limits.maxBudgetUsdPerStage, left)),
   ];
   if (stage.model) args.push('--model', stage.model);
 

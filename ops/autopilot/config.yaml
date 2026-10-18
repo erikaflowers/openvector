@@ -2,17 +2,25 @@
 
 github: erikaflowers/openvector
 
+# Cadence and money (Samantha, 2026-10-18): about once a month, critical changes only, $10 a month in total.
+# Automation ON (Desk switch) = at most one run per calendar month, the first chance after 05:00. Run now is
+# always manual. A month that already has a completed run is skipped; a failed run is retried once a day.
+cadence: monthly
+budget:
+  monthlyUsd: 10      # hard cap: no run, and no single Claude call, starts once the month's spend reaches this
+  minCallUsd: 0.5     # margin: a call needs this much left to start (claude stops a call only after its limit)
+
 # phase 1 = brief only (no branches, no PRs). phase 2 = tiered edits (PRs; T0 auto-merges).
 phase: 2
 
 # Items dated older than this are never treated as news (also keeps the first brief sane).
-lookbackDays: 14
+lookbackDays: 35
 # Hard cap on items handed to triage per run, highest weight first.
 maxItemsForTriage: 60
 
 limits:
-  maxPrsPerDay: 8
-  maxBudgetUsdPerStage: 3
+  maxPrsPerDay: 4          # per run
+  maxBudgetUsdPerStage: 1.5
 
 # Files the agent may touch at all. T0 auto-merge only ever touches these.
 allowlist:
@@ -46,46 +54,46 @@ staleAfterDays: 90
 allowRedirects:
   - https://claude.ai/install.sh
 
-# LLM stages, run headlessly by stage.mjs. model: null = the Mini's default Claude model.
+# LLM stages, run headlessly by stage.mjs. All on Sonnet 5.5 to fit the monthly budget (Opus is ~2x per token).
 # tools: what the agent may use. Bash/Edit/Write are always denied in Phase 1.
 stages:
   topic-map:
-    model: null
+    model: claude-sonnet-5-5
     tools: [Read, Grep, Glob]
-    maxBudgetUsd: 8
+    maxBudgetUsd: 3
     timeoutMin: 30
     writeYaml: topic-map.yaml
   brief:
-    model: null
+    model: claude-sonnet-5-5
     tools: [Read, Grep, Glob, WebFetch]
-    maxBudgetUsd: 5
+    maxBudgetUsd: 2
     timeoutMin: 25
   draft:
-    model: null
+    model: claude-sonnet-5-5
     tools: [Read, Grep, Glob, WebFetch]   # plus Edit(<file>) for each file in the change, added per call
     denyWrites: false
-    maxBudgetUsd: 3
+    maxBudgetUsd: 1
     timeoutMin: 15
   propose:
-    model: null
+    model: claude-sonnet-5-5
     tools: [Read, Grep, Glob, WebFetch]   # plus Edit on content/curriculum, content/approach, manifest.yaml
     denyWrites: false
-    maxBudgetUsd: 6
+    maxBudgetUsd: 2
     timeoutMin: 25
   verify:
-    model: null
+    model: claude-sonnet-5-5
     tools: [Read, Grep, Glob, WebFetch]
-    maxBudgetUsd: 2
+    maxBudgetUsd: 0.75
     timeoutMin: 15
   audit:
-    model: null
+    model: claude-sonnet-5-5
     tools: [Read, Grep, Glob, WebFetch]
-    maxBudgetUsd: 2
+    maxBudgetUsd: 0.75
     timeoutMin: 15
 
-# Freshness sweep: every day, re-verify the lessons that were verified longest ago (never-verified first,
+# Freshness sweep: every run, re-verify the lessons that were verified longest ago (never-verified first,
 # most volatile first), whether or not the news mentions them. Outdated claims become T1 changes for the Desk.
 # Coverage goal: every lesson re-verified at least every `targetDays`.
 sweep:
-  perDay: 6
-  targetDays: 30
+  perDay: 3           # per run
+  targetDays: 90

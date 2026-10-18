@@ -1,12 +1,13 @@
 #!/bin/zsh
-# Open Vector Autopilot: daily run. Phase is set in config.yaml (1 = brief only, 2 = tiered PRs).
-#   ops/autopilot/run.sh            normal daily run (LaunchAgent)
+# Open Vector Autopilot: monthly run (config.yaml: cadence, budget). Phase is set in config.yaml (1 = brief only, 2 = tiered PRs).
+#   ops/autopilot/run.sh            scheduled run (LaunchAgent): at most once a month, only when automation is ON
 #   ops/autopilot/run.sh --dry-run  no Telegram, does not mark crawl items as seen
 #   ops/autopilot/run.sh --topic-map   also regenerate topic-map.yaml
 #   ops/autopilot/run.sh --force       run even if today's run already completed
 #   ops/autopilot/run.sh --manual      run now even when automation is OFF (the Desk's Run now button)
-# The LaunchAgent fires every 30 minutes; this script runs the day's work once, after 05:00, and only
-# until a run completes (marker runs/<date>/.complete). launchd's single 05:00 calendar trigger proved
+# The LaunchAgent fires every 30 minutes; this script does nothing unless automation is ON, this month has no
+# completed run (marker runs/<date>/.complete), today has no attempt yet, and it is after 05:00.
+# Every run, manual or not, stops before starting if the month's Claude spend has reached budget.monthlyUsd. launchd's single 05:00 calendar trigger proved
 # unreliable on this headless Mini (2026-09-28: skipped 05:00, fired at 08:00).
 # Kill switch (the Desk's "Automation is ON/OFF" toggle): touch "$OV_STATE/PAUSED". --manual ignores it.
 set -euo pipefail
@@ -28,9 +29,14 @@ trap 'rmdir "$LOCK"' EXIT
 export OV_RUN_DATE="$(date +%F)"
 RUN="$OV_STATE/runs/$OV_RUN_DATE"
 if (( ! FORCE && ! DRY )); then
-  [[ -f "$RUN/.complete" ]] && exit 0                          # already ran today
-  (( 10#$(date +%H) < ${OV_START_HOUR:-5} )) && exit 0          # too early
+  done_this_month=("$OV_STATE"/runs/"${OV_RUN_DATE:0:7}"-*/.complete(N))
+  (( ${#done_this_month} )) && exit 0                                             # this month already ran
+  [[ -f "$RUN/run.log" ]] && exit 0                                               # one attempt a day
+  (( 10#$(date +%H) < ${OV_START_HOUR:-5} )) && exit 0                            # too early
 fi
+BUDGET_RC=0; node "$HERE/budget.mjs" > /dev/null 2>&1 || BUDGET_RC=$?
+(( BUDGET_RC == 3 )) && { echo "ov-autopilot: monthly budget reached, not running ($(node "$HERE/budget.mjs"))"; exit 0; }
+(( BUDGET_RC )) && { echo "ov-autopilot: budget check failed (exit $BUDGET_RC), not running"; exit 1; }
 mkdir -p "$RUN"
 exec > >(tee -a "$RUN/run.log") 2>&1
 echo "=== ov-autopilot $(date '+%F %T') dry=$DRY manual=$MANUAL ==="
@@ -45,6 +51,7 @@ else
 fi
 export OV_REPO="$SITE"
 echo "site: origin/main @ $(git -C "$SITE" rev-parse --short HEAD)"
+node "$HERE/budget.mjs" || true
 
 [[ -d "$CODE_REPO/node_modules" ]] || (cd "$CODE_REPO" && npm ci --no-audit --no-fund --silent)
 cd "$CODE_REPO"
@@ -63,7 +70,7 @@ if (( BRIEF_OK )) && (( PHASE >= 2 )); then
   if (( DRY )); then OV_DRY=1 node ops/autopilot/publish.mjs || echo "publish (dry) failed"
   else node ops/autopilot/publish.mjs || echo "publish failed"; fi
 fi
-[[ -f "$OV_STATE/.env" ]] && [[ "$(date +%u)" == "${DIGEST_WEEKDAY:-5}" ]] && { node ops/autopilot/digest.mjs || echo "digest failed"; }
+[[ -f "$OV_STATE/.env" ]] && { node ops/autopilot/digest.mjs || echo "digest failed"; }
 node ops/autopilot/render-brief.mjs
 
 if (( ! DRY )) && [[ -d "$MATILDA/venv" ]]; then

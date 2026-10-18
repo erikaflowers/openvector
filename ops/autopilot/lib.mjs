@@ -20,6 +20,16 @@ export const runDir = (date = process.env.OV_RUN_DATE || today()) => {
   return d;
 };
 
+// Claude spend for a calendar month (YYYY-MM), summed from every run's cost.jsonl.
+export function monthSpend(month = today().slice(0, 7)) {
+  const runs = path.join(STATE, 'runs');
+  if (!fs.existsSync(runs)) return 0;
+  return fs.readdirSync(runs).filter((d) => d.startsWith(month)).reduce((sum, d) => {
+    const f = path.join(runs, d, 'cost.jsonl');
+    return sum + (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).reduce((s, l) => { try { return s + (JSON.parse(l).usd || 0); } catch { return s; } }, 0) : 0);
+  }, 0);
+}
+
 export const loadYaml = (name) => yaml.load(fs.readFileSync(path.join(HERE, name), 'utf8'));
 export const readJson = (p, fallback) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return fallback; } };
 export const writeJson = (p, data) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, JSON.stringify(data, null, 2) + '\n'); };

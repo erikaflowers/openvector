@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync, spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { STATE, loadYaml, readJson, writeJson } from '../lib.mjs';
+import { STATE, loadYaml, readJson, writeJson, monthSpend } from '../lib.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PORT = +(process.env.OV_DESK_PORT || 7811);
@@ -181,11 +181,11 @@ http.createServer(async (req, res) => {
       return fs.existsSync(p) ? send(res, 200, fs.readFileSync(p, 'utf8'), 'text/plain; charset=utf-8') : send(res, 404, 'no diff', 'text/plain');
     }
     if (req.method === 'GET' && url.pathname === '/api/status') {
-      const since = new Date(Date.now() - 6 * 864e5).toISOString().slice(0, 10);
       const latest = days()[0] || null;
       return send(res, 200, {
-        paused: fs.existsSync(PAUSED), running: fs.existsSync(LOCK), phase: config.phase, latest,
-        latestCost: latest ? costOf(latest) : 0, cost7d: days().filter((d) => d >= since).reduce((s, d) => s + costOf(d), 0),
+        paused: fs.existsSync(PAUSED), running: fs.existsSync(LOCK), phase: config.phase, latest, cadence: config.cadence,
+        monthUsd: monthSpend(), monthCap: config.budget?.monthlyUsd ?? null,
+        latestCost: latest ? costOf(latest) : 0,
         lastLog: fs.existsSync(ENGINE_LOG) ? fs.readFileSync(ENGINE_LOG, 'utf8').split('\n').slice(-12).join('\n') : '',
       });
     }
@@ -201,6 +201,8 @@ http.createServer(async (req, res) => {
       if (url.pathname === '/api/run') {
         // Run now: one full run, even when automation is OFF. run.sh's lock stops a second concurrent run.
         if (fs.existsSync(LOCK)) return send(res, 409, { error: 'a run is already in progress' });
+        const cap = config.budget?.monthlyUsd ?? Infinity;
+        if (monthSpend() >= cap) return send(res, 409, { error: `this month's budget ($${cap}) is spent` });
         const log = fs.openSync(ENGINE_LOG, 'a');
         spawn('/bin/zsh', [RUN_SH, '--manual'], { detached: true, stdio: ['ignore', log, log] }).unref();
         fs.closeSync(log);
