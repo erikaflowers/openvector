@@ -42,7 +42,11 @@ lessons with an open human PR are deferred; `limits.maxPrsPerDay`; a dollar cap 
 127.0.0.1:7811, `tailscale serve --bg --https=7810 7811`, never Funnel). One card per change: files, diff,
 sources, audit, the learner-facing note. **Go** merges the PR (or queues a change that had no PR), **No-go**
 closes it, **Note** records feedback. Every decision lands in `feedback.jsonl`, which the next brief reads.
-Proposals: **Write it** queues them for Phase 3. The header pill is the kill switch.
+Proposals: **Write it** queues them for Phase 3.
+
+The header carries the **Automation is ON/OFF** switch (the `PAUSED` file) and **Run now**, which starts one full
+run immediately (`run.sh --manual`), even when automation is OFF. It also shows the last run's cost and the last
+7 days. A full run uses about $4-6 of Claude usage (Opus, API-equivalent; see `runs/<date>/cost.jsonl`).
 
 ## The supervisor loop
 
@@ -88,6 +92,7 @@ automatic "Updated" badge.
 ops/autopilot/run.sh --dry-run      # full run, no Telegram, crawl items not marked seen
 ops/autopilot/run.sh                # what the LaunchAgent runs at 05:00
 ops/autopilot/run.sh --topic-map    # also regenerate topic-map.yaml
+ops/autopilot/run.sh --manual       # run now, even when automation is OFF (Desk: Run now)
 ```
 
 Needs: Node (repo `node_modules`), `claude` logged in on the Mini, `gh` with write access.
