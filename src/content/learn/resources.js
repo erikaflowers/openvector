@@ -176,7 +176,7 @@ const resources = [
   {
     title: 'Rocket Surgery Made Easy',
     author: 'Steve Krug',
-    url: 'https://www.sensible.com/rocket-surgery-made-easy/',
+    url: 'https://www.informit.com/store/rocket-surgery-made-easy-the-do-it-yourself-guide-to-9780321657299',
     description: 'DIY usability testing. Do it yourself, this week, with no budget.',
     type: 'book',
     topics: ['research'],
@@ -184,7 +184,7 @@ const resources = [
   {
     title: "Don't Make Me Think",
     author: 'Steve Krug',
-    url: 'https://www.sensible.com/dont-make-me-think/',
+    url: 'https://www.informit.com/store/dont-make-me-think-revisited-a-common-sense-approach-9780321965516',
     description: 'The classic on web usability. Short, funny, still relevant after 20 years.',
     type: 'book',
     topics: ['craft'],
