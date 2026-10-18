@@ -186,7 +186,7 @@ async function load(date) {
   } else {
     const sw = d.sweep;
     h += `<div class="card summary"><b>${esc(date)}:</b> ${d.prs.filter((p) => p.status === 'merged').length} shipped`
-      + `${sw ? ` · ${sw.checked.length} lessons re-checked, ${sw.checked.filter((c) => c.status === 'needs-update').length} needed fixes · <b>${sw.coverage.covered}/${sw.coverage.total}</b> lessons verified this month` : ''}`
+      + `${sw ? ` · ${sw.checked.length} lessons re-checked, ${sw.checked.filter((c) => c.status === 'needs-update').length} needed fixes · <b>${sw.coverage.covered}/${sw.coverage.total}</b> lessons verified in the last ${sw.coverage.targetDays} days` : ''}`
       + ` · $${d.cost.toFixed(2)}</div>`;
     h += `<details class="report"><summary>Full report for ${esc(date)}</summary>`;
     h += `<p class="headline">${esc(b.headline)}</p>`;
@@ -315,20 +315,22 @@ async function pauseState(s) {
   b.setAttribute('aria-pressed', String(on));
   b.onclick = async () => {
     if (!confirm(on ? 'Turn automation OFF? Nothing runs on its own until you turn it back on. Run now still works.'
-      : 'Turn automation ON? The full run (about $4-6 of Claude usage) then happens every morning after 05:00.')) return;
+      : 'Turn automation ON? One run then happens each month, the first morning after the 1st (about $2 of Claude usage).')) return;
     const r = await api('/api/pause', { paused: on });
     pauseState({ ...s, paused: r.paused });
   };
   const run = $('#runnow');
-  run.disabled = !!s.running;
-  run.textContent = s.running ? 'Running…' : 'Run now';
+  const over = s.monthCap != null && s.monthUsd >= s.monthCap;
+  run.disabled = !!s.running || over;
+  run.textContent = s.running ? 'Running…' : over ? 'Budget spent' : 'Run now';
   run.onclick = async () => {
-    if (!confirm('Start a full run now? It takes 20-40 minutes and uses about $4-6 of Claude usage.')) return;
+    if (!confirm('Start a full run now? It takes 20-40 minutes and uses about $2 of Claude usage.')) return;
     try { await api('/api/run', {}); toast('Run started. The brief lands here when it finishes.'); pauseState({ ...s, running: true }); }
     catch (e) { toast(`Failed: ${e.message}`); }
   };
-  $('#autometa').innerHTML = `${on ? 'Runs daily after 05:00.' : 'Manual only: press Run now.'}`
-    + `<br>Last run ${esc(s.latest || 'none')}: $${(s.latestCost || 0).toFixed(2)} · last 7 days: $${(s.cost7d || 0).toFixed(2)}`;
+  $('#autometa').innerHTML = `${on ? 'Runs once a month, the first morning after the 1st.' : 'Manual only: press Run now.'}`
+    + `<br>This month: <b>$${(s.monthUsd || 0).toFixed(2)}</b>${s.monthCap != null ? ` of $${s.monthCap} budget` : ''}`
+    + ` · last run ${esc(s.latest || 'none')}: $${(s.latestCost || 0).toFixed(2)}`;
 }
 setInterval(async () => { try { pauseState(await api('/api/status')); } catch {} }, 30000);
 

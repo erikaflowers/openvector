@@ -1,22 +1,35 @@
 # Open Vector Autopilot
 
-A daily agent that keeps Open Vector current. It crawls the sources that matter, checks the site's health, works out which lessons the news affects, and writes Samantha a private **Open Vector Updates** brief: a changelog written before anything ships, reviewed item by item.
+A monthly agent that keeps Open Vector current. It crawls the sources that matter, checks the site's health, works out which lessons the news affects, and writes Samantha a private **Open Vector Updates** brief: a changelog written before anything ships, reviewed item by item.
 
 Runs on the Mac Mini. Not part of the site build (nothing in `src/` imports it).
+
+## Cadence and budget
+
+Decided by Samantha on 2026-10-18 after the daily cadence cost about $5/day: **about once a month, critical changes
+only, $10 a month in total.**
+
+- **Automation ON** (Desk switch) = at most one run per calendar month, the first chance after 05:00 on or after
+  the 1st. **Automation OFF** = nothing runs on its own. **Run now** on the Desk (`run.sh --manual`) always works.
+- **Hard cap** `config.yaml → budget.monthlyUsd`: no run starts, and no single Claude call starts, once the month's
+  spend (all `runs/<YYYY-MM>-*/cost.jsonl`) reaches it. A call needs `budget.minCallUsd` left, because `claude`
+  stops a call only after it passes its own limit, so one call can overshoot by a few cents.
+- All stages run on Sonnet 5.5; the brief proposes only critical fixes (at most 4); the sweep re-checks 3 lessons a
+  run; the window (`lookbackDays`) is 35 days. A failed scheduled run is retried at most once a day.
 
 ## Phases
 
 | Phase | What it does | Status |
 |---|---|---|
 | 0 | Baseline: topic map, link check, staleness | done |
-| 1 | Daily brief only. Reads `origin/main`, writes nothing to git | done |
-| 2 | Tiered edits: T0 auto-merge, T1 PRs approved on the private Desk, learner signal, weekly digest draft | **current** (`config.yaml: phase: 2`) |
+| 1 | Brief only. Reads `origin/main`, writes nothing to git | done |
+| 2 | Tiered edits: T0 auto-merge, T1 PRs approved on the private Desk, learner signal, digest draft | **current** (`config.yaml: phase: 2`) |
 | 3 | T2 new-lesson drafts (from Desk "Write it"), generated chat prompt | later |
 
 ## Pipeline
 
 ```
-run.sh (LaunchAgent com.macmini.ov-autopilot, daily 05:00)
+run.sh (LaunchAgent com.macmini.ov-autopilot: monthly when ON; Desk Run now: any time)
   collect.mjs            feeds, pages, HN → new items since last run            (no LLM)
   health.mjs             links, manifest/frontmatter lint, staleness, model IDs  (no LLM)
   learners.mjs           aggregate progress + signups + list size (needs .env)   (no LLM)
@@ -25,10 +38,10 @@ run.sh (LaunchAgent com.macmini.ov-autopilot, daily 05:00)
   publish.mjs            per change: worktree → draft agent (edits only the listed files)
                          → scope check → updatedAt + content/updates note → npm run build
                          → audit agent → PR. T0 + audit pass: squash-merge. T1: waits for the Desk.
-  sweep.mjs              freshness sweep: re-verify the 6 least-recently-verified lessons against official
+  sweep.mjs              freshness sweep: re-verify the 3 least-recently-verified lessons against official
                          sources, whether or not the news mentions them; outdated claims become T1 changes;
-                         ledger in freshness.json (coverage goal: every lesson verified within 30 days)
-  digest.mjs             Fridays: Buttondown DRAFT of the week's update notes (never sends)
+                         ledger in freshness.json (coverage reported over 90 days)
+  digest.mjs             every run: Buttondown DRAFT of the period's update notes (never sends)
   render-brief.mjs       brief.md + Telegram ping with the Desk link
 ```
 
@@ -48,9 +61,12 @@ The header carries the **Automation is ON/OFF** switch (the `PAUSED` file) and *
 run immediately (`run.sh --manual`), even when automation is OFF. It also shows the last run's cost and the last
 7 days. A full run uses about $4-6 of Claude usage (Opus, API-equivalent; see `runs/<date>/cost.jsonl`).
 
-## The supervisor loop
+## The supervisor loop (retired)
 
-The LaunchAgent is the **engine**: it runs at 05:00 whether or not any Claude session is alive.
+**Not running since 2026-10-12; do not restart it.** It cost about $6/day on Opus for checks that were almost
+always "no change". The notes below describe how it worked.
+
+The LaunchAgent is the **engine**: it runs whether or not any Claude session is alive.
 The **supervisor** is a Claude Code session in tmux `ov-loop` running `/loop 2h Follow ops/autopilot/LOOP.md`:
 it checks that the engine ran (and re-runs it once on a transient failure), keeps the Desk up, confirms merged
 changes went live, probes the signup function, and messages Samantha only when something changed.
@@ -90,7 +106,8 @@ automatic "Updated" badge.
 
 ```sh
 ops/autopilot/run.sh --dry-run      # full run, no Telegram, crawl items not marked seen
-ops/autopilot/run.sh                # what the LaunchAgent runs at 05:00
+ops/autopilot/run.sh                # what the LaunchAgent runs (monthly, only when automation is ON)
+node ops/autopilot/budget.mjs       # this month's spend against the cap (exit 3 = cap reached)
 ops/autopilot/run.sh --topic-map    # also regenerate topic-map.yaml
 ops/autopilot/run.sh --manual       # run now, even when automation is OFF (Desk: Run now)
 ```

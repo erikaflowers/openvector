@@ -1,15 +1,15 @@
-// Stage 8: DIGEST (weekly). Builds "What's new on Open Vector" from update notes merged in the last
-// 7 days and saves it as a Buttondown DRAFT. It never sends. Samantha reviews, picks the audience, sends.
+// Stage 8: DIGEST (every run). Builds "What's new on Open Vector" from update notes merged in the last
+// `lookbackDays` (one run covers about a month) and saves it as a Buttondown DRAFT. It never sends. Samantha reviews, picks the audience, sends.
 // Needs BUTTONDOWN_API_KEY in $OV_STATE/.env. Output: runs/<date>/digest.json (+ digest.md)
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
-import { REPO, loadEnv, writeJson, runDir } from './lib.mjs';
+import { REPO, loadEnv, loadYaml, writeJson, runDir } from './lib.mjs';
 
 const SITE = 'https://open.zerovector.design';
 const dir = runDir();
 const env = loadEnv();
-const since = Date.now() - 7 * 864e5;
+const since = Date.now() - loadYaml('config.yaml').lookbackDays * 864e5;
 
 const updatesDir = path.join(REPO, 'content/updates');
 const updates = (fs.existsSync(updatesDir) ? fs.readdirSync(updatesDir) : [])
@@ -27,15 +27,15 @@ const lessonUrl = (k) => {
 };
 
 if (!updates.length) {
-  writeJson(path.join(dir, 'digest.json'), { status: 'Nothing merged this week, so no digest.' });
-  console.log('digest: nothing this week');
+  writeJson(path.join(dir, 'digest.json'), { status: 'Nothing merged since the last digest, so no digest.' });
+  console.log('digest: nothing to report');
   process.exit(0);
 }
 
-const week = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-const subject = `What's new on Open Vector (week of ${week})`;
+const month = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+const subject = `What's new on Open Vector (${month})`;
 const body = [
-  `Here is what changed on [Open Vector](${SITE}/learn) this week. The tools move fast; the lessons now keep up.`,
+  `Here is what changed on [Open Vector](${SITE}/learn) this month. The tools move fast; the lessons now keep up.`,
   '',
   ...updates.map((u) => `- ${u.note}${(u.lessons || []).length ? ` ${u.lessons.map((k) => `[Open the lesson](${lessonUrl(k)})`).join(' · ')}` : ''}`),
   '',
